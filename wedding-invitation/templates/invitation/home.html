@@ -4,66 +4,9 @@
 {% block content %}
 
 <!-- ══════════════════════════════════════════════════════════════
-     NAVBAR
-══════════════════════════════════════════════════════════════ -->
-<nav id="navbar">
-  <div class="navbar-shimmer-top"></div>
-  <div class="navbar-inner">
-
-    <!-- Date pill (desktop) -->
-    <div class="navbar-date">
-      <span>📅</span>
-      <span>21 Aug 2026</span>
-    </div>
-
-    <!-- Centre logo -->
-    <a href="#" class="navbar-logo">
-      <div class="navbar-logo-row">
-        <span class="navbar-logo-om">ॐ</span>
-        <span class="navbar-logo-name">{{ groom.first_name }}</span>
-        <span style="color:rgba(212,160,23,0.5);font-size:0.55rem;">◆</span>
-        <span class="navbar-logo-name">{{ bride.first_name }}</span>
-        <span class="navbar-logo-om">ॐ</span>
-      </div>
-      <div class="navbar-logo-sub">
-        <div class="navbar-logo-line"></div>
-        <span style="color:rgba(212,160,23,0.4);font-size:0.45rem;">✦ ✦ ✦</span>
-        <div class="navbar-logo-line right"></div>
-      </div>
-    </a>
-
-    <!-- Nav links (desktop) -->
-    <nav class="navbar-links">
-      <a href="#family">Family</a><span class="sep">◆</span>
-      <a href="#events">Events</a><span class="sep">◆</span>
-      <a href="#gallery">Gallery</a><span class="sep">◆</span>
-      <a href="#live">Live</a><span class="sep">◆</span>
-      <a href="#rsvp">RSVP</a>
-    </nav>
-
-    <!-- Hamburger (mobile) -->
-    <button class="hamburger" id="hamburger" aria-label="menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-  <div class="navbar-shimmer-bot"></div>
-</nav>
-
-<!-- Mobile drawer -->
-<div class="mobile-menu" id="mobileMenu">
-  <span class="mobile-menu-date">📅 {{ w.wedding_date }}</span>
-  <a href="#family"  onclick="">Family  <span style="color:rgba(212,160,23,0.35);font-size:0.55rem;">◆</span></a>
-  <a href="#events"  onclick="">Events  <span style="color:rgba(212,160,23,0.35);font-size:0.55rem;">◆</span></a>
-  <a href="#gallery" onclick="">Gallery <span style="color:rgba(212,160,23,0.35);font-size:0.55rem;">◆</span></a>
-  <a href="#live"    onclick="">Live    <span style="color:rgba(212,160,23,0.35);font-size:0.55rem;">◆</span></a>
-  <a href="#rsvp"    onclick="">RSVP    <span style="color:rgba(212,160,23,0.35);font-size:0.55rem;">◆</span></a>
-  <a href="#rsvp" class="mobile-cta">💌 Join Our Celebration</a>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════════
      HERO
 ══════════════════════════════════════════════════════════════ -->
-<div style="padding-top:58px;">
+<div style="padding-top:0;">
 <div class="relative overflow-hidden" style="background:#060E24;">
 
   <!-- ── BAND 0 · DIVINE PHOTO (full width, top) ── -->
