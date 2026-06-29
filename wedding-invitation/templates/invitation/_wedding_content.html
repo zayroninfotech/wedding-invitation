@@ -80,35 +80,17 @@ function getCookie(name){let v=null;document.cookie.split(';').forEach(c=>{c=c.t
 {% endif %}
 
 <!-- NAVBAR -->
+{% if is_dashboard %}
 <nav style="position:fixed;top:0;left:0;right:0;z-index:9999;background:transparent;border-bottom:none;">
-  <div style="padding:0.55rem 1.5rem;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;">
-  {% if is_dashboard %}
-  <button onclick="toggleDrawer()" style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.3);border-radius:6px;padding:0.35rem 0.5rem;cursor:pointer;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;">
-    <span style="display:block;width:18px;height:2px;background:#D4A017;border-radius:2px;"></span>
-    <span style="display:block;width:18px;height:2px;background:#D4A017;border-radius:2px;"></span>
-    <span style="display:block;width:18px;height:2px;background:#D4A017;border-radius:2px;"></span>
-  </button>
-  {% endif %}
-    <div>
-      <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
-        <span style="color:#D4A017;font-size:1rem;">ॐ</span>
-        <span id="nav-groom-name" style="font-family:'Palatino Linotype',serif;font-size:1.05rem;color:#D4A017;letter-spacing:0.1em;">{{ groom.first_name }}</span>
-        <span style="color:rgba(212,160,23,0.6);font-size:0.7rem;">◆</span>
-        <span id="nav-bride-name" style="font-family:'Palatino Linotype',serif;font-size:1.05rem;color:#D4A017;letter-spacing:0.1em;">{{ bride.first_name }}</span>
-        <span style="color:#D4A017;font-size:1rem;">ॐ</span>
-        {% if is_dashboard %}
-        <button onclick="openNameEdit()" title="Edit names" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:0.7rem;margin-left:2px;padding:0;line-height:1;opacity:0.6;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">✏</button>
-        {% endif %}
-      </div>
-      <div style="display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-top:3px;">
-        <div style="height:1px;width:2.5rem;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.5));"></div>
-        <span style="color:rgba(212,160,23,0.5);font-size:0.5rem;letter-spacing:0.2em;">✦ ✦ ✦</span>
-        <div style="height:1px;width:2.5rem;background:linear-gradient(90deg,rgba(212,160,23,0.5),transparent);"></div>
-      </div>
-    </div>
-  </div>
+  <div style="padding:0.5rem 1rem;">
+    <button onclick="toggleDrawer()" style="background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.3);border-radius:6px;padding:0.35rem 0.5rem;cursor:pointer;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;">
+      <span style="display:block;width:18px;height:2px;background:#D4A017;border-radius:2px;"></span>
+      <span style="display:block;width:18px;height:2px;background:#D4A017;border-radius:2px;"></span>
+      <span style="display:block;width:18px;height:2px;background:#D4A017;border-radius:2px;"></span>
+    </button>
   </div>
 </nav>
+{% endif %}
 
 <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      HERO
