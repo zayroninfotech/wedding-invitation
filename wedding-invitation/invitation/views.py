@@ -25,7 +25,7 @@ def admin_login(request):
         if verify_user(username, password):
             request.session['admin_logged_in'] = True
             request.session['admin_username'] = username.strip().lower()
-            return redirect('dashboard')
+            return redirect('admin_panel')
         messages.error(request, 'Invalid username or password.')
     return render(request, 'invitation/login.html')
 
