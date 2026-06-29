@@ -6,7 +6,7 @@
 <!-- ══════════════════════════════════════════════════════════════
      NAVBAR (transparent, overlaid on photo)
 ══════════════════════════════════════════════════════════════ -->
-<nav style="position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;border-bottom:none;">
+<nav id="topnav" style="position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;border-bottom:none;transition:background 0.3s,border-bottom 0.3s;">
   <div style="max-width:1200px;margin:0 auto;padding:0.6rem 1.5rem;display:flex;align-items:center;justify-content:center;">
     <a href="#" style="text-decoration:none;text-align:center;">
       <div style="display:flex;align-items:center;gap:0.5rem;">
@@ -575,4 +575,23 @@
 </footer>
 
 </div><!-- /pt-58 -->
+
+<script>
+(function(){
+  var nav = document.getElementById('topnav');
+  var photoH = document.querySelector('img[alt="Divine Blessing"]');
+  window.addEventListener('scroll', function(){
+    var threshold = photoH ? photoH.offsetHeight * 0.6 : 300;
+    if(window.scrollY > threshold){
+      nav.style.background = 'rgba(60,5,15,0.92)';
+      nav.style.backdropFilter = 'blur(8px)';
+      nav.style.borderBottom = '1px solid rgba(212,160,23,0.3)';
+    } else {
+      nav.style.background = 'transparent';
+      nav.style.backdropFilter = 'none';
+      nav.style.borderBottom = 'none';
+    }
+  });
+})();
+</script>
 {% endblock %}
