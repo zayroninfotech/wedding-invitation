@@ -82,12 +82,6 @@
 
         <!-- Centre content -->
         <div style="flex:1;text-align:center;">
-          <!-- Divine temple photo -->
-          <div style="display:inline-block;margin-bottom:1.25rem;border-radius:12px;overflow:hidden;border:2px solid rgba(212,160,23,0.5);box-shadow:0 0 30px rgba(212,160,23,0.3);">
-            <img src="{{ w.divine_photo }}" alt="Divine Blessing"
-                 style="width:clamp(200px,40vw,380px);max-height:260px;object-fit:cover;object-position:center top;display:block;">
-          </div>
-
           <p style="font-family:'Palatino Linotype',serif;font-style:italic;font-size:clamp(1.4rem,3vw,2.5rem);color:#D4A017;text-shadow:0 2px 12px rgba(212,160,23,0.4);margin-bottom:1rem;">
             We&rsquo;re Getting Married
           </p>
@@ -194,14 +188,27 @@
     <div style="position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,#D4A017,#FFB300,#D4A017,transparent);"></div>
   </div><!-- /band2 -->
 
-  <!-- ── BAND 3 · HASHTAG STRIP ── -->
-  <div style="background:linear-gradient(180deg,#0D1B4B 0%,#060E24 100%);display:flex;flex-direction:column;align-items:center;padding:2rem 1rem;">
-    <div class="mandala-border" style="width:100%;margin-bottom:1rem;"></div>
-    <p style="color:#D4A017;font-weight:600;letter-spacing:0.2em;font-size:1.1rem;text-shadow:0 0 10px rgba(212,160,23,0.4);margin-bottom:0.5rem;">
-      {{ w.hashtag }}
-    </p>
-    <p style="color:rgba(255,255,255,0.2);font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:1rem;">SCROLL TO EXPLORE</p>
-    <span class="animate-bounce" style="color:#D4A017;font-size:1.25rem;">↓</span>
+  <!-- ── BAND 3 · PHOTO + HASHTAG STRIP ── -->
+  <!-- Gold divider line between maroon and blue -->
+  <div style="height:3px;background:linear-gradient(90deg,transparent,#D4A017,#FFB300,#D4A017,transparent);"></div>
+
+  <div style="position:relative;overflow:hidden;min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 1rem;">
+    <!-- New photo full-width background -->
+    <img src="{{ w.divine_photo2 }}" alt=""
+         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;z-index:0;"
+         onerror="this.style.display='none'">
+    <!-- Blue overlay -->
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,27,75,0.78) 0%,rgba(6,14,36,0.85) 100%);z-index:1;"></div>
+
+    <!-- Content -->
+    <div style="position:relative;z-index:2;text-align:center;">
+      <div class="mandala-border" style="width:100%;margin-bottom:1rem;"></div>
+      <p style="color:#D4A017;font-weight:600;letter-spacing:0.2em;font-size:1.1rem;text-shadow:0 0 10px rgba(212,160,23,0.4);margin-bottom:0.5rem;">
+        {{ w.hashtag }}
+      </p>
+      <p style="color:rgba(255,255,255,0.35);font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:1rem;">SCROLL TO EXPLORE</p>
+      <span class="animate-bounce" style="color:#D4A017;font-size:1.25rem;">↓</span>
+    </div>
   </div>
 
 </div><!-- /hero -->
