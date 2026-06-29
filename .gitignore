@@ -12,3 +12,7 @@ build/
 venv/
 node_modules/
 wedding-invitation/
+.next/
+node_modules/
+*.pack.gz
+*.pack.gz.old
