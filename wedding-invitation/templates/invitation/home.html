@@ -67,66 +67,53 @@
 <div class="relative overflow-hidden" style="background:#060E24;">
 
   <!-- ── BAND 1 · INVITATION HEADER ── -->
-  <div class="relative" style="background:linear-gradient(160deg,#07122A 0%,#0D1B4B 50%,#1A2B6B 100%);padding:5rem 1rem 2rem;overflow:hidden;">
+  <div class="relative" style="position:relative;padding:5rem 1rem 3rem;overflow:hidden;min-height:420px;">
 
-    <!-- Star field -->
-    <div class="absolute-fill" style="background-image:
-      radial-gradient(2px 2px at 5% 10%,rgba(212,160,23,1) 0%,transparent 100%),
-      radial-gradient(1px 1px at 15% 45%,rgba(255,255,255,0.9) 0%,transparent 100%),
-      radial-gradient(2px 2px at 25% 80%,rgba(212,160,23,0.8) 0%,transparent 100%),
-      radial-gradient(1px 1px at 38% 20%,rgba(255,255,255,0.7) 0%,transparent 100%),
-      radial-gradient(2px 2px at 50% 65%,rgba(255,255,255,0.5) 0%,transparent 100%),
-      radial-gradient(1px 1px at 62% 35%,rgba(212,160,23,0.9) 0%,transparent 100%),
-      radial-gradient(2px 2px at 75% 85%,rgba(255,255,255,0.6) 0%,transparent 100%),
-      radial-gradient(1px 1px at 88% 15%,rgba(255,255,255,0.8) 0%,transparent 100%),
-      radial-gradient(2px 2px at 93% 55%,rgba(212,160,23,0.7) 0%,transparent 100%);
-      pointer-events:none;"></div>
+    <!-- Temple image fills full section -->
+    <img src="{{ w.divine_photo }}" alt=""
+         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:0;"
+         onerror="this.style.display='none'">
+
+    <!-- Dark overlay for readability -->
+    <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(4,8,30,0.87) 0%,rgba(8,14,52,0.82) 50%,rgba(4,8,30,0.87) 100%);z-index:1;"></div>
+
+    <!-- Gold star-dots overlay -->
+    <div style="position:absolute;inset:0;z-index:2;pointer-events:none;background-image:
+      radial-gradient(2px 2px at 5% 10%,rgba(212,160,23,0.9) 0%,transparent 100%),
+      radial-gradient(1px 1px at 20% 45%,rgba(255,255,255,0.7) 0%,transparent 100%),
+      radial-gradient(2px 2px at 40% 80%,rgba(212,160,23,0.7) 0%,transparent 100%),
+      radial-gradient(1px 1px at 60% 20%,rgba(255,255,255,0.6) 0%,transparent 100%),
+      radial-gradient(2px 2px at 80% 55%,rgba(212,160,23,0.8) 0%,transparent 100%),
+      radial-gradient(1px 1px at 92% 35%,rgba(255,255,255,0.5) 0%,transparent 100%);"></div>
 
     <!-- OM watermark -->
-    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;user-select:none;opacity:0.03;">
+    <div style="position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;pointer-events:none;user-select:none;opacity:0.04;">
       <span style="font-size:60vw;color:#D4A017;line-height:1;">ॐ</span>
     </div>
 
-    <!-- Family banner -->
-    <div style="max-width:1024px;margin:0 auto;">
-      <div class="family-banner" style="position:relative;overflow:hidden;">
-        <!-- Background temple image -->
-        <div style="position:absolute;inset:0;z-index:0;">
-          <img src="{{ w.divine_photo }}" alt=""
-               style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
-               onerror="this.parentElement.style.display='none'">
-          <!-- Dark overlay so text stays readable -->
-          <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(7,10,40,0.88) 0%,rgba(10,18,65,0.82) 40%,rgba(7,10,40,0.75) 100%);"></div>
-          <!-- Gold vignette border glow -->
-          <div style="position:absolute;inset:0;box-shadow:inset 0 0 80px rgba(0,0,0,0.6);"></div>
-        </div>
-
-        <!-- Text side -->
-        <div style="flex:1;padding:1.75rem 2rem;text-align:center;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;">
-          <p style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(212,160,23,0.55);margin-bottom:0.75rem;">
-            ✦ &nbsp; శుభ వివాహ వేడుక &nbsp; ✦ &nbsp; शुभ विवाह &nbsp; ✦
-          </p>
-          <h2 style="font-family:'Palatino Linotype',serif;font-size:clamp(1.8rem,4vw,3rem);color:#D4A017;text-shadow:0 0 30px rgba(212,160,23,0.5);letter-spacing:0.06em;margin-bottom:0.5rem;">
-            {{ w.family_surname }} Family
-          </h2>
-          <div style="display:flex;align-items:center;gap:0.75rem;justify-content:center;margin:0.75rem 0;">
-            <div style="height:1px;flex:1;max-width:6rem;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.5));"></div>
-            <span style="font-size:1.25rem;">🪷</span>
-            <div style="height:1px;flex:1;max-width:6rem;background:linear-gradient(90deg,rgba(212,160,23,0.5),transparent);"></div>
-          </div>
-          <p style="font-size:0.9rem;color:rgba(255,255,255,0.8);font-family:Georgia,serif;letter-spacing:0.04em;margin-bottom:0.5rem;">
-            Cordially invites you to the auspicious<br>wedding celebration of
-          </p>
-          <p style="font-family:'Palatino Linotype',serif;font-style:italic;font-size:clamp(1.1rem,2.5vw,1.75rem);color:#FFB300;text-shadow:0 0 20px rgba(255,179,0,0.45);margin:0.5rem 0 0.75rem;">
-            {{ groom.first_name }}
-            <span style="color:rgba(212,160,23,0.5);font-style:normal;margin:0 0.75rem;font-size:0.65em;">✦</span>
-            {{ bride.first_name }}
-          </p>
-          <p style="font-size:0.75rem;color:rgba(212,160,23,0.6);letter-spacing:0.1em;">📅 {{ w.wedding_date }}</p>
-          <p style="font-size:0.75rem;color:rgba(212,160,23,0.45);letter-spacing:0.08em;margin-top:0.25rem;">📍 {{ w.wedding_city }}</p>
-        </div>
-
+    <!-- Content — no card, directly on section -->
+    <div style="max-width:700px;margin:0 auto;text-align:center;position:relative;z-index:3;">
+      <p style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(212,160,23,0.7);margin-bottom:0.75rem;">
+        ✦ &nbsp; శుభ వివాహ వేడుక &nbsp; ✦ &nbsp; शुभ विवाह &nbsp; ✦
+      </p>
+      <h2 style="font-family:'Palatino Linotype',serif;font-size:clamp(2rem,5vw,3.5rem);color:#D4A017;text-shadow:0 0 40px rgba(212,160,23,0.7),0 2px 8px rgba(0,0,0,0.8);letter-spacing:0.06em;margin-bottom:0.75rem;">
+        {{ w.family_surname }} Family
+      </h2>
+      <div style="display:flex;align-items:center;gap:0.75rem;justify-content:center;margin:0.75rem 0;">
+        <div style="height:1px;flex:1;max-width:8rem;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.6));"></div>
+        <span style="font-size:1.5rem;">🪷</span>
+        <div style="height:1px;flex:1;max-width:8rem;background:linear-gradient(90deg,rgba(212,160,23,0.6),transparent);"></div>
       </div>
+      <p style="font-size:1rem;color:rgba(255,255,255,0.9);font-family:Georgia,serif;letter-spacing:0.04em;margin-bottom:0.75rem;text-shadow:0 1px 6px rgba(0,0,0,0.8);">
+        Cordially invites you to the auspicious<br>wedding celebration of
+      </p>
+      <p style="font-family:'Palatino Linotype',serif;font-style:italic;font-size:clamp(1.4rem,3vw,2.2rem);color:#FFB300;text-shadow:0 0 24px rgba(255,179,0,0.6),0 2px 8px rgba(0,0,0,0.8);margin:0.5rem 0 1rem;">
+        {{ groom.first_name }}
+        <span style="color:rgba(212,160,23,0.6);font-style:normal;margin:0 1rem;font-size:0.65em;">✦</span>
+        {{ bride.first_name }}
+      </p>
+      <p style="font-size:0.85rem;color:rgba(212,160,23,0.8);letter-spacing:0.1em;text-shadow:0 1px 4px rgba(0,0,0,0.7);">📅 {{ w.wedding_date }}</p>
+      <p style="font-size:0.8rem;color:rgba(212,160,23,0.6);letter-spacing:0.08em;margin-top:0.3rem;">📍 {{ w.wedding_city }}</p>
     </div>
   </div><!-- /band1 -->
 
