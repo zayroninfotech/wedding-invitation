@@ -190,8 +190,9 @@
     </div>
 
     <!-- Wedding Site Preview panel -->
-    <div class="panel panel-preview" id="panel-preview" style="height:100%;">
-      <iframe src="/preview/" title="Wedding Site"></iframe>
+    <div class="panel" id="panel-preview" style="height:100%;overflow-y:auto;background:#060E24;">
+      {% load static %}
+      {% include "invitation/_wedding_content.html" %}
     </div>
 
     <!-- Events panel -->
