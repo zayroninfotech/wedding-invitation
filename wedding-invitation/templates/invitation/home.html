@@ -66,57 +66,6 @@
 <div style="padding-top:58px;">
 <div class="relative overflow-hidden" style="background:#060E24;">
 
-  <!-- ── BAND 1 · INVITATION HEADER ── -->
-  <div class="relative" style="position:relative;padding:5rem 1rem 3rem;overflow:hidden;min-height:420px;">
-
-    <!-- Temple image fills full section -->
-    <img src="{{ w.divine_photo }}" alt=""
-         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:0;"
-         onerror="this.style.display='none'">
-
-    <!-- Dark overlay for readability -->
-    <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(4,8,30,0.87) 0%,rgba(8,14,52,0.82) 50%,rgba(4,8,30,0.87) 100%);z-index:1;"></div>
-
-    <!-- Gold star-dots overlay -->
-    <div style="position:absolute;inset:0;z-index:2;pointer-events:none;background-image:
-      radial-gradient(2px 2px at 5% 10%,rgba(212,160,23,0.9) 0%,transparent 100%),
-      radial-gradient(1px 1px at 20% 45%,rgba(255,255,255,0.7) 0%,transparent 100%),
-      radial-gradient(2px 2px at 40% 80%,rgba(212,160,23,0.7) 0%,transparent 100%),
-      radial-gradient(1px 1px at 60% 20%,rgba(255,255,255,0.6) 0%,transparent 100%),
-      radial-gradient(2px 2px at 80% 55%,rgba(212,160,23,0.8) 0%,transparent 100%),
-      radial-gradient(1px 1px at 92% 35%,rgba(255,255,255,0.5) 0%,transparent 100%);"></div>
-
-    <!-- OM watermark -->
-    <div style="position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;pointer-events:none;user-select:none;opacity:0.04;">
-      <span style="font-size:60vw;color:#D4A017;line-height:1;">ॐ</span>
-    </div>
-
-    <!-- Content — no card, directly on section -->
-    <div style="max-width:700px;margin:0 auto;text-align:center;position:relative;z-index:3;">
-      <p style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(212,160,23,0.7);margin-bottom:0.75rem;">
-        ✦ &nbsp; శుభ వివాహ వేడుక &nbsp; ✦ &nbsp; शुभ विवाह &nbsp; ✦
-      </p>
-      <h2 style="font-family:'Palatino Linotype',serif;font-size:clamp(2rem,5vw,3.5rem);color:#D4A017;text-shadow:0 0 40px rgba(212,160,23,0.7),0 2px 8px rgba(0,0,0,0.8);letter-spacing:0.06em;margin-bottom:0.75rem;">
-        {{ w.family_surname }} Family
-      </h2>
-      <div style="display:flex;align-items:center;gap:0.75rem;justify-content:center;margin:0.75rem 0;">
-        <div style="height:1px;flex:1;max-width:8rem;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.6));"></div>
-        <span style="font-size:1.5rem;">🪷</span>
-        <div style="height:1px;flex:1;max-width:8rem;background:linear-gradient(90deg,rgba(212,160,23,0.6),transparent);"></div>
-      </div>
-      <p style="font-size:1rem;color:rgba(255,255,255,0.9);font-family:Georgia,serif;letter-spacing:0.04em;margin-bottom:0.75rem;text-shadow:0 1px 6px rgba(0,0,0,0.8);">
-        Cordially invites you to the auspicious<br>wedding celebration of
-      </p>
-      <p style="font-family:'Palatino Linotype',serif;font-style:italic;font-size:clamp(1.4rem,3vw,2.2rem);color:#FFB300;text-shadow:0 0 24px rgba(255,179,0,0.6),0 2px 8px rgba(0,0,0,0.8);margin:0.5rem 0 1rem;">
-        {{ groom.first_name }}
-        <span style="color:rgba(212,160,23,0.6);font-style:normal;margin:0 1rem;font-size:0.65em;">✦</span>
-        {{ bride.first_name }}
-      </p>
-      <p style="font-size:0.85rem;color:rgba(212,160,23,0.8);letter-spacing:0.1em;text-shadow:0 1px 4px rgba(0,0,0,0.7);">📅 {{ w.wedding_date }}</p>
-      <p style="font-size:0.8rem;color:rgba(212,160,23,0.6);letter-spacing:0.08em;margin-top:0.3rem;">📍 {{ w.wedding_city }}</p>
-    </div>
-  </div><!-- /band1 -->
-
   <!-- ── BAND 2 · MAROON CARD ── -->
   <div class="relative" style="background:linear-gradient(160deg,#5C0A1E 0%,#8B1A35 30%,#6B1228 60%,#3D0010 100%);padding:3.5rem 1rem;">
     <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,#D4A017,#FFB300,#D4A017,transparent);"></div>
