@@ -135,7 +135,7 @@ async function saveOverlayText(){
     <div style="position:absolute;bottom:0;left:0;right:0;padding:1.5rem 1rem 1.25rem;text-align:center;pointer-events:none;background:linear-gradient(0deg,rgba(6,14,36,0.75) 0%,transparent 100%);">
       <div style="font-family:'Palatino Linotype',Georgia,serif;font-size:1.25rem;color:rgba(255,255,255,0.95);letter-spacing:0.05em;text-shadow:0 2px 16px rgba(0,0,0,0.9);line-height:1.8;display:inline-flex;align-items:center;gap:0.5rem;">
         <span id="overlay-text-display">{% if overlay_text %}{{ overlay_text }}{% else %}ॐ శుభ వివాహ వేడుక ॐ{% endif %}</span>
-        {% if is_dashboard %}<button onclick="openOverlayEdit()" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.5);font-size:0.75rem;padding:0;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">✏</button>{% endif %}
+        {% if is_dashboard %}<button onclick="openOverlayEdit()" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.5);font-size:0.75rem;padding:0;opacity:0.7;transition:opacity 0.2s;pointer-events:auto;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">✏</button>{% endif %}
       </div>
     </div>
   </div>
