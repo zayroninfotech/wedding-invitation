@@ -91,6 +91,10 @@ def dashboard(request):
         'is_dashboard': True,
         'admin_username': request.session.get('admin_username', 'admin'),
         'overlay_text': get_setting('overlay_text', 'ॐ శుభ వివాహ వేడుక ॐ'),
+        'hero_tagline': get_setting('hero_tagline', "We're Getting Married"),
+        'hero_date':    get_setting('hero_date', w['wedding_date']),
+        'hero_city':    get_setting('hero_city', w['wedding_city']),
+        'hero_venue':   get_setting('hero_venue', w['venue']['name']),
     }
     return render(request, 'invitation/home.html', context)
 
@@ -166,12 +170,13 @@ def save_names(request):
         data = json.loads(request.body)
         groom_name = data.get('groom_name', '').strip()
         bride_name = data.get('bride_name', '').strip()
-        overlay_text = data.get('overlay_text', '').strip()
+        for key in ['overlay_text','hero_tagline','hero_date','hero_city','hero_venue']:
+            val = data.get(key, '').strip()
+            if val:
+                save_setting(key, val)
         if groom_name:
             save_setting('groom_display_name', groom_name)
         if bride_name:
             save_setting('bride_display_name', bride_name)
-        if overlay_text:
-            save_setting('overlay_text', overlay_text)
         return HttpResponse('{"ok":true}', content_type='application/json')
     return HttpResponse('{"ok":false}', content_type='application/json', status=400)

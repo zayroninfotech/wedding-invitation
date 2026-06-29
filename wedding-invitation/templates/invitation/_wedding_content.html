@@ -61,6 +61,32 @@ async function saveNames(){
   } else {btn.textContent='Error';btn.disabled=false;}
 }
 function getCookie(name){let v=null;document.cookie.split(';').forEach(c=>{c=c.trim();if(c.startsWith(name+'='))v=decodeURIComponent(c.slice(name.length+1));});return v;}
+const heroFields={
+  tagline:{id:'hero-tagline',label:'Tagline',key:'hero_tagline'},
+  date:{id:'hero-date',label:'Wedding Date',key:'hero_date'},
+  city:{id:'hero-city',label:'City',key:'hero_city'},
+  venue:{id:'hero-venue',label:'Venue',key:'hero_venue'},
+};
+function openHeroEdit(field){
+  const f=heroFields[field];
+  document.getElementById('hero-edit-label').textContent=f.label;
+  document.getElementById('hero-edit-input').value=document.getElementById(f.id).textContent.trim();
+  document.getElementById('hero-edit-modal').dataset.field=field;
+  document.getElementById('hero-edit-modal').style.display='flex';
+}
+function closeHeroEdit(){document.getElementById('hero-edit-modal').style.display='none';}
+async function saveHeroField(){
+  const modal=document.getElementById('hero-edit-modal');
+  const field=modal.dataset.field;
+  const f=heroFields[field];
+  const val=document.getElementById('hero-edit-input').value.trim();
+  const btn=document.getElementById('hero-save-btn');
+  btn.textContent='Saving…';btn.disabled=true;
+  const body={};body[f.key]=val;
+  const res=await fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify(body)});
+  if(res.ok){document.getElementById(f.id).textContent=val;btn.textContent='Saved ✓';setTimeout(()=>{closeHeroEdit();btn.textContent='Save';btn.disabled=false;},700);}
+  else{btn.textContent='Error';btn.disabled=false;}
+}
 function openOverlayEdit(){
   document.getElementById('overlay-text-input').value=document.getElementById('overlay-text-display').textContent.trim();
   document.getElementById('overlay-edit-modal').style.display='flex';
@@ -75,6 +101,18 @@ async function saveOverlayText(){
   else{btn.textContent='Error';btn.disabled=false;}
 }
 </script>
+
+<!-- Hero Field Edit Modal -->
+<div id="hero-edit-modal" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
+  <div style="background:linear-gradient(160deg,#3D0010,#5C0A1E);border:1.5px solid rgba(212,160,23,0.4);border-radius:16px;padding:2rem;width:340px;box-shadow:0 30px 80px rgba(0,0,0,0.6);">
+    <p id="hero-edit-label" style="color:#D4A017;font-size:0.95rem;letter-spacing:0.1em;margin-bottom:1.25rem;text-align:center;">✏ Edit</p>
+    <input id="hero-edit-input" type="text" style="width:100%;padding:0.6rem 0.85rem;border-radius:7px;border:1px solid rgba(212,160,23,0.35);background:rgba(255,255,255,0.07);color:#fff;font-size:0.9rem;margin-bottom:1.25rem;outline:none;">
+    <div style="display:flex;gap:0.75rem;">
+      <button id="hero-save-btn" onclick="saveHeroField()" style="flex:1;padding:0.6rem;background:linear-gradient(90deg,#8B1A35,#D4A017);border:none;border-radius:8px;color:#fff;font-size:0.88rem;cursor:pointer;">Save</button>
+      <button onclick="closeHeroEdit()" style="flex:1;padding:0.6rem;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:0.88rem;cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <!-- Overlay Text Edit Modal -->
 <div id="overlay-edit-modal" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
@@ -156,8 +194,9 @@ async function saveOverlayText(){
 
         <!-- Centre content -->
         <div style="flex:1;text-align:center;">
-          <p style="font-family:'Palatino Linotype',serif;font-style:italic;font-size:clamp(1.4rem,3vw,2.5rem);color:#D4A017;text-shadow:0 2px 12px rgba(212,160,23,0.4);margin-bottom:1rem;">
-            We&rsquo;re Getting Married
+          <p style="font-family:'Palatino Linotype',serif;font-style:italic;font-size:clamp(1.4rem,3vw,2.5rem);color:#D4A017;text-shadow:0 2px 12px rgba(212,160,23,0.4);margin-bottom:1rem;display:inline-flex;align-items:center;gap:0.5rem;">
+            <span id="hero-tagline">{% if hero_tagline %}{{ hero_tagline }}{% else %}We're Getting Married{% endif %}</span>
+            {% if is_dashboard %}<button onclick="openHeroEdit('tagline')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.5);font-size:0.75rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
           </p>
 
           <div style="font-size:2.5rem;margin-bottom:0.75rem;filter:drop-shadow(0 0 16px rgba(255,179,0,0.6));">ॐ</div>
@@ -173,10 +212,14 @@ async function saveOverlayText(){
             </h1>
           </div>
 
-          <p style="font-size:1rem;color:rgba(255,255,255,0.8);font-family:Georgia,serif;margin-bottom:0.25rem;">
-            {{ w.wedding_date }} &nbsp;&bull;&nbsp; {{ w.wedding_city }}
+          <p style="font-size:1rem;color:rgba(255,255,255,0.8);font-family:Georgia,serif;margin-bottom:0.25rem;display:inline-flex;align-items:center;gap:0.4rem;">
+            <span id="hero-date">{% if hero_date %}{{ hero_date }}{% else %}{{ w.wedding_date }}{% endif %}</span> &nbsp;&bull;&nbsp; <span id="hero-city">{% if hero_city %}{{ hero_city }}{% else %}{{ w.wedding_city }}{% endif %}</span>
+            {% if is_dashboard %}<button onclick="openHeroEdit('date')" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:0.7rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
           </p>
-          <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:1rem;">{{ venue.name }}</p>
+          <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:1rem;display:inline-flex;align-items:center;gap:0.4rem;">
+            <span id="hero-venue">{% if hero_venue %}{{ hero_venue }}{% else %}{{ venue.name }}{% endif %}</span>
+            {% if is_dashboard %}<button onclick="openHeroEdit('venue')" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.7rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
+          </p>
 
           <div style="height:1px;width:75%;margin:0 auto 1rem;background:linear-gradient(90deg,transparent,#D4A017,transparent);"></div>
 
