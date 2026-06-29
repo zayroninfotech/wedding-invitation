@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+.env
+media/
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+node_modules/
+wedding-invitation/
