@@ -40,7 +40,43 @@ function toggleDrawer(){var d=document.getElementById('admin-drawer'),o=document
 function closeDrawer(){document.getElementById('admin-drawer').style.left='-260px';document.getElementById('admin-overlay').style.display='none';}
 function showAdminQR(){document.getElementById('admin-qr-url').textContent=window.location.origin+'/preview/';document.getElementById('admin-qr-modal').style.display='flex';closeDrawer();}
 document.getElementById('admin-qr-modal').addEventListener('click',function(e){if(e.target===this)this.style.display='none';});
+document.getElementById('name-edit-modal').addEventListener('click',function(e){if(e.target===this)closeNameEdit();});
+function openNameEdit(){
+  document.getElementById('edit-groom-input').value=document.getElementById('nav-groom-name').textContent.trim();
+  document.getElementById('edit-bride-input').value=document.getElementById('nav-bride-name').textContent.trim();
+  document.getElementById('name-edit-modal').style.display='flex';
+}
+function closeNameEdit(){document.getElementById('name-edit-modal').style.display='none';}
+async function saveNames(){
+  const groom=document.getElementById('edit-groom-input').value.trim();
+  const bride=document.getElementById('edit-bride-input').value.trim();
+  const btn=document.getElementById('name-save-btn');
+  btn.textContent='Saving…';btn.disabled=true;
+  const res=await fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify({groom_name:groom,bride_name:bride})});
+  if(res.ok){
+    document.getElementById('nav-groom-name').textContent=groom;
+    document.getElementById('nav-bride-name').textContent=bride;
+    btn.textContent='Saved ✓';
+    setTimeout(()=>{closeNameEdit();btn.textContent='Save';btn.disabled=false;},800);
+  } else {btn.textContent='Error';btn.disabled=false;}
+}
+function getCookie(name){let v=null;document.cookie.split(';').forEach(c=>{c=c.trim();if(c.startsWith(name+'='))v=decodeURIComponent(c.slice(name.length+1));});return v;}
 </script>
+
+<!-- Name Edit Modal -->
+<div id="name-edit-modal" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
+  <div style="background:linear-gradient(160deg,#3D0010,#5C0A1E);border:1.5px solid rgba(212,160,23,0.4);border-radius:16px;padding:2rem;width:320px;box-shadow:0 30px 80px rgba(0,0,0,0.6);">
+    <p style="color:#D4A017;font-size:0.95rem;letter-spacing:0.1em;margin-bottom:1.25rem;text-align:center;">✏ Edit Names</p>
+    <label style="display:block;font-size:0.68rem;color:rgba(212,160,23,0.5);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.35rem;">Groom Name</label>
+    <input id="edit-groom-input" type="text" style="width:100%;padding:0.6rem 0.85rem;border-radius:7px;border:1px solid rgba(212,160,23,0.35);background:rgba(255,255,255,0.07);color:#fff;font-size:0.9rem;margin-bottom:1rem;outline:none;">
+    <label style="display:block;font-size:0.68rem;color:rgba(212,160,23,0.5);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.35rem;">Bride Name</label>
+    <input id="edit-bride-input" type="text" style="width:100%;padding:0.6rem 0.85rem;border-radius:7px;border:1px solid rgba(212,160,23,0.35);background:rgba(255,255,255,0.07);color:#fff;font-size:0.9rem;margin-bottom:1.25rem;outline:none;">
+    <div style="display:flex;gap:0.75rem;">
+      <button id="name-save-btn" onclick="saveNames()" style="flex:1;padding:0.6rem;background:linear-gradient(90deg,#8B1A35,#D4A017);border:none;border-radius:8px;color:#fff;font-size:0.88rem;cursor:pointer;">Save</button>
+      <button onclick="closeNameEdit()" style="flex:1;padding:0.6rem;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:0.88rem;cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+</div>
 {% endif %}
 
 <!-- NAVBAR -->
@@ -56,10 +92,13 @@ document.getElementById('admin-qr-modal').addEventListener('click',function(e){i
     <div>
       <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
         <span style="color:#D4A017;font-size:1rem;">ॐ</span>
-        <span style="font-family:'Palatino Linotype',serif;font-size:1.05rem;color:#D4A017;letter-spacing:0.1em;">{{ groom.first_name }}</span>
+        <span id="nav-groom-name" style="font-family:'Palatino Linotype',serif;font-size:1.05rem;color:#D4A017;letter-spacing:0.1em;">{{ groom.first_name }}</span>
         <span style="color:rgba(212,160,23,0.6);font-size:0.7rem;">◆</span>
-        <span style="font-family:'Palatino Linotype',serif;font-size:1.05rem;color:#D4A017;letter-spacing:0.1em;">{{ bride.first_name }}</span>
+        <span id="nav-bride-name" style="font-family:'Palatino Linotype',serif;font-size:1.05rem;color:#D4A017;letter-spacing:0.1em;">{{ bride.first_name }}</span>
         <span style="color:#D4A017;font-size:1rem;">ॐ</span>
+        {% if is_dashboard %}
+        <button onclick="openNameEdit()" title="Edit names" style="background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.35);border-radius:5px;padding:2px 7px;cursor:pointer;color:#D4A017;font-size:0.75rem;margin-left:4px;">✏</button>
+        {% endif %}
       </div>
       <div style="display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-top:3px;">
         <div style="height:1px;width:2.5rem;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.5));"></div>

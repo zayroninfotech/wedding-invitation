@@ -1,10 +1,23 @@
 import io
+import json
 import qrcode
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from .wedding_data import WEDDING
-from .mongo_db import verify_user
+from .mongo_db import verify_user, get_setting, save_setting
+
+
+def apply_name_overrides(groom, bride):
+    groom = dict(groom)
+    bride = dict(bride)
+    g = get_setting('groom_display_name')
+    b = get_setting('bride_display_name')
+    if g:
+        groom['first_name'] = g
+    if b:
+        bride['first_name'] = b
+    return groom, bride
 
 
 def login_required(view_fn):
@@ -61,10 +74,11 @@ def dashboard(request):
         {'icon': '🌙', 'label': 'Tithi',      'val': w['tithi']},
         {'icon': '📍', 'label': 'Venue',      'val': w['venue']['name']},
     ]
+    groom, bride = apply_name_overrides(w['groom'], w['bride'])
     context = {
         'w': w,
-        'groom': w['groom'],
-        'bride': w['bride'],
+        'groom': groom,
+        'bride': bride,
         'venue': w['venue'],
         'events': w['events'],
         'youtube': w['youtube'],
@@ -138,3 +152,17 @@ def generate_qr(request):
     img.save(buf, format='PNG')
     buf.seek(0)
     return HttpResponse(buf, content_type='image/png')
+
+
+@login_required
+def save_names(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        groom_name = data.get('groom_name', '').strip()
+        bride_name = data.get('bride_name', '').strip()
+        if groom_name:
+            save_setting('groom_display_name', groom_name)
+        if bride_name:
+            save_setting('bride_display_name', bride_name)
+        return HttpResponse('{"ok":true}', content_type='application/json')
+    return HttpResponse('{"ok":false}', content_type='application/json', status=400)

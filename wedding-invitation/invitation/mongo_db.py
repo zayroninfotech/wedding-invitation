@@ -28,6 +28,24 @@ def verify_user(username: str, password: str) -> bool:
         return False
 
 
+def get_setting(key, default=None):
+    try:
+        db = get_db()
+        doc = db.settings.find_one({'key': key})
+        return doc['value'] if doc else default
+    except Exception:
+        return default
+
+
+def save_setting(key, value):
+    try:
+        db = get_db()
+        db.settings.update_one({'key': key}, {'$set': {'value': value}}, upsert=True)
+        return True
+    except Exception:
+        return False
+
+
 def seed_superadmin():
     """Insert superadmin if not already present."""
     try:
