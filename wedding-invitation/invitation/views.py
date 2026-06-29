@@ -1,20 +1,28 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .wedding_data import WEDDING
+from .mongo_db import verify_user
 
-ADMIN_USERNAME = 'vamsi'
-ADMIN_PASSWORD = 'zayron@2026'
+
+def login_required(view_fn):
+    def wrapper(request, *args, **kwargs):
+        if not request.session.get('admin_logged_in'):
+            return redirect('admin_login')
+        return view_fn(request, *args, **kwargs)
+    wrapper.__name__ = view_fn.__name__
+    return wrapper
 
 
 def admin_login(request):
     if request.session.get('admin_logged_in'):
-        return redirect('dashboard')
+        return redirect('home')
     if request.method == 'POST':
-        u = request.POST.get('username', '')
-        p = request.POST.get('password', '')
-        if u == ADMIN_USERNAME and p == ADMIN_PASSWORD:
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        if verify_user(username, password):
             request.session['admin_logged_in'] = True
-            return redirect('dashboard')
+            request.session['admin_username'] = username.strip().lower()
+            return redirect('home')
         messages.error(request, 'Invalid username or password.')
     return render(request, 'invitation/login.html')
 
@@ -24,22 +32,22 @@ def admin_logout(request):
     return redirect('admin_login')
 
 
+@login_required
 def dashboard(request):
-    if not request.session.get('admin_logged_in'):
-        return redirect('admin_login')
     w = WEDDING
     return render(request, 'invitation/dashboard.html', {'w': w})
 
 
+@login_required
 def home(request):
     w = WEDDING
 
     quick_links = [
         {'href': '#family',  'emoji': '👨‍👩‍👧', 'label': 'Family'},
-        {'href': '#events',  'emoji': '📅',                 'label': 'Events'},
-        {'href': '#gallery', 'emoji': '📸',                 'label': 'Gallery'},
-        {'href': '#live',    'emoji': '▶',                  'label': 'Live Stream'},
-        {'href': '#rsvp',    'emoji': '💌',                 'label': 'RSVP'},
+        {'href': '#events',  'emoji': '📅',      'label': 'Events'},
+        {'href': '#gallery', 'emoji': '📸',      'label': 'Gallery'},
+        {'href': '#live',    'emoji': '▶',       'label': 'Live Stream'},
+        {'href': '#rsvp',    'emoji': '💌',      'label': 'RSVP'},
     ]
 
     muhurtham_items = [
@@ -50,16 +58,16 @@ def home(request):
     ]
 
     context = {
-        'w':                 w,
-        'groom':             w['groom'],
-        'bride':             w['bride'],
-        'venue':             w['venue'],
-        'events':            w['events'],
-        'youtube':           w['youtube'],
-        'rsvp':              w['rsvp'],
-        'quick_links':       quick_links,
-        'muhurtham_items':   muhurtham_items,
-        'wedding_date_iso':  w['wedding_date_iso'],
+        'w':                  w,
+        'groom':              w['groom'],
+        'bride':              w['bride'],
+        'venue':              w['venue'],
+        'events':             w['events'],
+        'youtube':            w['youtube'],
+        'rsvp':               w['rsvp'],
+        'quick_links':        quick_links,
+        'muhurtham_items':    muhurtham_items,
+        'wedding_date_iso':   w['wedding_date_iso'],
         'bride_groom_photos': list(zip(
             w['bride_groom_photos'],
             w['photo_placeholder_colors']['couple'],
