@@ -1,7 +1,57 @@
 ﻿
+{% if is_dashboard %}
+<!-- SLIDE-OUT ADMIN SIDEBAR -->
+<div id="admin-drawer" style="position:fixed;top:0;left:-260px;width:240px;height:100vh;z-index:99999;background:linear-gradient(180deg,#3D0010 0%,#5C0A1E 55%,#3D0010 100%);border-right:1px solid rgba(212,160,23,0.35);transition:left 0.3s ease;display:flex;flex-direction:column;box-shadow:4px 0 30px rgba(0,0,0,0.6);">
+  <div style="padding:1.2rem 1rem;text-align:center;border-bottom:1px solid rgba(212,160,23,0.2);">
+    <div style="font-size:1.4rem;color:#D4A017;">ॐ</div>
+    <div style="font-size:0.9rem;color:#D4A017;letter-spacing:0.08em;">Vamsi ✦ Anausha</div>
+    <div style="font-size:0.55rem;color:rgba(212,160,23,0.4);letter-spacing:0.3em;text-transform:uppercase;margin-top:2px;">Admin Panel</div>
+  </div>
+  <nav style="flex:1;padding:0.75rem 0;position:static;background:transparent;border:none;">
+    <div style="padding:0.5rem 1rem 0.25rem;font-size:0.6rem;color:rgba(212,160,23,0.4);letter-spacing:0.3em;text-transform:uppercase;">Main</div>
+    <a href="/dashboard/" style="display:flex;align-items:center;gap:0.6rem;padding:0.65rem 1rem;color:rgba(255,255,255,0.7);font-size:0.88rem;text-decoration:none;border-left:3px solid transparent;transition:all 0.2s;" onmouseover="this.style.background='rgba(212,160,23,0.08)';this.style.color='#D4A017'" onmouseout="this.style.background='';this.style.color='rgba(255,255,255,0.7)'"><span>🏠</span> Dashboard</a>
+    <a onclick="showAdminQR()" style="display:flex;align-items:center;gap:0.6rem;padding:0.65rem 1rem;color:rgba(255,255,255,0.7);font-size:0.88rem;text-decoration:none;border-left:3px solid transparent;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(212,160,23,0.08)';this.style.color='#D4A017'" onmouseout="this.style.background='';this.style.color='rgba(255,255,255,0.7)'"><span>📲</span> Generate QR</a>
+    <a href="/logout/" style="display:flex;align-items:center;gap:0.6rem;padding:0.65rem 1rem;color:rgba(255,100,100,0.75);font-size:0.88rem;text-decoration:none;border-left:3px solid transparent;transition:all 0.2s;" onmouseover="this.style.color='#fca5a5'" onmouseout="this.style.color='rgba(255,100,100,0.75)'"><span>⬅</span> Logout</a>
+  </nav>
+  <div style="padding:0.85rem 1rem;border-top:1px solid rgba(212,160,23,0.2);font-size:0.75rem;color:rgba(255,255,255,0.3);">
+    Logged in as <strong style="color:rgba(212,160,23,0.7);">{{ admin_username }}</strong>
+  </div>
+</div>
+<div id="admin-overlay" onclick="closeDrawer()" style="display:none;position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,0.4);"></div>
+
+<!-- QR Modal -->
+<div id="admin-qr-modal" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.75);align-items:center;justify-content:center;">
+  <div style="background:linear-gradient(160deg,#3D0010,#5C0A1E);border:1.5px solid rgba(212,160,23,0.4);border-radius:16px;padding:2rem;max-width:340px;width:90%;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,0.6);">
+    <p style="color:#D4A017;font-size:1rem;letter-spacing:0.1em;margin-bottom:0.25rem;">ॐ Vamsi ✦ Anausha ॐ</p>
+    <p style="color:rgba(255,255,255,0.4);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.25rem;">Scan to open wedding invitation</p>
+    <div style="background:#060E24;border-radius:12px;padding:1rem;display:inline-block;border:2px solid rgba(212,160,23,0.3);">
+      <img src="/qr/" alt="QR Code" style="width:200px;height:200px;display:block;">
+    </div>
+    <p style="color:rgba(212,160,23,0.6);font-size:0.7rem;margin-top:0.75rem;word-break:break-all;" id="admin-qr-url"></p>
+    <div style="display:flex;gap:0.75rem;justify-content:center;margin-top:1.25rem;">
+      <a href="/qr/" download="wedding-qr.png" style="padding:0.55rem 1.25rem;background:linear-gradient(90deg,#8B1A35,#D4A017);border-radius:8px;color:#fff;font-size:0.85rem;text-decoration:none;">⬇ Download</a>
+      <button onclick="document.getElementById('admin-qr-modal').style.display='none'" style="padding:0.55rem 1.25rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:0.85rem;cursor:pointer;">Close</button>
+    </div>
+  </div>
+</div>
+<script>
+function toggleDrawer(){var d=document.getElementById('admin-drawer'),o=document.getElementById('admin-overlay');var open=d.style.left==='0px';d.style.left=open?'-260px':'0px';o.style.display=open?'none':'block';}
+function closeDrawer(){document.getElementById('admin-drawer').style.left='-260px';document.getElementById('admin-overlay').style.display='none';}
+function showAdminQR(){document.getElementById('admin-qr-url').textContent=window.location.origin+'/preview/';document.getElementById('admin-qr-modal').style.display='flex';closeDrawer();}
+document.getElementById('admin-qr-modal').addEventListener('click',function(e){if(e.target===this)this.style.display='none';});
+</script>
+{% endif %}
+
 <!-- NAVBAR -->
 <nav style="position:fixed;top:0;left:0;right:0;z-index:9999;background:transparent;border-bottom:none;">
-  <div style="padding:0.55rem 1.5rem;display:flex;align-items:center;justify-content:center;text-align:center;">
+  <div style="padding:0.55rem 1.5rem;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;">
+  {% if is_dashboard %}
+  <button onclick="toggleDrawer()" style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.3);border-radius:6px;padding:0.35rem 0.5rem;cursor:pointer;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;">
+    <span style="display:block;width:18px;height:2px;background:#D4A017;border-radius:2px;"></span>
+    <span style="display:block;width:18px;height:2px;background:#D4A017;border-radius:2px;"></span>
+    <span style="display:block;width:18px;height:2px;background:#D4A017;border-radius:2px;"></span>
+  </button>
+  {% endif %}
     <div>
       <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
         <span style="color:#D4A017;font-size:1rem;">ॐ</span>
@@ -16,6 +66,7 @@
         <div style="height:1px;width:2.5rem;background:linear-gradient(90deg,rgba(212,160,23,0.5),transparent);"></div>
       </div>
     </div>
+  </div>
   </div>
 </nav>
 

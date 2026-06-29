@@ -64,6 +64,8 @@ def dashboard(request):
         'wedding_date_iso': w['wedding_date_iso'],
         'bride_groom_photos': list(zip(w['bride_groom_photos'], w['photo_placeholder_colors']['couple'])),
         'family_photos': list(zip(w['family_photos'], w['photo_placeholder_colors']['family'])),
+        'is_dashboard': True,
+        'admin_username': request.session.get('admin_username', 'admin'),
     }
     return render(request, 'invitation/home.html', context)
 
