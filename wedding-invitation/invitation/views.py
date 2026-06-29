@@ -1,4 +1,7 @@
+import io
+import qrcode
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib import messages
 from .wedding_data import WEDDING
 from .mongo_db import verify_user
@@ -110,3 +113,16 @@ def wedding_preview(request):
         )),
     }
     return render(request, 'invitation/home.html', context)
+
+
+@login_required
+def generate_qr(request):
+    base_url = request.build_absolute_uri('/preview/')
+    qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=10, border=4)
+    qr.add_data(base_url)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color='#D4A017', back_color='#060E24')
+    buf = io.BytesIO()
+    img.save(buf, format='PNG')
+    buf.seek(0)
+    return HttpResponse(buf, content_type='image/png')

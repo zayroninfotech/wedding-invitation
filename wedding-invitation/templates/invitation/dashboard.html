@@ -113,6 +113,10 @@
       <span class="icon">💍</span> Wedding Site
     </a>
 
+    <a class="nav-item" onclick="showQR()" style="background:rgba(212,160,23,0.12);border-left:3px solid rgba(212,160,23,0.5);margin:0.25rem 0.5rem;border-radius:6px;">
+      <span class="icon">📲</span> Generate QR
+    </a>
+
     <div class="nav-section" style="margin-top:0.5rem;">Wedding Info</div>
     <a class="nav-item" onclick="showPanel('events',this)">
       <span class="icon">📅</span> Events
@@ -233,6 +237,28 @@
   </div>
 </div>
 
+<!-- QR Modal -->
+<div id="qr-modal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.75);align-items:center;justify-content:center;">
+  <div style="background:linear-gradient(160deg,#3D0010,#5C0A1E);border:1.5px solid rgba(212,160,23,0.4);border-radius:16px;padding:2rem;max-width:340px;width:90%;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,0.6);">
+    <p style="color:#D4A017;font-size:1rem;letter-spacing:0.1em;margin-bottom:0.25rem;">ॐ Vamsi ✦ Anausha ॐ</p>
+    <p style="color:rgba(255,255,255,0.4);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.25rem;">Scan to open wedding invitation</p>
+    <div style="background:#060E24;border-radius:12px;padding:1rem;display:inline-block;border:2px solid rgba(212,160,23,0.3);">
+      <img id="qr-img" src="/qr/" alt="QR Code" style="width:200px;height:200px;display:block;">
+    </div>
+    <p id="qr-url" style="color:rgba(212,160,23,0.6);font-size:0.7rem;margin-top:0.75rem;word-break:break-all;"></p>
+    <div style="display:flex;gap:0.75rem;justify-content:center;margin-top:1.25rem;">
+      <a id="qr-download" href="/qr/" download="wedding-qr.png"
+         style="padding:0.55rem 1.25rem;background:linear-gradient(90deg,#8B1A35,#D4A017);border:none;border-radius:8px;color:#fff;font-size:0.85rem;cursor:pointer;text-decoration:none;">
+        ⬇ Download
+      </a>
+      <button onclick="closeQR()"
+         style="padding:0.55rem 1.25rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:0.85rem;cursor:pointer;">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
 const titles = {home:'Dashboard',preview:'Wedding Site Preview',events:'Events',venue:'Venue',rsvp:'RSVP Info'};
 function showPanel(id, el){
@@ -242,6 +268,17 @@ function showPanel(id, el){
   el.classList.add('active');
   document.getElementById('topbar-title').textContent = titles[id]||id;
 }
+function showQR(){
+  const modal = document.getElementById('qr-modal');
+  document.getElementById('qr-url').textContent = window.location.origin + '/preview/';
+  modal.style.display = 'flex';
+}
+function closeQR(){
+  document.getElementById('qr-modal').style.display = 'none';
+}
+document.getElementById('qr-modal').addEventListener('click', function(e){
+  if(e.target === this) closeQR();
+});
 </script>
 </body>
 </html>
