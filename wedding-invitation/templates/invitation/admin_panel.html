@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Panel — Vamsi & Anausha</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Palatino Linotype',Georgia,serif;background:#060E24;color:#fff;min-height:100vh;}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(6,14,36,0.97);border-bottom:1px solid rgba(212,160,23,0.25);padding:0.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.topbar-left{display:flex;align-items:center;gap:1rem;}
+.back-btn{display:flex;align-items:center;gap:0.5rem;color:rgba(212,160,23,0.8);text-decoration:none;font-size:0.82rem;padding:0.35rem 0.75rem;border:1px solid rgba(212,160,23,0.3);border-radius:6px;transition:all 0.2s;}
+.back-btn:hover{background:rgba(212,160,23,0.1);color:#D4A017;}
+.topbar-title{color:#D4A017;font-size:1rem;letter-spacing:0.06em;}
+.topbar-right{font-size:0.78rem;color:rgba(255,255,255,0.35);}
+
+.content{padding:5rem 1.5rem 2rem;}
+.page-heading{text-align:center;margin-bottom:2rem;}
+.page-heading h1{font-size:1.4rem;color:#D4A017;letter-spacing:0.1em;}
+.page-heading p{font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:0.35rem;letter-spacing:0.15em;text-transform:uppercase;}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem;}
+.stat-card{padding:1.25rem;border-radius:10px;background:linear-gradient(135deg,rgba(92,10,30,0.45),rgba(61,0,16,0.55));border:1px solid rgba(212,160,23,0.2);}
+.stat-icon{font-size:1.5rem;margin-bottom:0.5rem;}
+.stat-label{font-size:0.68rem;color:rgba(212,160,23,0.5);letter-spacing:0.15em;text-transform:uppercase;}
+.stat-value{font-size:1rem;color:#D4A017;font-weight:bold;margin-top:0.2rem;}
+
+.info-card{padding:1.25rem;border-radius:10px;margin-bottom:1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(212,160,23,0.15);}
+.info-card h3{color:#D4A017;font-size:0.82rem;letter-spacing:0.12em;margin-bottom:0.75rem;text-transform:uppercase;}
+.info-row{display:flex;justify-content:space-between;padding:0.38rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.82rem;}
+.info-row:last-child{border-bottom:none;}
+.info-row .lbl{color:rgba(255,255,255,0.38);}
+.info-row .val{color:rgba(255,255,255,0.8);text-align:right;}
+
+.actions{display:flex;gap:0.75rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.action-btn{padding:0.6rem 1.2rem;border-radius:8px;font-size:0.85rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem;transition:all 0.2s;}
+.action-btn.primary{background:linear-gradient(90deg,#8B1A35,#D4A017);color:#fff;border:none;}
+.action-btn.secondary{background:rgba(255,255,255,0.06);border:1px solid rgba(212,160,23,0.25);color:rgba(212,160,23,0.8);}
+.action-btn:hover{opacity:0.85;transform:translateY(-1px);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <a class="back-btn" href="/dashboard/">← Wedding Site</a>
+    <span class="topbar-title">Admin Panel</span>
+  </div>
+  <span class="topbar-right">Logged in as <strong style="color:rgba(212,160,23,0.7);">{{ admin_username }}</strong> &nbsp;·&nbsp; <a href="/logout/" style="color:rgba(255,100,100,0.6);text-decoration:none;">Logout</a></span>
+</div>
+
+<div class="content">
+  <div class="page-heading">
+    <h1>ॐ Vamsi ✦ Anausha ॐ</h1>
+    <p>Wedding Admin Overview</p>
+  </div>
+
+  <div class="actions">
+    <a href="/dashboard/" class="action-btn primary">💍 View Wedding Site</a>
+    <a href="/qr/" download="wedding-qr.png" class="action-btn secondary">📲 Download QR</a>
+    <a href="/preview/" target="_blank" class="action-btn secondary">🔗 Public Link</a>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon">👰</div><div class="stat-label">Bride</div><div class="stat-value">{{ w.bride.name }}</div></div>
+    <div class="stat-card"><div class="stat-icon">🤵</div><div class="stat-label">Groom</div><div class="stat-value">{{ w.groom.name }}</div></div>
+    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-label">Wedding Date</div><div class="stat-value" style="font-size:0.9rem;">{{ w.wedding_date }}</div></div>
+    <div class="stat-card"><div class="stat-icon">📍</div><div class="stat-label">City</div><div class="stat-value">{{ w.wedding_city }}</div></div>
+  </div>
+
+  <div class="info-card">
+    <h3>Muhurtham Details</h3>
+    <div class="info-row"><span class="lbl">Time</span><span class="val">{{ w.muhurtham_time }}</span></div>
+    <div class="info-row"><span class="lbl">Nakshatra</span><span class="val">{{ w.nakshatra }}</span></div>
+    <div class="info-row"><span class="lbl">Tithi</span><span class="val">{{ w.tithi }}</span></div>
+    <div class="info-row"><span class="lbl">Hashtag</span><span class="val">{{ w.hashtag }}</span></div>
+  </div>
+
+  <div class="info-card">
+    <h3>Venue</h3>
+    <div class="info-row"><span class="lbl">Name</span><span class="val">{{ w.venue.name }}</span></div>
+    <div class="info-row"><span class="lbl">Address</span><span class="val">{{ w.venue.address }}</span></div>
+    <div class="info-row"><span class="lbl">City</span><span class="val">{{ w.venue.city }}</span></div>
+    <div class="info-row"><span class="lbl">Maps</span><span class="val"><a href="{{ w.venue.maps_url }}" target="_blank" style="color:#D4A017;">Open Maps ↗</a></span></div>
+  </div>
+
+  <div class="info-card">
+    <h3>Events</h3>
+    {% for event in w.events %}
+    <div class="info-row"><span class="lbl">{{ event.name }}</span><span class="val">{{ event.date }} · {{ event.time }}</span></div>
+    {% endfor %}
+  </div>
+
+  <div class="info-card">
+    <h3>RSVP Contacts</h3>
+    <div class="info-row"><span class="lbl">Phone</span><span class="val">{{ w.rsvp.phone }}</span></div>
+    <div class="info-row"><span class="lbl">WhatsApp</span><span class="val">{{ w.rsvp.whatsapp }}</span></div>
+    <div class="info-row"><span class="lbl">Email</span><span class="val">{{ w.rsvp.email }}</span></div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -36,6 +36,16 @@ def admin_logout(request):
 
 
 @login_required
+def admin_panel(request):
+    w = WEDDING
+    context = {
+        'w': w,
+        'admin_username': request.session.get('admin_username', 'admin'),
+    }
+    return render(request, 'invitation/admin_panel.html', context)
+
+
+@login_required
 def dashboard(request):
     w = WEDDING
     quick_links = [
