@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard — Vamsi & Anausha</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{display:flex;height:100vh;overflow:hidden;font-family:'Palatino Linotype',Georgia,serif;background:#060E24;}
+
+  /* ── Sidebar ── */
+  .sidebar{
+    width:220px;flex-shrink:0;
+    background:linear-gradient(180deg,#3D0010 0%,#5C0A1E 50%,#3D0010 100%);
+    border-right:1px solid rgba(212,160,23,0.3);
+    display:flex;flex-direction:column;
+    overflow-y:auto;
+  }
+  .sidebar-logo{
+    padding:1.2rem 1rem;text-align:center;
+    border-bottom:1px solid rgba(212,160,23,0.2);
+  }
+  .sidebar-logo-om{font-size:1.4rem;color:#D4A017;}
+  .sidebar-logo-names{font-size:0.9rem;color:#D4A017;letter-spacing:0.08em;}
+  .sidebar-logo-sub{font-size:0.55rem;color:rgba(212,160,23,0.4);letter-spacing:0.3em;text-transform:uppercase;margin-top:2px;}
+
+  .sidebar-nav{flex:1;padding:0.75rem 0;}
+  .nav-section{padding:0.5rem 1rem 0.25rem;font-size:0.6rem;color:rgba(212,160,23,0.4);letter-spacing:0.3em;text-transform:uppercase;}
+  .nav-item{
+    display:flex;align-items:center;gap:0.6rem;
+    padding:0.6rem 1rem;cursor:pointer;
+    color:rgba(255,255,255,0.6);font-size:0.85rem;
+    border-left:3px solid transparent;
+    transition:all 0.2s;text-decoration:none;
+  }
+  .nav-item:hover{background:rgba(212,160,23,0.08);color:#D4A017;border-left-color:rgba(212,160,23,0.4);}
+  .nav-item.active{background:rgba(212,160,23,0.12);color:#D4A017;border-left-color:#D4A017;}
+  .nav-item .icon{font-size:1rem;width:1.2rem;text-align:center;}
+
+  .sidebar-footer{
+    padding:0.85rem 1rem;border-top:1px solid rgba(212,160,23,0.2);
+    font-size:0.75rem;color:rgba(255,255,255,0.3);
+  }
+  .logout-btn{
+    display:flex;align-items:center;gap:0.5rem;
+    color:rgba(255,100,100,0.7);text-decoration:none;font-size:0.8rem;margin-top:0.5rem;
+    cursor:pointer;transition:color 0.2s;
+  }
+  .logout-btn:hover{color:#fca5a5;}
+
+  /* ── Main area ── */
+  .main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+
+  .topbar{
+    padding:0.75rem 1.5rem;
+    background:rgba(6,14,36,0.95);
+    border-bottom:1px solid rgba(212,160,23,0.2);
+    display:flex;align-items:center;justify-content:space-between;
+    flex-shrink:0;
+  }
+  .topbar-title{color:#D4A017;font-size:1rem;letter-spacing:0.06em;}
+  .topbar-user{color:rgba(255,255,255,0.4);font-size:0.78rem;}
+
+  .content{flex:1;overflow:hidden;position:relative;}
+
+  /* Panels */
+  .panel{display:none;height:100%;overflow-y:auto;}
+  .panel.active{display:block;}
+
+  /* Preview iframe panel */
+  .panel-preview{padding:0;}
+  .panel-preview iframe{width:100%;height:100%;border:none;display:block;}
+
+  /* Dashboard home panel */
+  .panel-home{padding:2rem;background:#060E24;}
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem;}
+  .stat-card{
+    padding:1.25rem;border-radius:10px;
+    background:linear-gradient(135deg,rgba(92,10,30,0.4),rgba(61,0,16,0.5));
+    border:1px solid rgba(212,160,23,0.2);
+  }
+  .stat-icon{font-size:1.5rem;margin-bottom:0.5rem;}
+  .stat-label{font-size:0.7rem;color:rgba(212,160,23,0.5);letter-spacing:0.15em;text-transform:uppercase;}
+  .stat-value{font-size:1.4rem;color:#D4A017;font-weight:bold;margin-top:0.2rem;}
+
+  .info-card{
+    padding:1.25rem;border-radius:10px;margin-bottom:1rem;
+    background:rgba(255,255,255,0.03);border:1px solid rgba(212,160,23,0.15);
+  }
+  .info-card h3{color:#D4A017;font-size:0.85rem;letter-spacing:0.1em;margin-bottom:0.75rem;text-transform:uppercase;}
+  .info-row{display:flex;justify-content:space-between;padding:0.35rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.82rem;}
+  .info-row:last-child{border-bottom:none;}
+  .info-row span:first-child{color:rgba(255,255,255,0.4);}
+  .info-row span:last-child{color:rgba(255,255,255,0.8);}
+</style>
+</head>
+<body>
+
+<!-- ── Sidebar ── -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-om">ॐ</div>
+    <div class="sidebar-logo-names">Vamsi ✦ Anausha</div>
+    <div class="sidebar-logo-sub">Admin Panel</div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section">Main</div>
+    <a class="nav-item active" onclick="showPanel('home',this)">
+      <span class="icon">🏠</span> Dashboard
+    </a>
+    <a class="nav-item" onclick="showPanel('preview',this)">
+      <span class="icon">💍</span> Wedding Site
+    </a>
+
+    <div class="nav-section" style="margin-top:0.5rem;">Wedding Info</div>
+    <a class="nav-item" onclick="showPanel('events',this)">
+      <span class="icon">📅</span> Events
+    </a>
+    <a class="nav-item" onclick="showPanel('venue',this)">
+      <span class="icon">📍</span> Venue
+    </a>
+    <a class="nav-item" onclick="showPanel('rsvp',this)">
+      <span class="icon">💌</span> RSVP Info
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div>Logged in as <strong style="color:rgba(212,160,23,0.7);">vamsi</strong></div>
+    <a class="logout-btn" href="/logout/">⬅ Logout</a>
+  </div>
+</aside>
+
+<!-- ── Main ── -->
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title" id="topbar-title">Dashboard</span>
+    <span class="topbar-user">Vanteddu Family · Admin</span>
+  </div>
+
+  <div class="content">
+
+    <!-- Home panel -->
+    <div class="panel panel-home active" id="panel-home">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">👰</div>
+          <div class="stat-label">Bride</div>
+          <div class="stat-value" style="font-size:1rem;">{{ w.bride.name }}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🤵</div>
+          <div class="stat-label">Groom</div>
+          <div class="stat-value" style="font-size:1rem;">{{ w.groom.name }}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-label">Wedding Date</div>
+          <div class="stat-value" style="font-size:0.95rem;">{{ w.wedding_date }}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📍</div>
+          <div class="stat-label">City</div>
+          <div class="stat-value" style="font-size:1rem;">{{ w.wedding_city }}</div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>Muhurtham Details</h3>
+        <div class="info-row"><span>Time</span><span>{{ w.muhurtham_time }}</span></div>
+        <div class="info-row"><span>Nakshatra</span><span>{{ w.nakshatra }}</span></div>
+        <div class="info-row"><span>Tithi</span><span>{{ w.tithi }}</span></div>
+        <div class="info-row"><span>Hashtag</span><span>{{ w.hashtag }}</span></div>
+      </div>
+
+      <div class="info-card">
+        <h3>Venue</h3>
+        <div class="info-row"><span>Name</span><span>{{ w.venue.name }}</span></div>
+        <div class="info-row"><span>Address</span><span>{{ w.venue.address }}</span></div>
+        <div class="info-row"><span>City</span><span>{{ w.venue.city }}</span></div>
+        <div class="info-row"><span>Maps</span><span><a href="{{ w.venue.maps_url }}" target="_blank" style="color:#D4A017;">Open Maps</a></span></div>
+      </div>
+
+      <div class="info-card">
+        <h3>RSVP Contacts</h3>
+        <div class="info-row"><span>Phone</span><span>{{ w.rsvp.phone }}</span></div>
+        <div class="info-row"><span>WhatsApp</span><span>{{ w.rsvp.whatsapp }}</span></div>
+        <div class="info-row"><span>Email</span><span>{{ w.rsvp.email }}</span></div>
+      </div>
+    </div>
+
+    <!-- Wedding Site Preview panel -->
+    <div class="panel panel-preview" id="panel-preview" style="height:100%;">
+      <iframe src="/" title="Wedding Site"></iframe>
+    </div>
+
+    <!-- Events panel -->
+    <div class="panel panel-home" id="panel-events">
+      <div class="info-card">
+        <h3>All Events</h3>
+        {% for event in w.events %}
+        <div class="info-row">
+          <span>{{ event.name }}</span>
+          <span>{{ event.date }} · {{ event.time }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Venue panel -->
+    <div class="panel panel-home" id="panel-venue">
+      <div class="info-card">
+        <h3>Venue Details</h3>
+        <div class="info-row"><span>Name</span><span>{{ w.venue.name }}</span></div>
+        <div class="info-row"><span>Address</span><span>{{ w.venue.address }}</span></div>
+        <div class="info-row"><span>City</span><span>{{ w.venue.city }}</span></div>
+        <div class="info-row"><span>State</span><span>{{ w.venue.state }}</span></div>
+        <div class="info-row"><span>Maps Link</span><span><a href="{{ w.venue.maps_url }}" target="_blank" style="color:#D4A017;">Open in Google Maps ↗</a></span></div>
+      </div>
+    </div>
+
+    <!-- RSVP panel -->
+    <div class="panel panel-home" id="panel-rsvp">
+      <div class="info-card">
+        <h3>RSVP Contact Details</h3>
+        <div class="info-row"><span>Phone</span><span>{{ w.rsvp.phone }}</span></div>
+        <div class="info-row"><span>WhatsApp</span><span>{{ w.rsvp.whatsapp }}</span></div>
+        <div class="info-row"><span>Email</span><span>{{ w.rsvp.email }}</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const titles = {home:'Dashboard',preview:'Wedding Site Preview',events:'Events',venue:'Venue',rsvp:'RSVP Info'};
+function showPanel(id, el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  el.classList.add('active');
+  document.getElementById('topbar-title').textContent = titles[id]||id;
+}
+</script>
+</body>
+</html>

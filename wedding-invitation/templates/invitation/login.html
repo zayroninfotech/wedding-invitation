@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Login — Vamsi & Anausha</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,#060E24 0%,#0D1B4B 50%,#060E24 100%);
+    font-family:'Palatino Linotype',Georgia,serif;
+  }
+  .card{
+    width:100%;max-width:420px;padding:2.5rem 2rem;
+    background:linear-gradient(160deg,rgba(92,10,30,0.55),rgba(61,0,16,0.7));
+    border:1.5px solid rgba(212,160,23,0.35);
+    border-radius:16px;
+    box-shadow:0 24px 60px rgba(0,0,0,0.5),inset 0 1px 0 rgba(212,160,23,0.1);
+  }
+  .logo{text-align:center;margin-bottom:1.75rem;}
+  .logo-om{font-size:2rem;color:#D4A017;filter:drop-shadow(0 0 12px rgba(212,160,23,0.6));}
+  .logo-names{font-size:1.4rem;color:#D4A017;letter-spacing:0.1em;margin:0.25rem 0;}
+  .logo-sub{color:rgba(212,160,23,0.4);font-size:0.7rem;letter-spacing:0.4em;}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.4),transparent);margin:1rem 0 1.5rem;}
+  .label{display:block;color:rgba(212,160,23,0.7);font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.4rem;}
+  .input{
+    width:100%;padding:0.7rem 1rem;margin-bottom:1.1rem;
+    background:rgba(255,255,255,0.06);border:1px solid rgba(212,160,23,0.25);
+    border-radius:8px;color:#fff;font-size:0.95rem;font-family:inherit;
+    outline:none;transition:border 0.2s;
+  }
+  .input:focus{border-color:rgba(212,160,23,0.6);}
+  .btn{
+    width:100%;padding:0.8rem;margin-top:0.5rem;
+    background:linear-gradient(90deg,#8B1A35,#D4A017,#8B1A35);
+    background-size:200% 100%;border:none;border-radius:8px;
+    color:#fff;font-size:1rem;font-family:inherit;letter-spacing:0.08em;
+    cursor:pointer;transition:background-position 0.4s;
+  }
+  .btn:hover{background-position:100% 0;}
+  .error{
+    background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.35);
+    color:#fca5a5;border-radius:8px;padding:0.6rem 0.9rem;
+    font-size:0.85rem;margin-bottom:1rem;text-align:center;
+  }
+  .hint{text-align:center;color:rgba(255,255,255,0.2);font-size:0.7rem;margin-top:1.2rem;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="logo-om">ॐ</div>
+    <div class="logo-names">Vamsi ✦ Anausha</div>
+    <div class="logo-sub">ADMIN PORTAL</div>
+  </div>
+  <div class="divider"></div>
+
+  {% if messages %}
+    {% for msg in messages %}
+      <div class="error">{{ msg }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <label class="label">Username</label>
+    <input class="input" type="text" name="username" autocomplete="username" required autofocus>
+    <label class="label">Password</label>
+    <input class="input" type="password" name="password" autocomplete="current-password" required>
+    <button class="btn" type="submit">Sign In</button>
+  </form>
+
+  <p class="hint">Wedding Admin · Vanteddu Family</p>
+</div>
+</body>
+</html>
