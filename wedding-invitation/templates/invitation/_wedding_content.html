@@ -97,7 +97,7 @@ function getCookie(name){let v=null;document.cookie.split(';').forEach(c=>{c=c.t
         <span id="nav-bride-name" style="font-family:'Palatino Linotype',serif;font-size:1.05rem;color:#D4A017;letter-spacing:0.1em;">{{ bride.first_name }}</span>
         <span style="color:#D4A017;font-size:1rem;">ॐ</span>
         {% if is_dashboard %}
-        <button onclick="openNameEdit()" title="Edit names" style="background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.35);border-radius:5px;padding:2px 7px;cursor:pointer;color:#D4A017;font-size:0.75rem;margin-left:4px;">✏</button>
+        <button onclick="openNameEdit()" title="Edit names" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.7rem;margin-left:2px;padding:0;line-height:1;opacity:0.6;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">✏</button>
         {% endif %}
       </div>
       <div style="display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-top:3px;">
