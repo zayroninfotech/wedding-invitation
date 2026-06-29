@@ -3,6 +3,26 @@
 
 {% block content %}
 
+<!-- NAVBAR -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(160deg,#3D0010 0%,#5C0A1E 50%,#3D0010 100%);border-bottom:1px solid rgba(212,160,23,0.4);">
+  <div style="padding:0.55rem 1.5rem;display:flex;align-items:center;justify-content:center;text-align:center;">
+    <div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+        <span style="color:#D4A017;font-size:1rem;">ॐ</span>
+        <span style="font-family:'Palatino Linotype',serif;font-size:1.05rem;color:#D4A017;letter-spacing:0.1em;">{{ groom.first_name }}</span>
+        <span style="color:rgba(212,160,23,0.6);font-size:0.7rem;">◆</span>
+        <span style="font-family:'Palatino Linotype',serif;font-size:1.05rem;color:#D4A017;letter-spacing:0.1em;">{{ bride.first_name }}</span>
+        <span style="color:#D4A017;font-size:1rem;">ॐ</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-top:3px;">
+        <div style="height:1px;width:2.5rem;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.5));"></div>
+        <span style="color:rgba(212,160,23,0.5);font-size:0.5rem;letter-spacing:0.2em;">✦ ✦ ✦</span>
+        <div style="height:1px;width:2.5rem;background:linear-gradient(90deg,rgba(212,160,23,0.5),transparent);"></div>
+      </div>
+    </div>
+  </div>
+</nav>
+
 <!-- ══════════════════════════════════════════════════════════════
      HERO
 ══════════════════════════════════════════════════════════════ -->
