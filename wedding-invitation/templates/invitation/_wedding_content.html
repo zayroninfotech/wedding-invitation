@@ -61,7 +61,33 @@ async function saveNames(){
   } else {btn.textContent='Error';btn.disabled=false;}
 }
 function getCookie(name){let v=null;document.cookie.split(';').forEach(c=>{c=c.trim();if(c.startsWith(name+'='))v=decodeURIComponent(c.slice(name.length+1));});return v;}
+function openOverlayEdit(){
+  document.getElementById('overlay-text-input').value=document.getElementById('overlay-text-display').textContent.trim();
+  document.getElementById('overlay-edit-modal').style.display='flex';
+}
+function closeOverlayEdit(){document.getElementById('overlay-edit-modal').style.display='none';}
+async function saveOverlayText(){
+  const txt=document.getElementById('overlay-text-input').value.trim();
+  const btn=document.getElementById('overlay-save-btn');
+  btn.textContent='Saving…';btn.disabled=true;
+  const res=await fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify({overlay_text:txt})});
+  if(res.ok){document.getElementById('overlay-text-display').textContent=txt;btn.textContent='Saved ✓';setTimeout(()=>{closeOverlayEdit();btn.textContent='Save';btn.disabled=false;},800);}
+  else{btn.textContent='Error';btn.disabled=false;}
+}
 </script>
+
+<!-- Overlay Text Edit Modal -->
+<div id="overlay-edit-modal" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
+  <div style="background:linear-gradient(160deg,#3D0010,#5C0A1E);border:1.5px solid rgba(212,160,23,0.4);border-radius:16px;padding:2rem;width:360px;box-shadow:0 30px 80px rgba(0,0,0,0.6);">
+    <p style="color:#D4A017;font-size:0.95rem;letter-spacing:0.1em;margin-bottom:1.25rem;text-align:center;">✏ Edit Overlay Text</p>
+    <label style="display:block;font-size:0.68rem;color:rgba(212,160,23,0.5);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.35rem;">Text</label>
+    <input id="overlay-text-input" type="text" style="width:100%;padding:0.6rem 0.85rem;border-radius:7px;border:1px solid rgba(212,160,23,0.35);background:rgba(255,255,255,0.07);color:#fff;font-size:0.9rem;margin-bottom:1.25rem;outline:none;">
+    <div style="display:flex;gap:0.75rem;">
+      <button id="overlay-save-btn" onclick="saveOverlayText()" style="flex:1;padding:0.6rem;background:linear-gradient(90deg,#8B1A35,#D4A017);border:none;border-radius:8px;color:#fff;font-size:0.88rem;cursor:pointer;">Save</button>
+      <button onclick="closeOverlayEdit()" style="flex:1;padding:0.6rem;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:0.88rem;cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <!-- Name Edit Modal -->
 <div id="name-edit-modal" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
@@ -107,8 +133,9 @@ function getCookie(name){let v=null;document.cookie.split(';').forEach(c=>{c=c.t
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,27,75,0.55) 0%,rgba(6,14,36,0.65) 100%);pointer-events:none;"></div>
     <!-- Text overlay -->
     <div style="position:absolute;bottom:0;left:0;right:0;padding:1.5rem 1rem 1.25rem;text-align:center;pointer-events:none;background:linear-gradient(0deg,rgba(6,14,36,0.75) 0%,transparent 100%);">
-      <div style="font-family:'Palatino Linotype',Georgia,serif;font-size:1.6rem;color:rgba(255,255,255,0.95);letter-spacing:0.15em;text-shadow:0 2px 16px rgba(0,0,0,0.9);line-height:1.8;display:block;">
-        ॐ &nbsp; శుభ వివాహ వేడుక &nbsp; ॐ
+      <div style="font-family:'Palatino Linotype',Georgia,serif;font-size:1.25rem;color:rgba(255,255,255,0.95);letter-spacing:0.05em;text-shadow:0 2px 16px rgba(0,0,0,0.9);line-height:1.8;display:inline-flex;align-items:center;gap:0.5rem;">
+        <span id="overlay-text-display">{% if overlay_text %}{{ overlay_text }}{% else %}ॐ శుభ వివాహ వేడుక ॐ{% endif %}</span>
+        {% if is_dashboard %}<button onclick="openOverlayEdit()" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.5);font-size:0.75rem;padding:0;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">✏</button>{% endif %}
       </div>
     </div>
   </div>
