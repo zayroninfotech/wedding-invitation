@@ -65,7 +65,7 @@ def dashboard(request):
         'bride_groom_photos': list(zip(w['bride_groom_photos'], w['photo_placeholder_colors']['couple'])),
         'family_photos': list(zip(w['family_photos'], w['photo_placeholder_colors']['family'])),
     }
-    return render(request, 'invitation/dashboard.html', context)
+    return render(request, 'invitation/home.html', context)
 
 
 def home(request):
