@@ -22,7 +22,7 @@ def admin_login(request):
         if verify_user(username, password):
             request.session['admin_logged_in'] = True
             request.session['admin_username'] = username.strip().lower()
-            return redirect('home')
+            return redirect('dashboard')
         messages.error(request, 'Invalid username or password.')
     return render(request, 'invitation/login.html')
 
@@ -38,8 +38,13 @@ def dashboard(request):
     return render(request, 'invitation/dashboard.html', {'w': w})
 
 
-@login_required
 def home(request):
+    if not request.session.get('admin_logged_in'):
+        return redirect('admin_login')
+    return redirect('dashboard')
+
+
+def wedding_preview(request):
     w = WEDDING
 
     quick_links = [
