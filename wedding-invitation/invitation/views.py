@@ -97,6 +97,9 @@ def dashboard(request):
         bride = dict(bride)
         bride_ts = get_setting('bride_photo_ts', '1')
         bride['photo'] = f'/media/photos/bride{bride_ext}?v={bride_ts}'
+    cv_ext = get_setting('couple_video_photo_ext', '')
+    cv_ts = get_setting('couple_video_photo_ts', '1')
+    couple_video_url = f'/media/photos/couple_video{cv_ext}?v={cv_ts}' if cv_ext else ''
     context = {
         'w': w,
         'groom': groom,
@@ -117,6 +120,8 @@ def dashboard(request):
         'wedding_date_iso': w['wedding_date_iso'],
         'bride_groom_photos': list(zip(_gallery_photos('couple', w['bride_groom_photos']), w['photo_placeholder_colors']['couple'])),
         'family_photos': list(zip(_gallery_photos('family', w['family_photos']), w['photo_placeholder_colors']['family'])),
+        'couple_video_url': couple_video_url,
+        'couple_video_ext': cv_ext,
         'is_dashboard': True,
         'admin_username': request.session.get('admin_username', 'admin'),
         'overlay_text': get_setting('overlay_text', 'ॐ శుభ వివాహ వేడుక ॐ'),
