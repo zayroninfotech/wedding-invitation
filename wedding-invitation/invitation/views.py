@@ -70,10 +70,10 @@ def dashboard(request):
         {'href': '#rsvp',    'emoji': '💌',      'label': 'RSVP'},
     ]
     muhurtham_items = [
-        {'icon': '🕐', 'label': 'Muhurtham', 'val': w['muhurtham_time']},
-        {'icon': '⭐', 'label': 'Nakshatra',  'val': w['nakshatra']},
-        {'icon': '🌙', 'label': 'Tithi',      'val': w['tithi']},
-        {'icon': '📍', 'label': 'Venue',      'val': w['venue']['name']},
+        {'icon': '🕐', 'label': 'Muhurtham', 'val': get_setting('hero_muhu_muhurtham', w['muhurtham_time'])},
+        {'icon': '⭐', 'label': 'Nakshatra',  'val': get_setting('hero_muhu_nakshatra', w['nakshatra'])},
+        {'icon': '🌙', 'label': 'Tithi',      'val': get_setting('hero_muhu_tithi', w['tithi'])},
+        {'icon': '📍', 'label': 'Venue',      'val': get_setting('hero_muhu_venue', w['venue']['name'])},
     ]
     groom, bride = apply_name_overrides(w['groom'], w['bride'])
     context = {
@@ -98,6 +98,7 @@ def dashboard(request):
         'hero_city':    get_setting('hero_city', w['wedding_city']),
         'hero_venue':        get_setting('hero_venue', w['venue']['name']),
         'hero_sacred_quote': get_setting('hero_sacred_quote', w['sacred_quote']),
+        'hero_hashtag':      get_setting('hero_hashtag', w['hashtag']),
         'wedding_date_iso':  get_setting('hero_countdown_date', w['wedding_date_iso']),
     }
     return render(request, 'invitation/home.html', context)
@@ -174,7 +175,8 @@ def save_names(request):
         data = json.loads(request.body)
         groom_name = data.get('groom_name', '').strip()
         bride_name = data.get('bride_name', '').strip()
-        for key in ['overlay_text','hero_tagline','hero_invite','hero_date','hero_city','hero_venue','hero_sacred_quote','hero_countdown_date']:
+        for key in ['overlay_text','hero_tagline','hero_invite','hero_date','hero_city','hero_venue','hero_sacred_quote','hero_countdown_date','hero_hashtag',
+                    'hero_muhu_muhurtham','hero_muhu_nakshatra','hero_muhu_tithi','hero_muhu_venue']:
             val = data.get(key, '').strip()
             if val:
                 save_setting(key, val)

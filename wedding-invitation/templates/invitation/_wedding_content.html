@@ -64,6 +64,29 @@ async function saveNames(){
     setTimeout(()=>{closeNameEdit();btn.textContent='Save';btn.disabled=false;},800);
   } else {btn.textContent='Error';btn.disabled=false;}
 }
+function openMuhuEdit(label,elemId,key){
+  document.getElementById('muhu-modal-label').textContent='✏ '+label;
+  document.getElementById('muhu-modal-input').value=document.getElementById(elemId).childNodes[0].textContent.trim();
+  document.getElementById('muhu-modal').dataset.elemId=elemId;
+  document.getElementById('muhu-modal').dataset.key=key;
+  document.getElementById('muhu-modal').style.display='flex';
+}
+function closeMuhuEdit(){document.getElementById('muhu-modal').style.display='none';}
+async function saveMuhuField(){
+  const modal=document.getElementById('muhu-modal');
+  const elemId=modal.dataset.elemId;
+  const key=modal.dataset.key;
+  const val=document.getElementById('muhu-modal-input').value.trim();
+  const btn=document.getElementById('muhu-save-btn');
+  btn.textContent='Saving…';btn.disabled=true;
+  const body={};body[key]=val;
+  const res=await fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify(body)});
+  if(res.ok){
+    const el=document.getElementById(elemId);
+    if(el)el.childNodes[0].textContent=val+' ';
+    btn.textContent='Saved ✓';setTimeout(()=>{closeMuhuEdit();btn.textContent='Save';btn.disabled=false;},700);
+  } else{btn.textContent='Error';btn.disabled=false;}
+}
 async function uploadCoupleVideo(input){
   if(!input.files||!input.files[0])return;
   const file=input.files[0];
@@ -131,6 +154,7 @@ const heroFields={
   city:{id:'hero-city',label:'City',key:'hero_city'},
   venue:{id:'hero-venue',label:'Venue',key:'hero_venue'},
   names:{id:null,label:'Couple Names',names:true},
+  hashtag:{id:'hero-hashtag',label:'Hashtag',key:'hero_hashtag'},
   sacred_quote:{id:'hero-sacred-quote',label:'Sacred Quote',key:'hero_sacred_quote',multiline:true},
   countdown_date:{id:null,label:'Countdown Date (YYYY-MM-DDTHH:MM:SS)',key:'hero_countdown_date',countdown:true},
 };
@@ -202,6 +226,18 @@ async function saveOverlayText(){
   else{btn.textContent='Error';btn.disabled=false;}
 }
 </script>
+
+<!-- Muhurtham Field Edit Modal -->
+<div id="muhu-modal" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
+  <div style="background:linear-gradient(160deg,#3D0010,#5C0A1E);border:1.5px solid rgba(212,160,23,0.4);border-radius:16px;padding:2rem;width:320px;box-shadow:0 30px 80px rgba(0,0,0,0.6);">
+    <p id="muhu-modal-label" style="color:#D4A017;font-size:0.95rem;letter-spacing:0.1em;margin-bottom:1.25rem;text-align:center;">✏ Edit</p>
+    <input id="muhu-modal-input" type="text" style="width:100%;padding:0.6rem 0.85rem;border-radius:7px;border:1px solid rgba(212,160,23,0.35);background:rgba(255,255,255,0.07);color:#fff;font-size:0.9rem;margin-bottom:1.25rem;outline:none;">
+    <div style="display:flex;gap:0.75rem;">
+      <button id="muhu-save-btn" onclick="saveMuhuField()" style="flex:1;padding:0.6rem;background:linear-gradient(90deg,#8B1A35,#D4A017);border:none;border-radius:8px;color:#fff;font-size:0.88rem;cursor:pointer;">Save</button>
+      <button onclick="closeMuhuEdit()" style="flex:1;padding:0.6rem;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:0.88rem;cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <!-- Full Name Edit Modal -->
 <div id="fullname-edit-modal" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
@@ -446,10 +482,13 @@ to celebrate our wedding ceremony.{% endif %}</p>
       <!-- Muhurtham strip -->
       <div style="margin-top:2.5rem;border-radius:1rem;padding:1rem 1.5rem;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem;text-align:center;background:rgba(0,0,0,0.25);border:1px solid rgba(212,160,23,0.25);">
         {% for item in muhurtham_items %}
-        <div style="display:flex;flex-direction:column;align-items:center;min-width:110px;">
+        <div style="display:flex;flex-direction:column;align-items:center;min-width:110px;position:relative;">
           <span style="font-size:1.25rem;margin-bottom:0.25rem;">{{ item.icon }}</span>
           <p style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(212,160,23,0.5);margin-bottom:0.2rem;">{{ item.label }}</p>
-          <p style="color:rgba(255,255,255,0.8);font-size:0.8rem;font-family:Georgia,serif;">{{ item.val }}</p>
+          <p id="muhu-{{ item.label|lower|slugify }}" style="color:rgba(255,255,255,0.8);font-size:0.8rem;font-family:Georgia,serif;display:inline-flex;align-items:center;gap:0.3rem;">
+            {{ item.val }}
+            {% if is_dashboard %}<button onclick="openMuhuEdit('{{ item.label }}','muhu-{{ item.label|lower|slugify }}','hero_muhu_{{ item.label|lower|slugify }}')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.65rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
+          </p>
         </div>
         {% endfor %}
       </div>
@@ -473,8 +512,9 @@ to celebrate our wedding ceremony.{% endif %}</p>
     <!-- Content -->
     <div style=”position:relative;z-index:2;text-align:center;”>
       <div style=”height:1px;width:120px;background:linear-gradient(90deg,transparent,#D4A017,transparent);margin:0 auto 1.25rem;”></div>
-      <p style=”color:#D4A017;font-weight:600;letter-spacing:0.2em;font-size:1.1rem;text-shadow:0 0 10px rgba(212,160,23,0.4);margin-bottom:0.75rem;”>
-        {{ w.hashtag }}
+      <p style=”color:#FFB300;font-weight:700;letter-spacing:0.2em;font-size:1.2rem;text-shadow:0 0 14px rgba(255,179,0,0.6);margin-bottom:0.75rem;display:inline-flex;align-items:center;gap:0.4rem;”>
+        <span id=”hero-hashtag”>{% if hero_hashtag %}{{ hero_hashtag }}{% else %}{{ w.hashtag }}{% endif %}</span>
+        {% if is_dashboard %}<button onclick=”openHeroEdit('hashtag')” style=”background:none;border:none;cursor:pointer;color:rgba(255,179,0,0.5);font-size:0.75rem;padding:0;pointer-events:auto;” title=”Edit”>✏</button>{% endif %}
       </p>
 
       <!-- Animated SCROLL TO EXPLORE -->
