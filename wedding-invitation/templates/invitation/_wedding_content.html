@@ -126,6 +126,8 @@ async function uploadCoupleVideo(input){
 }
 async function uploadPhoto(input, role){
   if(!input.files||!input.files[0])return;
+  const lbl=input.closest('label');
+  if(lbl)lbl.textContent='⏳';
   const fd=new FormData();
   fd.append('photo',input.files[0]);
   fd.append('role',role);
@@ -134,8 +136,15 @@ async function uploadPhoto(input, role){
   const data=await res.json();
   if(data.ok){
     const img=document.getElementById('photo-'+role);
-    if(img){img.style.display='';img.src=data.url+'?t='+Date.now();}
-  } else{alert('Upload failed');}
+    if(img){
+      img.style.display='block';
+      img.src=data.url+'?t='+Date.now();
+      const fallback=img.nextElementSibling;
+      if(fallback&&fallback.style)fallback.style.display='none';
+    }
+    if(lbl)lbl.textContent='✓';
+    setTimeout(()=>location.reload(),800);
+  } else{alert('Upload failed');if(lbl)lbl.textContent='📷';}
 }
 function openNameFullEdit(role){
   document.getElementById('fullname-edit-role').value=role;

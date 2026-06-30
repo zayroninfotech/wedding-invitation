@@ -14,7 +14,7 @@
     {% if is_dashboard %}
     <label title="Change photo" style="position:absolute;bottom:8px;right:8px;background:rgba(6,14,36,0.75);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;">
       📷
-      <input type="file" accept="image/*" style="display:none;" onchange="uploadPhoto(this,'{{ role|lower }}')">
+      <input type="file" accept="image/*" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;" onchange="uploadPhoto(this,'{{ role|lower }}')">
     </label>
     {% endif %}
   </div>
