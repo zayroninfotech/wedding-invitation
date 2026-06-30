@@ -464,15 +464,20 @@ to celebrate our wedding ceremony.{% endif %}</p>
           </div>
 
           <!-- Date & time -->
-          <p style="font-size:clamp(0.9rem,1.8vw,1.1rem);color:rgba(255,255,255,0.9);font-family:Georgia,serif;margin-bottom:0.35rem;display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;">
-            <span id="hero-date">{% if hero_date %}{{ hero_date }}{% else %}{{ w.wedding_date }}{% endif %}</span>&nbsp;&bull;&nbsp;<span id="hero-city">{% if hero_city %}{{ hero_city }}{% else %}{{ w.wedding_city }}{% endif %}</span>
-            {% if is_dashboard %}<button onclick="openHeroEdit('date')" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:0.7rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
-          </p>
+          <div style="display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;margin-bottom:0.35rem;flex-wrap:wrap;">
+            <p style="font-size:clamp(0.9rem,1.8vw,1.1rem);color:rgba(255,255,255,0.9);font-family:Georgia,serif;margin:0;">
+              <span id="hero-date">{% if hero_date %}{{ hero_date }}{% else %}{{ w.wedding_date }}{% endif %}</span>&nbsp;&bull;&nbsp;<span id="hero-city">{% if hero_city %}{{ hero_city }}{% else %}{{ w.wedding_city }}{% endif %}</span>
+            </p>
+            {% if is_dashboard %}
+            <button onclick="openHeroEdit('date')" style="padding:0.15rem 0.5rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);border-radius:0.4rem;cursor:pointer;color:rgba(255,255,255,0.8);font-size:0.65rem;pointer-events:auto;" title="Edit date">✏ Date</button>
+            <button onclick="openHeroEdit('city')" style="padding:0.15rem 0.5rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);border-radius:0.4rem;cursor:pointer;color:rgba(255,255,255,0.8);font-size:0.65rem;pointer-events:auto;" title="Edit city">✏ City</button>
+            {% endif %}
+          </div>
 
           <!-- Venue with pin -->
           <p style="font-size:0.9rem;color:rgba(212,160,23,0.85);margin-bottom:1.5rem;display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;">
             📍 <span id="hero-venue">{% if hero_venue %}{{ hero_venue }}{% else %}{{ venue.name }}{% endif %}</span>
-            {% if is_dashboard %}<button onclick="openHeroEdit('venue')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.7rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
+            {% if is_dashboard %}<button onclick="openHeroEdit('venue')" style="padding:0.15rem 0.5rem;background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.4);border-radius:0.4rem;cursor:pointer;color:rgba(212,160,23,0.9);font-size:0.65rem;pointer-events:auto;" title="Edit venue">✏ Venue</button>{% endif %}
           </p>
 
           <div style="height:1px;width:75%;margin:0 auto 1.5rem;background:linear-gradient(90deg,transparent,#D4A017,transparent);"></div>
