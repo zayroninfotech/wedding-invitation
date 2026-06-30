@@ -82,7 +82,14 @@ def dashboard(request):
         'bride': bride,
         'venue': w['venue'],
         'events': w['events'],
-        'youtube': w['youtube'],
+        'youtube': {
+            **w['youtube'],
+            'video_id':   get_setting('yt_video_id',    w['youtube']['video_id']),
+            'embed_url':  get_setting('yt_embed_url',   w['youtube']['embed_url']),
+            'channel_url':get_setting('yt_channel_url', w['youtube']['channel_url']),
+            'channel_name':get_setting('yt_channel_name',w['youtube']['channel_name']),
+            'live_date':  get_setting('yt_live_date',   w['youtube']['live_date']),
+        },
         'rsvp': w['rsvp'],
         'quick_links': quick_links,
         'muhurtham_items': muhurtham_items,
@@ -178,7 +185,8 @@ def save_names(request):
         for key in ['overlay_text','hero_tagline','hero_invite','hero_date','hero_city','hero_venue','hero_sacred_quote','hero_countdown_date','hero_hashtag',
                     'hero_muhu_muhurtham','hero_muhu_nakshatra','hero_muhu_tithi','hero_muhu_venue',
                     'fam_groom_name','fam_groom_father','fam_groom_mother','fam_groom_city',
-                    'fam_bride_name','fam_bride_father','fam_bride_mother','fam_bride_city']:
+                    'fam_bride_name','fam_bride_father','fam_bride_mother','fam_bride_city',
+                    'yt_video_id','yt_embed_url','yt_channel_url','yt_channel_name','yt_live_date']:
             val = data.get(key, '').strip()
             if val:
                 save_setting(key, val)
