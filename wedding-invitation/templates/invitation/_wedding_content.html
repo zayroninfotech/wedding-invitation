@@ -804,53 +804,6 @@ to celebrate our wedding ceremony.{% endif %}</p>
 
 </section>
 
-
-
-    <!-- Live badge + meta -->
-    <div style=”text-align:center;”>
-      <div style=”display:inline-flex;align-items:center;gap:0.5rem;background:#dc2626;color:#fff;font-size:0.75rem;font-weight:700;padding:0.45rem 1rem;border-radius:2rem;margin-bottom:0.85rem;”>
-        <span style=”width:7px;height:7px;background:#fff;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;”></span>
-        LIVE &mdash; {{ w.wedding_date }}
-      </div>
-      <br>
-      <p style=”color:rgba(147,197,253,0.65);font-size:0.875rem;margin-bottom:1.25rem;display:inline;”>
-        📅 Going live: <strong id=”live-date-text” style=”color:#FFB300;”>{{ youtube.live_date }}</strong>
-        {% if is_dashboard %}<button onclick=”openMuhuEdit('Live Date','live-date-text','yt_live_date')” style=”background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.7rem;padding:0;margin-left:0.3rem;vertical-align:middle;”>✏</button>{% endif %}
-      </p>
-      <br><br>
-      <a id=”live-channel-link” href=”{{ youtube.channel_url }}” target=”_blank” rel=”noopener noreferrer”
-         style=”display:inline-block;padding:0.65rem 1.75rem;background:linear-gradient(135deg,#D4A017,#B8860B);color:#fff;border-radius:2rem;font-size:0.9rem;font-weight:600;text-decoration:none;letter-spacing:0.04em;”>
-        ▶ Watch on YouTube — <span id=”live-channel-name”>{{ youtube.channel_name }}</span>
-      </a>
-      {% if is_dashboard %}
-      <br><button onclick=”openMuhuEdit('Channel Name','live-channel-name','yt_channel_name')” style=”background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.25);font-size:0.7rem;margin-top:0.5rem;”>✏ Edit channel name</button>
-      {% endif %}
-    </div>
-
-  </div>
-</section>
-{% if is_dashboard %}
-<script>
-function saveLiveUrl(){
-  const raw=document.getElementById('live-url-input').value.trim();
-  if(!raw)return;
-  let vid=raw;
-  const m=raw.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|live\/))([A-Za-z0-9_-]{11})/);
-  if(m)vid=m[1];
-  document.getElementById('live-iframe').src='https://www.youtube.com/embed/'+vid;
-  const body={yt_video_id:vid,yt_embed_url:'https://www.youtube.com/embed/'+vid,yt_channel_url:'https://www.youtube.com/live/'+vid};
-  fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify(body)})
-    .then(r=>r.json()).then(d=>{
-      const btn=document.querySelector('[onclick=”saveLiveUrl()”]');
-      btn.textContent=d.ok?'Saved ✓':'Error';
-      setTimeout(()=>{btn.textContent='Update Link';},1400);
-    });
-}
-</script>
-{% endif %}
-{% endif %}
-
-
 <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      RSVP
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
