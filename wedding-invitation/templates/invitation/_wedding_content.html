@@ -165,6 +165,28 @@ async function saveNameFull(){
     btn.textContent='Saved ✓';setTimeout(()=>{closeNameFullEdit();btn.textContent='Save';btn.disabled=false;},700);
   } else{btn.textContent='Error';btn.disabled=false;}
 }
+async function uploadGalleryPhoto(input,type,idx){
+  if(!input.files||!input.files[0])return;
+  const label=input.closest('label');
+  const prevText=label?label.childNodes[0].textContent:'';
+  if(label)label.childNodes[0].textContent='⏳';
+  const fd=new FormData();
+  fd.append('photo',input.files[0]);
+  fd.append('role','gallery_'+type+'_'+idx);
+  fd.append('csrfmiddlewaretoken',getCookie('csrftoken'));
+  const res=await fetch('/upload-photo/',{method:'POST',body:fd});
+  const data=await res.json();
+  if(data.ok){
+    // update first-row img by id
+    const img=document.getElementById('gal-'+type+'-'+idx);
+    if(img){img.src=data.url+'?t='+Date.now();img.style.display='block';}
+    if(label)label.childNodes[0].textContent='✓';
+    setTimeout(()=>{if(label)label.childNodes[0].textContent='📷';},1500);
+  } else {
+    if(label)label.childNodes[0].textContent='❌';
+    setTimeout(()=>{if(label)label.childNodes[0].textContent='📷';},1500);
+  }
+}
 function syncHashtag(groomFirst,brideFirst){
   const el=document.getElementById('hero-hashtag');
   if(!el)return;
@@ -745,57 +767,70 @@ to celebrate our wedding ceremony.{% endif %}</p>
   </div>
 
   <!-- Row 1 "“ Couple -->
-  <div style="margin-bottom:0.5rem;">
-    <p style="color:rgba(212,160,23,0.5);font-size:0.7rem;text-align:center;text-transform:uppercase;letter-spacing:0.25em;margin-bottom:0.75rem;">✦ Bride &amp; Groom ✦</p>
-    <div class="overflow-hidden scroll-left" style="padding:1rem 0;">
-      <div class="gallery-track">
+  <!-- Row 1 – Bride & Groom -->
+  <div style=”margin-bottom:0.5rem;”>
+    <p style=”color:rgba(212,160,23,0.5);font-size:0.7rem;text-align:center;text-transform:uppercase;letter-spacing:0.25em;margin-bottom:0.75rem;”>✦ Bride &amp; Groom ✦</p>
+    <div class=”overflow-hidden scroll-left” style=”padding:1rem 0;”>
+      <div class=”gallery-track”>
         {% for photo, color in bride_groom_photos %}
-        <div class="photo-frame" style="flex-shrink:0;width:14rem;height:18rem;border-radius:1rem;overflow:hidden;background:{{ color }};border:2px solid rgba(212,160,23,0.35);box-shadow:0 8px 32px rgba(0,0,0,0.3);position:relative;">
-          <img src="{{ photo }}" alt="Couple photo" data-fallback-color="{{ color }}"
-               style="width:100%;height:100%;object-fit:cover;display:block;"
-               onerror="this.style.display='none'">
-          <div style="position:absolute;inset:0;border-radius:1rem;box-shadow:inset 0 0 20px rgba(0,0,0,0.2);pointer-events:none;"></div>
-          <div style="position:absolute;bottom:0;left:0;right:0;height:4rem;background:linear-gradient(transparent,rgba(0,0,0,0.5));border-radius:0 0 1rem 1rem;"></div>
-          <div style="position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;color:rgba(212,160,23,0.7);font-size:0.75rem;">✦</div>
+        <div class=”photo-frame” style=”flex-shrink:0;width:14rem;height:18rem;border-radius:1rem;overflow:hidden;background:{{ color }};border:2px solid rgba(212,160,23,0.35);box-shadow:0 8px 32px rgba(0,0,0,0.3);position:relative;”>
+          <img id=”gal-couple-{{ forloop.counter }}” src=”{{ photo }}” alt=”Couple photo”
+               style=”width:100%;height:100%;object-fit:cover;display:block;”
+               onerror=”this.style.display='none'”>
+          <div style=”position:absolute;inset:0;border-radius:1rem;box-shadow:inset 0 0 20px rgba(0,0,0,0.2);pointer-events:none;”></div>
+          <div style=”position:absolute;bottom:0;left:0;right:0;height:4rem;background:linear-gradient(transparent,rgba(0,0,0,0.5));border-radius:0 0 1rem 1rem;pointer-events:none;”></div>
+          {% if is_dashboard %}
+          <label style=”position:absolute;bottom:8px;right:8px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.8rem;pointer-events:auto;z-index:10;” title=”Upload photo {{ forloop.counter }}”>
+            📷<input type=”file” accept=”image/*” style=”display:none;” onchange=”uploadGalleryPhoto(this,'couple',{{ forloop.counter }})”>
+          </label>
+          {% else %}
+          <div style=”position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;color:rgba(212,160,23,0.7);font-size:0.75rem;pointer-events:none;”>✦</div>
+          {% endif %}
         </div>
         {% endfor %}
         {% for photo, color in bride_groom_photos %}
-        <div class="photo-frame" style="flex-shrink:0;width:14rem;height:18rem;border-radius:1rem;overflow:hidden;background:{{ color }};border:2px solid rgba(212,160,23,0.35);box-shadow:0 8px 32px rgba(0,0,0,0.3);position:relative;">
-          <img src="{{ photo }}" alt="Couple photo" data-fallback-color="{{ color }}"
-               style="width:100%;height:100%;object-fit:cover;display:block;"
-               onerror="this.style.display='none'">
-          <div style="position:absolute;inset:0;border-radius:1rem;box-shadow:inset 0 0 20px rgba(0,0,0,0.2);pointer-events:none;"></div>
-          <div style="position:absolute;bottom:0;left:0;right:0;height:4rem;background:linear-gradient(transparent,rgba(0,0,0,0.5));border-radius:0 0 1rem 1rem;"></div>
-          <div style="position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;color:rgba(212,160,23,0.7);font-size:0.75rem;">✦</div>
+        <div class=”photo-frame” style=”flex-shrink:0;width:14rem;height:18rem;border-radius:1rem;overflow:hidden;background:{{ color }};border:2px solid rgba(212,160,23,0.35);box-shadow:0 8px 32px rgba(0,0,0,0.3);position:relative;”>
+          <img src=”{{ photo }}” alt=”Couple photo”
+               style=”width:100%;height:100%;object-fit:cover;display:block;”
+               onerror=”this.style.display='none'”>
+          <div style=”position:absolute;inset:0;border-radius:1rem;box-shadow:inset 0 0 20px rgba(0,0,0,0.2);pointer-events:none;”></div>
+          <div style=”position:absolute;bottom:0;left:0;right:0;height:4rem;background:linear-gradient(transparent,rgba(0,0,0,0.5));border-radius:0 0 1rem 1rem;”></div>
+          <div style=”position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;color:rgba(212,160,23,0.7);font-size:0.75rem;”>✦</div>
         </div>
         {% endfor %}
       </div>
     </div>
   </div>
 
-  <!-- Row 2 "“ Family -->
-  <div style="margin-top:1rem;">
-    <p style="color:rgba(212,160,23,0.5);font-size:0.7rem;text-align:center;text-transform:uppercase;letter-spacing:0.25em;margin-bottom:0.75rem;">✦ Family ✦</p>
-    <div class="overflow-hidden scroll-right" style="padding:1rem 0;">
-      <div class="gallery-track">
+  <!-- Row 2 – Family -->
+  <div style=”margin-top:1rem;”>
+    <p style=”color:rgba(212,160,23,0.5);font-size:0.7rem;text-align:center;text-transform:uppercase;letter-spacing:0.25em;margin-bottom:0.75rem;”>✦ Family ✦</p>
+    <div class=”overflow-hidden scroll-right” style=”padding:1rem 0;”>
+      <div class=”gallery-track”>
         {% for photo, color in family_photos %}
-        <div class="photo-frame" style="flex-shrink:0;width:14rem;height:18rem;border-radius:1rem;overflow:hidden;background:{{ color }};border:2px solid rgba(212,160,23,0.35);box-shadow:0 8px 32px rgba(0,0,0,0.3);position:relative;">
-          <img src="{{ photo }}" alt="Family photo" data-fallback-color="{{ color }}"
-               style="width:100%;height:100%;object-fit:cover;display:block;"
-               onerror="this.style.display='none'">
-          <div style="position:absolute;inset:0;border-radius:1rem;box-shadow:inset 0 0 20px rgba(0,0,0,0.2);pointer-events:none;"></div>
-          <div style="position:absolute;bottom:0;left:0;right:0;height:4rem;background:linear-gradient(transparent,rgba(0,0,0,0.5));border-radius:0 0 1rem 1rem;"></div>
-          <div style="position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;color:rgba(212,160,23,0.7);font-size:0.75rem;">✦</div>
+        <div class=”photo-frame” style=”flex-shrink:0;width:14rem;height:18rem;border-radius:1rem;overflow:hidden;background:{{ color }};border:2px solid rgba(212,160,23,0.35);box-shadow:0 8px 32px rgba(0,0,0,0.3);position:relative;”>
+          <img id=”gal-family-{{ forloop.counter }}” src=”{{ photo }}” alt=”Family photo”
+               style=”width:100%;height:100%;object-fit:cover;display:block;”
+               onerror=”this.style.display='none'”>
+          <div style=”position:absolute;inset:0;border-radius:1rem;box-shadow:inset 0 0 20px rgba(0,0,0,0.2);pointer-events:none;”></div>
+          <div style=”position:absolute;bottom:0;left:0;right:0;height:4rem;background:linear-gradient(transparent,rgba(0,0,0,0.5));border-radius:0 0 1rem 1rem;pointer-events:none;”></div>
+          {% if is_dashboard %}
+          <label style=”position:absolute;bottom:8px;right:8px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.8rem;pointer-events:auto;z-index:10;” title=”Upload photo {{ forloop.counter }}”>
+            📷<input type=”file” accept=”image/*” style=”display:none;” onchange=”uploadGalleryPhoto(this,'family',{{ forloop.counter }})”>
+          </label>
+          {% else %}
+          <div style=”position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;color:rgba(212,160,23,0.7);font-size:0.75rem;pointer-events:none;”>✦</div>
+          {% endif %}
         </div>
         {% endfor %}
         {% for photo, color in family_photos %}
-        <div class="photo-frame" style="flex-shrink:0;width:14rem;height:18rem;border-radius:1rem;overflow:hidden;background:{{ color }};border:2px solid rgba(212,160,23,0.35);box-shadow:0 8px 32px rgba(0,0,0,0.3);position:relative;">
-          <img src="{{ photo }}" alt="Family photo" data-fallback-color="{{ color }}"
-               style="width:100%;height:100%;object-fit:cover;display:block;"
-               onerror="this.style.display='none'">
-          <div style="position:absolute;inset:0;border-radius:1rem;box-shadow:inset 0 0 20px rgba(0,0,0,0.2);pointer-events:none;"></div>
-          <div style="position:absolute;bottom:0;left:0;right:0;height:4rem;background:linear-gradient(transparent,rgba(0,0,0,0.5));border-radius:0 0 1rem 1rem;"></div>
-          <div style="position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;color:rgba(212,160,23,0.7);font-size:0.75rem;">✦</div>
+        <div class=”photo-frame” style=”flex-shrink:0;width:14rem;height:18rem;border-radius:1rem;overflow:hidden;background:{{ color }};border:2px solid rgba(212,160,23,0.35);box-shadow:0 8px 32px rgba(0,0,0,0.3);position:relative;”>
+          <img src=”{{ photo }}” alt=”Family photo”
+               style=”width:100%;height:100%;object-fit:cover;display:block;”
+               onerror=”this.style.display='none'”>
+          <div style=”position:absolute;inset:0;border-radius:1rem;box-shadow:inset 0 0 20px rgba(0,0,0,0.2);pointer-events:none;”></div>
+          <div style=”position:absolute;bottom:0;left:0;right:0;height:4rem;background:linear-gradient(transparent,rgba(0,0,0,0.5));border-radius:0 0 1rem 1rem;”></div>
+          <div style=”position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;color:rgba(212,160,23,0.7);font-size:0.75rem;”>✦</div>
         </div>
         {% endfor %}
       </div>
