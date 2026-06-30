@@ -96,7 +96,9 @@ def dashboard(request):
         'hero_invite':  get_setting('hero_invite', "Together with our families,\nwe request the honour of your presence\nto celebrate our wedding ceremony."),
         'hero_date':    get_setting('hero_date', w['wedding_date']),
         'hero_city':    get_setting('hero_city', w['wedding_city']),
-        'hero_venue':   get_setting('hero_venue', w['venue']['name']),
+        'hero_venue':        get_setting('hero_venue', w['venue']['name']),
+        'hero_sacred_quote': get_setting('hero_sacred_quote', w['sacred_quote']),
+        'wedding_date_iso':  get_setting('hero_countdown_date', w['wedding_date_iso']),
     }
     return render(request, 'invitation/home.html', context)
 
@@ -172,7 +174,7 @@ def save_names(request):
         data = json.loads(request.body)
         groom_name = data.get('groom_name', '').strip()
         bride_name = data.get('bride_name', '').strip()
-        for key in ['overlay_text','hero_tagline','hero_invite','hero_date','hero_city','hero_venue']:
+        for key in ['overlay_text','hero_tagline','hero_invite','hero_date','hero_city','hero_venue','hero_sacred_quote','hero_countdown_date']:
             val = data.get(key, '').strip()
             if val:
                 save_setting(key, val)

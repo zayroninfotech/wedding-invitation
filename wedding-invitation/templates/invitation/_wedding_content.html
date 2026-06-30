@@ -131,6 +131,8 @@ const heroFields={
   city:{id:'hero-city',label:'City',key:'hero_city'},
   venue:{id:'hero-venue',label:'Venue',key:'hero_venue'},
   names:{id:null,label:'Couple Names',names:true},
+  sacred_quote:{id:'hero-sacred-quote',label:'Sacred Quote',key:'hero_sacred_quote',multiline:true},
+  countdown_date:{id:null,label:'Countdown Date (YYYY-MM-DDTHH:MM:SS)',key:'hero_countdown_date',countdown:true},
 };
 function openHeroEdit(field){
   const f=heroFields[field];
@@ -139,7 +141,12 @@ function openHeroEdit(field){
   const nm=document.getElementById('hero-names-inputs');
   document.getElementById('hero-edit-label').textContent='✏ '+f.label;
   inp.style.display='none';ta.style.display='none';nm.style.display='none';
-  if(f.names){
+  if(f.countdown){
+    ta.style.display='none';nm.style.display='none';inp.style.display='block';
+    const el=document.getElementById('countdown');
+    inp.value=el?el.dataset.target:'';
+    inp.placeholder='YYYY-MM-DDTHH:MM:SS e.g. 2026-08-21T11:25:00';
+  } else if(f.names){
     nm.style.display='block';
     document.getElementById('hero-groom-input').value=document.getElementById('hero-groom-name').textContent.trim();
     document.getElementById('hero-bride-input').value=document.getElementById('hero-bride-name').textContent.trim();
@@ -156,7 +163,16 @@ async function saveHeroField(){
   const btn=document.getElementById('hero-save-btn');
   btn.textContent='Saving…';btn.disabled=true;
   let body={};
-  if(f.names){
+  if(f.countdown){
+    const val=document.getElementById('hero-edit-input').value.trim();
+    body={hero_countdown_date:val};
+    const res=await fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify(body)});
+    if(res.ok){
+      const el=document.getElementById('countdown');
+      if(el){el.dataset.target=val;}
+      btn.textContent='Saved ✓';setTimeout(()=>{closeHeroEdit();btn.textContent='Save';btn.disabled=false;},700);
+    } else{btn.textContent='Error';btn.disabled=false;}
+  } else if(f.names){
     const g=document.getElementById('hero-groom-input').value.trim();
     const b=document.getElementById('hero-bride-input').value.trim();
     body={groom_name:g,bride_name:b};
@@ -388,9 +404,12 @@ to celebrate our wedding ceremony.{% endif %}</p>
           </div>
 
           <!-- Sacred quote -->
-          <p style="font-size:0.85rem;font-style:italic;color:rgba(255,255,255,0.6);font-family:Georgia,serif;max-width:28rem;margin:0 auto 1.5rem;line-height:1.6;padding:0 1rem;">
-            {{ w.sacred_quote }}
-          </p>
+          <div style="position:relative;display:inline-block;max-width:28rem;margin:0 auto 1.5rem;padding:0 1rem;">
+            <p id="hero-sacred-quote" style="font-size:0.85rem;font-style:italic;color:rgba(255,255,255,0.6);font-family:Georgia,serif;line-height:1.6;">
+              {% if hero_sacred_quote %}{{ hero_sacred_quote }}{% else %}{{ w.sacred_quote }}{% endif %}
+            </p>
+            {% if is_dashboard %}<button onclick="openHeroEdit('sacred_quote')" style="position:absolute;top:-2px;right:0;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.35);font-size:0.7rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
+          </div>
 
           <!-- Mobile photos row -->
           <div class="mobile-only" style="justify-content:center;gap:1.5rem;margin-bottom:1.5rem;">
@@ -400,8 +419,9 @@ to celebrate our wedding ceremony.{% endif %}</p>
 
           <!-- Countdown -->
           <div style="margin-bottom:1.5rem;">
-            <p style="font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,160,23,0.55);margin-bottom:0.75rem;">
+            <p style="font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,160,23,0.55);margin-bottom:0.75rem;display:inline-flex;align-items:center;gap:0.4rem;">
               ✦ Counting down to the big day ✦
+              {% if is_dashboard %}<button onclick="openHeroEdit('countdown_date')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.7rem;padding:0;pointer-events:auto;" title="Edit date">✏</button>{% endif %}
             </p>
             <div id="countdown" data-target="{{ wedding_date_iso }}" style="display:flex;align-items:flex-end;gap:0.75rem;justify-content:center;">
               <div class="countdown-box"><span class="num" id="cd-days">00</span><span class="lbl">Days</span></div>
