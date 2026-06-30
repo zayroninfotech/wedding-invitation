@@ -29,41 +29,49 @@ body {
 
 /* ── Gold divider ── */
 .gold-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  width: 60%;
-  margin: 1rem auto;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+  margin: 2rem auto;
+  width: 80%;
 }
 
 /* ── Mandala border ── */
 .mandala-border {
-  height: 2px;
-  background: linear-gradient(90deg,
-    transparent 0%, var(--gold) 20%,
-    var(--gold-light) 50%, var(--gold) 80%, transparent 100%);
   position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--gold);
+  letter-spacing: 4px;
+  padding: 6px 0;
+  opacity: 0.85;
 }
 .mandala-border::before {
-  content: '✦ ॐ ✦';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--gold);
-  font-size: 0.75rem;
-  letter-spacing: 0.5em;
-  background: inherit;
-  padding: 0 1rem;
-  white-space: nowrap;
+  content: '✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦';
+  display: block;
+}
+.mandala-border::after {
+  content: '✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦ ❋ ✿ ❋ ✦';
+  display: block;
 }
 
 /* ── Section base classes ── */
-.dark-section  { background: linear-gradient(160deg, #07122A 0%, var(--navy-mid) 100%); }
-.pattern-bg    {
-  background: #f8f3ea;
+.dark-section {
+  background: linear-gradient(160deg, #0D1B4B 0%, #0A1628 60%, #1A3A8F 100%);
+}
+.pattern-bg {
+  background: linear-gradient(160deg, #E8EEFF 0%, #D0D8FF 50%, #E0E8FF 100%);
+  position: relative;
+}
+.pattern-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background-image:
-    radial-gradient(circle at 20% 20%, rgba(212,160,23,0.06) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(13,27,75,0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 20%, rgba(26,58,143,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(13,27,75,0.06) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 /* ── Button ── */
@@ -83,27 +91,45 @@ body {
 
 /* ── Event card ── */
 .event-card {
-  background: #fff;
-  border: 1px solid rgba(212,160,23,0.3);
+  background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(232,238,255,0.95));
+  border: 1px solid rgba(212,160,23,0.45);
   border-radius: 1rem;
-  transition: transform 0.25s, box-shadow 0.25s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.event-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
 }
 .event-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(13,27,75,0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(13,27,75,0.2), 0 0 0 1px rgba(212,160,23,0.3);
 }
 
-/* ── Section title underline ── */
+/* ── Section title ── */
 .section-title { position: relative; display: inline-block; }
-.section-title::after {
-  content: '';
-  display: block;
-  height: 3px;
-  width: 60%;
-  margin: 0.4rem auto 0;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  border-radius: 2px;
+.section-title::before,
+.section-title::after { content: ' ✦ '; color: var(--gold); }
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0D1B4B; }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ── Star twinkling ── */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50%       { opacity: 1; }
 }
+.star { animation: twinkle 3s ease-in-out infinite; }
+.star:nth-child(2) { animation-delay: 0.5s; }
+.star:nth-child(3) { animation-delay: 1s; }
+.star:nth-child(4) { animation-delay: 1.5s; }
+.star:nth-child(5) { animation-delay: 2s; }
 
 /* ── Gallery scroll track ── */
 .gallery-track {
