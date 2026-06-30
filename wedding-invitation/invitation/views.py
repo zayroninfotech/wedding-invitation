@@ -90,11 +90,13 @@ def dashboard(request):
     groom_ext = get_setting('groom_photo_ext', '')
     if groom_ext:
         groom = dict(groom)
-        groom['photo'] = f'/media/photos/groom{groom_ext}'
+        groom_ts = get_setting('groom_photo_ts', '1')
+        groom['photo'] = f'/media/photos/groom{groom_ext}?v={groom_ts}'
     bride_ext = get_setting('bride_photo_ext', '')
     if bride_ext:
         bride = dict(bride)
-        bride['photo'] = f'/media/photos/bride{bride_ext}'
+        bride_ts = get_setting('bride_photo_ts', '1')
+        bride['photo'] = f'/media/photos/bride{bride_ext}?v={bride_ts}'
     context = {
         'w': w,
         'groom': groom,
@@ -234,7 +236,10 @@ def upload_photo(request):
         with open(save_path, 'wb') as dest:
             for chunk in f.chunks():
                 dest.write(chunk)
-        url = f'/media/photos/{role}{ext}'
+        import time
+        ts = str(int(time.time()))
+        url = f'/media/photos/{role}{ext}?v={ts}'
         save_setting(f'{role}_photo_ext', ext)
+        save_setting(f'{role}_photo_ts', ts)
         return HttpResponse(f'{{"ok":true,"url":"{url}"}}', content_type='application/json')
     return HttpResponse('{"ok":false}', content_type='application/json', status=400)
