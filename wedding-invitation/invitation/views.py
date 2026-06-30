@@ -1,5 +1,6 @@
 import io
 import json
+import os
 import qrcode
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -180,4 +181,25 @@ def save_names(request):
         if bride_name:
             save_setting('bride_display_name', bride_name)
         return HttpResponse('{"ok":true}', content_type='application/json')
+    return HttpResponse('{"ok":false}', content_type='application/json', status=400)
+
+
+@login_required
+def upload_photo(request):
+    if request.method == 'POST':
+        role = request.POST.get('role', '').strip().lower()
+        if role not in ('groom', 'bride'):
+            return HttpResponse('{"ok":false,"error":"invalid role"}', content_type='application/json', status=400)
+        f = request.FILES.get('photo')
+        if not f:
+            return HttpResponse('{"ok":false,"error":"no file"}', content_type='application/json', status=400)
+        ext = os.path.splitext(f.name)[1].lower() or '.jpg'
+        save_path = os.path.join('media', 'photos', f'{role}{ext}')
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        with open(save_path, 'wb') as dest:
+            for chunk in f.chunks():
+                dest.write(chunk)
+        url = f'/media/photos/{role}{ext}'
+        save_setting(f'{role}_photo_ext', ext)
+        return HttpResponse(f'{{"ok":true,"url":"{url}"}}', content_type='application/json')
     return HttpResponse('{"ok":false}', content_type='application/json', status=400)
