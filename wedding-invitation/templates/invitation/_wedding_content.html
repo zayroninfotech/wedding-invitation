@@ -809,54 +809,62 @@ to celebrate our wedding ceremony.{% endif %}</p>
      YOUTUBE LIVE
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 {% if youtube.enabled %}
-<section id=”live” style=”padding:5rem 1rem;background:linear-gradient(160deg,#07122A 0%,#0D1B4B 100%);position:relative;”>
-  <div style=”position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,rgba(220,38,38,0.06) 0%,transparent 65%);”></div>
-  <div style=”max-width:52rem;margin:0 auto;text-align:center;position:relative;z-index:1;”>
-    <p style=”color:rgba(212,160,23,0.7);font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.5rem;”>Don't Miss It</p>
-    <h2 class=”section-title” style=”font-family:'Palatino Linotype',serif;font-size:clamp(1.6rem,3vw,2.5rem);color:#fff;margin-bottom:1rem;”>✦ Live Streaming ✦</h2>
-    <p style=”color:rgba(147,197,253,0.6);font-size:0.9rem;margin-bottom:2rem;max-width:32rem;margin-left:auto;margin-right:auto;line-height:1.7;”>
-      Can&rsquo;t be here in person? Watch the sacred ceremony live on YouTube. Join us from anywhere in the world.
-    </p>
+<section id=”live” style=”padding:5rem 1rem;background:linear-gradient(160deg,#07122A 0%,#0D1B4B 100%);”>
+  <div style=”max-width:820px;margin:0 auto;”>
 
-    <!-- Embed -->
-    <div id=”live-player-wrap” style=”position:relative;padding-top:56.25%;border-radius:1rem;overflow:hidden;margin-bottom:1.5rem;box-shadow:0 0 0 3px rgba(212,160,23,0.35),0 20px 60px rgba(0,0,0,0.5);”>
-      <iframe id=”live-iframe”
-        src=”https://www.youtube.com/embed/{{ youtube.video_id }}”
-        title=”Wedding Live Stream”
-        allow=”accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share”
-        allowfullscreen
-        style=”position:absolute;top:0;left:0;width:100%;height:100%;border:none;”>
-      </iframe>
+    <!-- Header -->
+    <div style=”text-align:center;margin-bottom:2rem;”>
+      <p style=”color:rgba(212,160,23,0.7);font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.5rem;”>Don't Miss It</p>
+      <h2 style=”font-family:'Palatino Linotype',serif;font-size:clamp(1.6rem,3vw,2.5rem);color:#fff;font-weight:700;margin-bottom:0.75rem;”>✦ Live Streaming ✦</h2>
+      <p style=”color:rgba(147,197,253,0.55);font-size:0.9rem;line-height:1.7;max-width:32rem;margin:0 auto;”>
+        Can&rsquo;t be here in person? Watch the sacred ceremony live on YouTube. Join us from anywhere in the world.
+      </p>
+      <div style=”height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.5),transparent);width:10rem;margin:1.25rem auto 0;”></div>
+    </div>
+
+    <!-- YouTube player -->
+    <div style=”width:100%;background:#000;border-radius:1rem;overflow:hidden;box-shadow:0 0 0 3px rgba(212,160,23,0.35),0 20px 60px rgba(0,0,0,0.6);margin-bottom:1.5rem;”>
+      <div style=”position:relative;padding-bottom:56.25%;height:0;”>
+        <iframe id=”live-iframe”
+          src=”https://www.youtube.com/embed/{{ youtube.video_id }}”
+          title=”Wedding Live Stream”
+          allow=”accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share”
+          allowfullscreen
+          style=”position:absolute;top:0;left:0;width:100%;height:100%;border:0;”>
+        </iframe>
+      </div>
     </div>
 
     {% if is_dashboard %}
-    <!-- Edit bar for YouTube URL -->
-    <div style=”display:flex;align-items:center;gap:0.5rem;justify-content:center;margin-bottom:1.25rem;flex-wrap:wrap;”>
-      <input id=”live-url-input” type=”text” placeholder=”Paste YouTube URL or video ID…”
-             style=”flex:1;min-width:220px;max-width:380px;padding:0.5rem 0.75rem;border-radius:0.5rem;border:1px solid rgba(212,160,23,0.4);background:rgba(255,255,255,0.06);color:#fff;font-size:0.85rem;outline:none;”>
-      <button onclick=”saveLiveUrl()” style=”padding:0.5rem 1.1rem;background:linear-gradient(135deg,#D4A017,#B8860B);color:#fff;border:none;border-radius:0.5rem;cursor:pointer;font-size:0.85rem;font-weight:600;”>Update</button>
+    <!-- URL update bar -->
+    <div style=”display:flex;gap:0.5rem;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:0.5rem;”>
+      <input id=”live-url-input” type=”text” placeholder=”Paste YouTube URL or video ID to update…”
+             style=”flex:1;min-width:240px;max-width:420px;padding:0.55rem 0.85rem;border-radius:0.5rem;border:1px solid rgba(212,160,23,0.4);background:rgba(255,255,255,0.07);color:#fff;font-size:0.85rem;outline:none;”>
+      <button onclick=”saveLiveUrl()” style=”padding:0.55rem 1.2rem;background:linear-gradient(135deg,#D4A017,#B8860B);color:#fff;border:none;border-radius:0.5rem;cursor:pointer;font-size:0.85rem;font-weight:600;white-space:nowrap;”>Update Link</button>
     </div>
-    <p style=”color:rgba(212,160,23,0.45);font-size:0.72rem;margin-bottom:1.5rem;”>Paste full YouTube URL (e.g. https://youtu.be/VIDEO_ID) or just the video ID</p>
+    <p style=”text-align:center;color:rgba(212,160,23,0.4);font-size:0.72rem;margin-bottom:1.5rem;”>e.g. https://www.youtube.com/live/VIDEO_ID</p>
     {% endif %}
 
-    <!-- Live badge -->
-    <div style=”display:inline-flex;align-items:center;gap:0.5rem;background:#dc2626;color:#fff;font-size:0.75rem;font-weight:700;padding:0.5rem 1rem;border-radius:2rem;margin-bottom:1rem;”>
-      <span style=”width:0.5rem;height:0.5rem;background:#fff;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;”></span>
-      LIVE &mdash; {{ w.wedding_date }}
+    <!-- Live badge + meta -->
+    <div style=”text-align:center;”>
+      <div style=”display:inline-flex;align-items:center;gap:0.5rem;background:#dc2626;color:#fff;font-size:0.75rem;font-weight:700;padding:0.45rem 1rem;border-radius:2rem;margin-bottom:0.85rem;”>
+        <span style=”width:7px;height:7px;background:#fff;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;”></span>
+        LIVE &mdash; {{ w.wedding_date }}
+      </div>
+      <br>
+      <p style=”color:rgba(147,197,253,0.65);font-size:0.875rem;margin-bottom:1.25rem;display:inline;”>
+        📅 Going live: <strong id=”live-date-text” style=”color:#FFB300;”>{{ youtube.live_date }}</strong>
+        {% if is_dashboard %}<button onclick=”openMuhuEdit('Live Date','live-date-text','yt_live_date')” style=”background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.7rem;padding:0;margin-left:0.3rem;vertical-align:middle;”>✏</button>{% endif %}
+      </p>
+      <br><br>
+      <a id=”live-channel-link” href=”{{ youtube.channel_url }}” target=”_blank” rel=”noopener noreferrer”
+         style=”display:inline-block;padding:0.65rem 1.75rem;background:linear-gradient(135deg,#D4A017,#B8860B);color:#fff;border-radius:2rem;font-size:0.9rem;font-weight:600;text-decoration:none;letter-spacing:0.04em;”>
+        ▶ Watch on YouTube — <span id=”live-channel-name”>{{ youtube.channel_name }}</span>
+      </a>
+      {% if is_dashboard %}
+      <br><button onclick=”openMuhuEdit('Channel Name','live-channel-name','yt_channel_name')” style=”background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.25);font-size:0.7rem;margin-top:0.5rem;”>✏ Edit channel name</button>
+      {% endif %}
     </div>
-
-    <p style=”color:rgba(147,197,253,0.6);font-size:0.875rem;margin-bottom:1.5rem;”>
-      📅 Going live: <strong id=”live-date-text” style=”color:#FFB300;”>{{ youtube.live_date }}</strong>
-      {% if is_dashboard %}<button onclick=”openMuhuEdit('Live Date','live-date-text','yt_live_date')” style=”background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.35);font-size:0.7rem;padding:0;margin-left:0.3rem;”>✏</button>{% endif %}
-    </p>
-
-    <a id=”live-channel-link” href=”{{ youtube.channel_url }}” target=”_blank” rel=”noopener noreferrer”
-       style=”display:inline-block;padding:0.6rem 1.5rem;background:linear-gradient(135deg,#D4A017,#B8860B);color:#fff;border-radius:2rem;font-size:0.85rem;font-weight:600;text-decoration:none;letter-spacing:0.05em;”>
-      ▶ Subscribe to <span id=”live-channel-name”>{{ youtube.channel_name }}</span>
-    </a>
-    {% if is_dashboard %}
-    <br><button onclick=”openMuhuEdit('Channel Name','live-channel-name','yt_channel_name')” style=”background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.7rem;margin-top:0.4rem;”>✏ Edit channel name</button>
-    {% endif %}
 
   </div>
 </section>
@@ -865,19 +873,16 @@ to celebrate our wedding ceremony.{% endif %}</p>
 function saveLiveUrl(){
   const raw=document.getElementById('live-url-input').value.trim();
   if(!raw)return;
-  // extract video ID from full URL or use raw
   let vid=raw;
   const m=raw.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|live\/))([A-Za-z0-9_-]{11})/);
   if(m)vid=m[1];
-  // update iframe src
-  document.getElementById('live-iframe').src='https://www.youtube.com/embed/'+vid+'?rel=0';
-  // save to DB
-  const body={yt_video_id:vid,yt_embed_url:'https://www.youtube.com/embed/'+vid+'?rel=0',yt_channel_url:'https://www.youtube.com/watch?v='+vid};
+  document.getElementById('live-iframe').src='https://www.youtube.com/embed/'+vid;
+  const body={yt_video_id:vid,yt_embed_url:'https://www.youtube.com/embed/'+vid,yt_channel_url:'https://www.youtube.com/live/'+vid};
   fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify(body)})
     .then(r=>r.json()).then(d=>{
       const btn=document.querySelector('[onclick=”saveLiveUrl()”]');
       btn.textContent=d.ok?'Saved ✓':'Error';
-      setTimeout(()=>btn.textContent='Update',1200);
+      setTimeout(()=>{btn.textContent='Update Link';},1400);
     });
 }
 </script>
