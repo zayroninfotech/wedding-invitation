@@ -9,6 +9,17 @@ from .wedding_data import WEDDING
 from .mongo_db import verify_user, get_setting, save_setting
 
 
+def _gallery_photos(type_, defaults):
+    result = list(defaults)
+    for i in range(1, len(defaults) + 1):
+        for ext in ('.jpg', '.jpeg', '.png', '.webp'):
+            path = os.path.join('media', 'photos', f'gallery_{type_}_{i}{ext}')
+            if os.path.exists(path):
+                result[i - 1] = f'/media/photos/gallery_{type_}_{i}{ext}'
+                break
+    return result
+
+
 def apply_name_overrides(groom, bride):
     groom = dict(groom)
     bride = dict(bride)
@@ -94,8 +105,8 @@ def dashboard(request):
         'quick_links': quick_links,
         'muhurtham_items': muhurtham_items,
         'wedding_date_iso': w['wedding_date_iso'],
-        'bride_groom_photos': list(zip(w['bride_groom_photos'], w['photo_placeholder_colors']['couple'])),
-        'family_photos': list(zip(w['family_photos'], w['photo_placeholder_colors']['family'])),
+        'bride_groom_photos': list(zip(_gallery_photos('couple', w['bride_groom_photos']), w['photo_placeholder_colors']['couple'])),
+        'family_photos': list(zip(_gallery_photos('family', w['family_photos']), w['photo_placeholder_colors']['family'])),
         'is_dashboard': True,
         'admin_username': request.session.get('admin_username', 'admin'),
         'overlay_text': get_setting('overlay_text', 'ॐ శుభ వివాహ వేడుక ॐ'),
@@ -202,7 +213,9 @@ def save_names(request):
 def upload_photo(request):
     if request.method == 'POST':
         role = request.POST.get('role', '').strip().lower()
-        if role not in ('groom', 'bride', 'couple', 'couple_video'):
+        import re
+        valid_gallery = bool(re.match(r'^gallery_(couple|family)_\d+$', role))
+        if role not in ('groom', 'bride', 'couple', 'couple_video') and not valid_gallery:
             return HttpResponse('{"ok":false,"error":"invalid role"}', content_type='application/json', status=400)
         f = request.FILES.get('photo')
         if not f:

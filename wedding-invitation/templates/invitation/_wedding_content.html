@@ -165,6 +165,24 @@ async function saveNameFull(){
     btn.textContent='Saved ✓';setTimeout(()=>{closeNameFullEdit();btn.textContent='Save';btn.disabled=false;},700);
   } else{btn.textContent='Error';btn.disabled=false;}
 }
+async function uploadGalleryBulk(input,type){
+  const files=Array.from(input.files);
+  if(!files.length)return;
+  const status=document.getElementById('gallery-'+type+'-status');
+  status.textContent='Uploading 0/'+files.length+'…';
+  let done=0;
+  for(let i=0;i<files.length;i++){
+    const fd=new FormData();
+    fd.append('photo',files[i]);
+    fd.append('role','gallery_'+type+'_'+(i+1));
+    fd.append('csrfmiddlewaretoken',getCookie('csrftoken'));
+    const res=await fetch('/upload-photo/',{method:'POST',body:fd});
+    if(res.ok){done++;}
+    status.textContent='Uploading '+done+'/'+files.length+'…';
+  }
+  status.textContent='✓ '+done+' photo'+(done!==1?'s':'')+' saved — reloading…';
+  setTimeout(()=>location.reload(),900);
+}
 function syncHashtag(groomFirst,brideFirst){
   const el=document.getElementById('hero-hashtag');
   if(!el)return;
@@ -744,9 +762,18 @@ to celebrate our wedding ceremony.{% endif %}</p>
     <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.4),transparent);width:12rem;margin:1rem auto 0;"></div>
   </div>
 
-  <!-- Row 1 "“ Couple -->
-  <div style="margin-bottom:0.5rem;">
-    <p style="color:rgba(212,160,23,0.5);font-size:0.7rem;text-align:center;text-transform:uppercase;letter-spacing:0.25em;margin-bottom:0.75rem;">✦ Bride &amp; Groom ✦</p>
+  <!-- Row 1 “” Couple -->
+  <div style=”margin-bottom:0.5rem;”>
+    <div style=”display:flex;align-items:center;justify-content:center;gap:0.75rem;margin-bottom:0.75rem;”>
+      <p style=”color:rgba(212,160,23,0.5);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.25em;margin:0;”>✦ Bride &amp; Groom ✦</p>
+      {% if is_dashboard %}
+      <label style=”display:inline-flex;align-items:center;gap:0.35rem;padding:0.25rem 0.7rem;background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.4);border-radius:1rem;cursor:pointer;font-size:0.7rem;color:rgba(212,160,23,0.85);pointer-events:auto;” title=”Upload couple/groom/bride photos”>
+        📷 Add Photos
+        <input type=”file” accept=”image/*” multiple style=”display:none;” onchange=”uploadGalleryBulk(this,'couple')”>
+      </label>
+      <span id=”gallery-couple-status” style=”font-size:0.7rem;color:rgba(212,160,23,0.6);”></span>
+      {% endif %}
+    </div>
     <div class="overflow-hidden scroll-left" style="padding:1rem 0;">
       <div class="gallery-track">
         {% for photo, color in bride_groom_photos %}
@@ -773,9 +800,18 @@ to celebrate our wedding ceremony.{% endif %}</p>
     </div>
   </div>
 
-  <!-- Row 2 "“ Family -->
-  <div style="margin-top:1rem;">
-    <p style="color:rgba(212,160,23,0.5);font-size:0.7rem;text-align:center;text-transform:uppercase;letter-spacing:0.25em;margin-bottom:0.75rem;">✦ Family ✦</p>
+  <!-- Row 2 “” Family -->
+  <div style=”margin-top:1rem;”>
+    <div style=”display:flex;align-items:center;justify-content:center;gap:0.75rem;margin-bottom:0.75rem;”>
+      <p style=”color:rgba(212,160,23,0.5);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.25em;margin:0;”>✦ Family ✦</p>
+      {% if is_dashboard %}
+      <label style=”display:inline-flex;align-items:center;gap:0.35rem;padding:0.25rem 0.7rem;background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.4);border-radius:1rem;cursor:pointer;font-size:0.7rem;color:rgba(212,160,23,0.85);pointer-events:auto;” title=”Upload family photos”>
+        📷 Add Photos
+        <input type=”file” accept=”image/*” multiple style=”display:none;” onchange=”uploadGalleryBulk(this,'family')”>
+      </label>
+      <span id=”gallery-family-status” style=”font-size:0.7rem;color:rgba(212,160,23,0.6);”></span>
+      {% endif %}
+    </div>
     <div class="overflow-hidden scroll-right" style="padding:1rem 0;">
       <div class="gallery-track">
         {% for photo, color in family_photos %}
