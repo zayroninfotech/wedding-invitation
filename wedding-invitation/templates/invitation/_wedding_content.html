@@ -688,37 +688,44 @@ to celebrate our wedding ceremony.{% endif %}</p>
 <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      EVENTS
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<section id="events" style="padding:5rem 1rem;background:#f8f3ea;position:relative;">
-  <div style="max-width:1024px;margin:0 auto;position:relative;z-index:1;">
+<section id="events" style="padding:5rem 1rem;background:linear-gradient(160deg,#07122A 0%,#0D1B4B 100%);position:relative;">
+  <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 30%,rgba(212,160,23,0.06) 0%,transparent 65%);"></div>
+  <div style="max-width:1100px;margin:0 auto;position:relative;z-index:1;">
     <div style="text-align:center;margin-bottom:3rem;">
-      <p style="color:#1A3A8F;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.5rem;">Mark Your Calendar</p>
-      <h2 class="section-title" style="font-family:'Palatino Linotype',serif;font-size:clamp(1.6rem,3vw,2.5rem);color:#0D1B4B;">Wedding Events</h2>
-      <p style="color:rgba(13,27,75,0.5);font-size:0.85rem;margin-top:0.5rem;">A celebration spanning days of joy and togetherness</p>
-      <div class="gold-divider"></div>
+      <p style="color:rgba(212,160,23,0.7);font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.5rem;">Mark Your Calendar</p>
+      <h2 class="section-title" style="font-family:'Palatino Linotype',serif;font-size:clamp(1.6rem,3vw,2.5rem);color:#fff;">✦ Wedding Events ✦</h2>
+      <p style="color:rgba(147,197,253,0.5);font-size:0.85rem;margin-top:0.5rem;">A celebration spanning days of joy and togetherness</p>
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.5),transparent);width:12rem;margin:1rem auto 0;"></div>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;" class="grid-3col">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.5rem;">
       {% for event in events %}
-      <div class="event-card" style="padding:1.5rem;">
-        <div style="font-size:2.25rem;margin-bottom:1rem;width:4rem;height:4rem;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,rgba(212,160,23,0.15),rgba(13,27,75,0.08));">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(212,160,23,0.25);border-radius:1.25rem;padding:1.75rem;position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;"
+           onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(0,0,0,0.4)'"
+           onmouseleave="this.style.transform='none';this.style.boxShadow='none'">
+        <div style="position:absolute;top:0;left:1.75rem;right:1.75rem;height:2px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.6),transparent);border-radius:0 0 2px 2px;"></div>
+        <div style="font-size:2rem;margin-bottom:1rem;width:3.5rem;height:3.5rem;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,rgba(212,160,23,0.2),rgba(13,27,75,0.3));border:1px solid rgba(212,160,23,0.3);">
           {{ event.icon }}
         </div>
-        <h3 style="font-size:1.05rem;font-family:Georgia,serif;font-weight:700;color:#0D1B4B;margin-bottom:0.25rem;">{{ event.title }}</h3>
-        <p style="color:#1A3A8F;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.25rem;">{{ event.date }}</p>
-        <p style="color:#D4A017;font-size:0.875rem;font-weight:600;margin-bottom:0.75rem;">ðŸ• {{ event.time }}</p>
-        <p style="color:rgba(13,27,75,0.55);font-size:0.75rem;margin-bottom:0.75rem;">📍 {{ event.venue }}</p>
-        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.4),transparent);margin-bottom:0.75rem;"></div>
-        <p style="font-size:0.875rem;color:rgba(13,27,75,0.7);line-height:1.6;">{{ event.description }}</p>
+        <h3 style="font-size:1.1rem;font-family:'Palatino Linotype',Georgia,serif;font-weight:700;color:#fff;margin-bottom:0.3rem;">{{ event.title }}</h3>
+        <p style="color:rgba(212,160,23,0.85);font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem;">{{ event.date }}</p>
+        <p style="color:#FFB300;font-size:0.9rem;font-weight:600;margin-bottom:0.75rem;">🕐 {{ event.time }}</p>
+        <p style="color:rgba(147,197,253,0.65);font-size:0.78rem;margin-bottom:0.75rem;">📍 {{ event.venue }}</p>
+        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.3),transparent);margin-bottom:0.75rem;"></div>
+        <p style="font-size:0.875rem;color:rgba(255,255,255,0.6);line-height:1.65;">{{ event.description }}</p>
       </div>
       {% endfor %}
     </div>
 
     <!-- Venue card -->
-    <div style="margin-top:3rem;border-radius:1rem;padding:1.5rem;text-align:center;border:1px solid rgba(212,160,23,0.3);background:linear-gradient(135deg,rgba(13,27,75,0.06),rgba(26,58,143,0.1));">
-      <p style="color:rgba(13,27,75,0.6);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.2em;margin-bottom:0.5rem;">Main Venue</p>
-      <h3 style="font-size:1.2rem;font-family:Georgia,serif;color:#0D1B4B;font-weight:700;margin-bottom:0.5rem;">{{ venue.name }}</h3>
-      <p style="color:rgba(13,27,75,0.6);font-size:0.875rem;margin-bottom:1rem;">{{ venue.address }}</p>
-      <a href="{{ venue.google_maps_link }}" target="_blank" rel="noopener noreferrer" class="btn-gold">📍 Open in Google Maps</a>
+    <div style="margin-top:3rem;border-radius:1.25rem;padding:1.75rem;text-align:center;border:1px solid rgba(212,160,23,0.35);background:rgba(212,160,23,0.05);">
+      <p style="color:rgba(212,160,23,0.65);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.25em;margin-bottom:0.5rem;">Main Venue</p>
+      <h3 style="font-size:1.25rem;font-family:'Palatino Linotype',Georgia,serif;color:#fff;font-weight:700;margin-bottom:0.4rem;">{{ venue.name }}</h3>
+      <p style="color:rgba(147,197,253,0.6);font-size:0.875rem;margin-bottom:1.25rem;">{{ venue.address }}</p>
+      <a href="https://maps.google.com/?q=Shubhasree+Gardens+Secunderabad" target="_blank" rel="noopener noreferrer"
+         style="display:inline-block;padding:0.6rem 1.5rem;background:linear-gradient(135deg,#D4A017,#B8860B);color:#fff;border-radius:2rem;font-size:0.85rem;font-weight:600;text-decoration:none;letter-spacing:0.05em;">
+        📍 Open in Google Maps
+      </a>
     </div>
   </div>
 </section>

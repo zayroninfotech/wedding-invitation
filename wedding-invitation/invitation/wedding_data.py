@@ -35,22 +35,31 @@ WEDDING = {
 
     'events': [
         {
+            'icon': '🪔',
+            'name': 'Haldi & Mehendi',
+            'title': 'Haldi & Mehendi',
+            'date': 'Thursday, 20th August 2026',
+            'time': '10:00 AM onwards',
+            'venue': 'Anu Jyothi Colony, Anand Nagar, Bowenpally, Secunderabad',
+            'description': 'Auspicious pre-wedding Haldi and Mehendi ceremony with family and friends.',
+        },
+        {
             'icon': '🛕',
             'name': 'Wedding Ceremony (Sumuhurtham)',
             'title': 'Wedding Ceremony',
             'date': 'Friday, 21st August 2026',
-            'time': '12:20 Noon – Akasah Lagnam',
+            'time': '11:25 AM – Akasah Lagnam',
             'venue': 'Shubhasree Gardens, Secunderabad',
-            'description': 'Sacred Hindu Vivah ceremony. Sumuhurtham at 12:20 Noon – Akasah Lagnam.',
+            'description': 'Sacred Hindu Vivah ceremony. Sumuhurtham at 11:25 AM – Akasah Lagnam.',
         },
         {
             'icon': '🍽️',
             'name': 'Wedding Reception',
             'title': 'Wedding Reception',
-            'date': 'Sunday, 05th July 2026',
+            'date': 'Friday, 21st August 2026',
             'time': '7:00 PM onwards',
             'venue': 'Ashish Gardens, Beside Railway Bridge, Lakkipathi, Attikol, Secunderabad',
-            'description': 'Grand reception dinner with blessings, music, and celebration.',
+            'description': 'Grand reception dinner with blessings, music, and celebration. All are cordially invited.',
         },
     ],
 
