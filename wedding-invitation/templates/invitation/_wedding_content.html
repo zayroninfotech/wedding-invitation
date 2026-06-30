@@ -165,6 +165,14 @@ async function saveNameFull(){
     btn.textContent='Saved ✓';setTimeout(()=>{closeNameFullEdit();btn.textContent='Save';btn.disabled=false;},700);
   } else{btn.textContent='Error';btn.disabled=false;}
 }
+function pickGalleryPhotos(type){
+  const inp=document.createElement('input');
+  inp.type='file';inp.accept='image/*';inp.multiple=true;
+  inp.style.cssText='position:fixed;top:-999px;left:-999px;opacity:0;';
+  document.body.appendChild(inp);
+  inp.addEventListener('change',function(){uploadGalleryBulk(inp,type);document.body.removeChild(inp);});
+  inp.click();
+}
 async function uploadGalleryBulk(input,type){
   const files=Array.from(input.files);
   if(!files.length)return;
@@ -767,9 +775,8 @@ to celebrate our wedding ceremony.{% endif %}</p>
     <div style=”display:flex;align-items:center;justify-content:center;gap:0.75rem;margin-bottom:0.75rem;”>
       <p style=”color:rgba(212,160,23,0.5);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.25em;margin:0;”>✦ Bride &amp; Groom ✦</p>
       {% if is_dashboard %}
-      <label for=”gal-couple-input” style=”padding:0.3rem 0.9rem;background:rgba(212,160,23,0.18);border:1px solid rgba(212,160,23,0.55);border-radius:1rem;cursor:pointer;font-size:0.72rem;color:rgba(212,160,23,0.95);pointer-events:auto;user-select:none;”>📷 Add Photos</label>
-      <input id=”gal-couple-input” type=”file” accept=”image/*” multiple style=”position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;” onchange=”uploadGalleryBulk(this,'couple')”>
-      <span id=”gallery-couple-status” style=”font-size:0.7rem;color:rgba(212,160,23,0.7);”></span>
+      <button type=”button” onclick=”pickGalleryPhotos('couple')” style=”padding:0.3rem 0.9rem;background:rgba(212,160,23,0.2);border:1px solid rgba(212,160,23,0.6);border-radius:1rem;cursor:pointer;font-size:0.75rem;color:#FFB300;font-weight:600;pointer-events:auto;”>📷 Add Photos</button>
+      <span id=”gallery-couple-status” style=”font-size:0.72rem;color:rgba(212,160,23,0.8);”></span>
       {% endif %}
     </div>
     <div class="overflow-hidden scroll-left" style="padding:1rem 0;">
@@ -803,9 +810,8 @@ to celebrate our wedding ceremony.{% endif %}</p>
     <div style=”display:flex;align-items:center;justify-content:center;gap:0.75rem;margin-bottom:0.75rem;”>
       <p style=”color:rgba(212,160,23,0.5);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.25em;margin:0;”>✦ Family ✦</p>
       {% if is_dashboard %}
-      <label for=”gal-family-input” style=”padding:0.3rem 0.9rem;background:rgba(212,160,23,0.18);border:1px solid rgba(212,160,23,0.55);border-radius:1rem;cursor:pointer;font-size:0.72rem;color:rgba(212,160,23,0.95);pointer-events:auto;user-select:none;”>📷 Add Photos</label>
-      <input id=”gal-family-input” type=”file” accept=”image/*” multiple style=”position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;” onchange=”uploadGalleryBulk(this,'family')”>
-      <span id=”gallery-family-status” style=”font-size:0.7rem;color:rgba(212,160,23,0.7);”></span>
+      <button type=”button” onclick=”pickGalleryPhotos('family')” style=”padding:0.3rem 0.9rem;background:rgba(212,160,23,0.2);border:1px solid rgba(212,160,23,0.6);border-radius:1rem;cursor:pointer;font-size:0.75rem;color:#FFB300;font-weight:600;pointer-events:auto;”>📷 Add Photos</button>
+      <span id=”gallery-family-status” style=”font-size:0.72rem;color:rgba(212,160,23,0.8);”></span>
       {% endif %}
     </div>
     <div class="overflow-hidden scroll-right" style="padding:1rem 0;">
