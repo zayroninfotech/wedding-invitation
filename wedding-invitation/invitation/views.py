@@ -188,7 +188,7 @@ def save_names(request):
 def upload_photo(request):
     if request.method == 'POST':
         role = request.POST.get('role', '').strip().lower()
-        if role not in ('groom', 'bride'):
+        if role not in ('groom', 'bride', 'couple', 'couple_video'):
             return HttpResponse('{"ok":false,"error":"invalid role"}', content_type='application/json', status=400)
         f = request.FILES.get('photo')
         if not f:
