@@ -491,40 +491,33 @@ to celebrate our wedding ceremony.{% endif %}</p>
 
           <!-- Couple photo / video -->
           <div style="display:flex;justify-content:center;margin-bottom:1.5rem;">
-            <div id="couple-card" style="position:relative;width:clamp(180px,30vw,280px);border-radius:1.5rem;overflow:hidden;border:3px solid rgba(212,160,23,0.6);box-shadow:0 0 40px rgba(212,160,23,0.25),0 12px 50px rgba(0,0,0,0.5);">
+            <div id="couple-card" style="position:relative;width:clamp(220px,35vw,320px);border-radius:1.5rem;overflow:hidden;border:3px solid rgba(212,160,23,0.7);box-shadow:0 0 60px rgba(212,160,23,0.3),0 16px 60px rgba(0,0,0,0.6);">
               {% if couple_video_url %}
                 {% if couple_video_ext == '.gif' %}
-                <!-- GIF auto-loops as img -->
                 <img id="couple-video-gif" src="{{ couple_video_url }}" alt="Couple" style="width:100%;display:block;object-fit:cover;">
                 {% else %}
-                <!-- Video auto-plays -->
-                <video id="couple-video" src="{{ couple_video_url }}" autoplay muted loop playsinline style="width:100%;display:block;"></video>
+                <video id="couple-video" src="{{ couple_video_url }}" autoplay loop playsinline style="width:100%;display:block;" onclick="this.muted=!this.muted;document.getElementById('sound-btn').textContent=this.muted?'🔇':'🔊';"></video>
+                <!-- Sound toggle -->
+                <button id="sound-btn" onclick="var v=document.getElementById('couple-video');v.muted=!v.muted;this.textContent=v.muted?'🔇':'🔊';" style="position:absolute;bottom:44px;right:8px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.85rem;">🔊</button>
                 {% endif %}
               {% else %}
-              <!-- Photo -->
               <img id="photo-couple" src="{{ w.couple_photo }}" alt="{{ groom.first_name }} &amp; {{ bride.first_name }}"
                    style="width:100%;display:block;"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-              <!-- fallback colour block -->
-              <div id="couple-fallback" style="display:none;height:260px;background:linear-gradient(135deg,#8B1A35,#D4A017);"></div>
+              <div id="couple-fallback" style="display:none;height:300px;background:linear-gradient(135deg,#8B1A35,#D4A017);"></div>
               {% endif %}
-              <!-- Hidden video element for JS upload (no src) -->
-              <video id="couple-video" style="display:none;width:100%;" autoplay muted loop playsinline></video>
-              <!-- corner accents -->
+              <video id="couple-video-hidden" style="display:none;width:100%;"></video>
               <div class="corner-accent tl"></div><div class="corner-accent tr"></div>
               <div class="corner-accent bl"></div><div class="corner-accent br"></div>
-              <!-- name overlay -->
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:0.5rem;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,0.6));pointer-events:none;">
-                <p style="color:#fff;font-size:0.75rem;font-family:Georgia,serif;letter-spacing:0.15em;">
-                  <span class="live-groom-name">{{ groom.first_name }}</span> ✦ <span class="live-bride-name">{{ bride.first_name }}</span>
+              <div style="position:absolute;bottom:0;left:0;right:0;padding:0.6rem;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,0.75));">
+                <p style="color:#fff;font-size:0.8rem;font-family:Georgia,serif;letter-spacing:0.18em;text-shadow:0 1px 6px rgba(0,0,0,0.8);">
+                  <span class="live-groom-name">{{ groom.first_name }}</span> <span style="color:#D4A017;">✦</span> <span class="live-bride-name">{{ bride.first_name }}</span>
                 </p>
               </div>
               {% if is_dashboard %}
-              <!-- Photo upload -->
-              <label title="Change photo" style="position:absolute;top:8px;right:8px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.85rem;" title="Upload photo">📷
+              <label title="Change photo" style="position:absolute;top:8px;right:8px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.85rem;">📷
                 <input type="file" accept="image/*" style="display:none;" onchange="uploadPhoto(this,'couple')">
               </label>
-              <!-- Video/GIF upload -->
               <label title="Upload video or GIF" style="position:absolute;top:8px;right:46px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.85rem;">🎬
                 <input type="file" accept="video/*,image/gif,.gif" style="display:none;" onchange="uploadCoupleVideo(this)">
               </label>
