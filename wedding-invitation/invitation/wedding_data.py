@@ -65,10 +65,10 @@ WEDDING = {
 
     'youtube': {
         'enabled': True,
-        'video_id': 'live_stream_video_id_here',
-        'embed_url': 'https://www.youtube.com/embed/live_stream_video_id_here?autoplay=1',
+        'video_id': '3TQ5MUkU3K0',
+        'embed_url': 'https://www.youtube.com/embed/3TQ5MUkU3K0',
         'channel_name': '@VamsiWedsAnausha',
-        'channel_url': 'https://www.youtube.com/@VamsiWedsAnausha',
+        'channel_url': 'https://www.youtube.com/live/3TQ5MUkU3K0',
         'live_date': 'Friday, 21st August 2026 from 11:25 AM',
     },
 
