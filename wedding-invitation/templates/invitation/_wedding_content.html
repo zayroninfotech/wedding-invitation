@@ -565,42 +565,64 @@ to celebrate our wedding ceremony.{% endif %}</p>
 
       <!-- Groom family -->
       <div style="border-radius:1rem;padding:1.75rem;border:1px solid rgba(212,160,23,0.25);text-align:left;position:relative;background:linear-gradient(135deg,rgba(212,160,23,0.08),rgba(26,58,143,0.3));">
-        <div style="position:absolute;top:1rem;right:1rem;font-size:1.75rem;opacity:0.2;">ðŸ¤µ</div>
-        <div style="font-size:1.75rem;margin-bottom:0.75rem;">ðŸ¤µ</div>
-        <h3 style="font-size:1.4rem;font-family:Georgia,serif;color:#D4A017;margin-bottom:0.25rem;">{{ groom.name }}</h3>
+        <div style="position:absolute;top:1rem;right:1rem;font-size:1.75rem;opacity:0.15;">🤵</div>
+        <div style="font-size:1.75rem;margin-bottom:0.75rem;">🤵</div>
+        <h3 style="font-size:1.4rem;font-family:Georgia,serif;color:#D4A017;margin-bottom:0.25rem;display:inline-flex;align-items:center;gap:0.4rem;">
+          <span id="fam-groom-name">{{ groom.name }}</span>
+          {% if is_dashboard %}<button onclick="openMuhuEdit('Groom Name','fam-groom-name','fam_groom_name')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.7rem;padding:0;pointer-events:auto;">✏</button>{% endif %}
+        </h3>
         <p style="color:rgba(147,197,253,0.6);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1rem;">Groom</p>
         <div style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.875rem;color:rgba(219,234,254,0.85);">
           <div style="display:flex;align-items:center;gap:0.5rem;">
-            <span style="font-size:1.1rem;">ðŸ‘¨</span>
-            <div><span style="color:rgba(212,160,23,0.6);font-size:0.7rem;display:block;">Father</span>{{ groom.father_name }}</div>
+            <span>👨</span>
+            <div><span style="color:rgba(212,160,23,0.6);font-size:0.7rem;display:block;">Father</span>
+              <span id="fam-groom-father">{{ groom.father_name }}</span>
+              {% if is_dashboard %}<button onclick="openMuhuEdit('Groom Father','fam-groom-father','fam_groom_father')" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.65rem;padding:0;pointer-events:auto;">✏</button>{% endif %}
+            </div>
           </div>
           <div style="display:flex;align-items:center;gap:0.5rem;">
-            <span style="font-size:1.1rem;">ðŸ‘©</span>
-            <div><span style="color:rgba(212,160,23,0.6);font-size:0.7rem;display:block;">Mother</span>{{ groom.mother_name }}</div>
+            <span>👩</span>
+            <div><span style="color:rgba(212,160,23,0.6);font-size:0.7rem;display:block;">Mother</span>
+              <span id="fam-groom-mother">{{ groom.mother_name }}</span>
+              {% if is_dashboard %}<button onclick="openMuhuEdit('Groom Mother','fam-groom-mother','fam_groom_mother')" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.65rem;padding:0;pointer-events:auto;">✏</button>{% endif %}
+            </div>
           </div>
           <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(212,160,23,0.2);">
-            <span>ðŸ“</span><span style="color:rgba(147,197,253,0.7);font-size:0.8rem;">{{ groom.city }}</span>
+            <span>📍</span>
+            <span id="fam-groom-city" style="color:rgba(147,197,253,0.7);font-size:0.8rem;">{{ groom.city }}</span>
+            {% if is_dashboard %}<button onclick="openMuhuEdit('Groom City','fam-groom-city','fam_groom_city')" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.65rem;padding:0;pointer-events:auto;">✏</button>{% endif %}
           </div>
         </div>
       </div>
 
       <!-- Bride family -->
       <div style="border-radius:1rem;padding:1.75rem;border:1px solid rgba(212,160,23,0.25);text-align:left;position:relative;background:linear-gradient(135deg,rgba(212,160,23,0.08),rgba(26,58,143,0.3));">
-        <div style="position:absolute;top:1rem;right:1rem;font-size:1.75rem;opacity:0.2;">ðŸ‘°</div>
-        <div style="font-size:1.75rem;margin-bottom:0.75rem;">ðŸ‘°</div>
-        <h3 style="font-size:1.4rem;font-family:Georgia,serif;color:#D4A017;margin-bottom:0.25rem;">{{ bride.name }}</h3>
+        <div style="position:absolute;top:1rem;right:1rem;font-size:1.75rem;opacity:0.15;">👰</div>
+        <div style="font-size:1.75rem;margin-bottom:0.75rem;">👰</div>
+        <h3 style="font-size:1.4rem;font-family:Georgia,serif;color:#D4A017;margin-bottom:0.25rem;display:inline-flex;align-items:center;gap:0.4rem;">
+          <span id="fam-bride-name">{{ bride.name }}</span>
+          {% if is_dashboard %}<button onclick="openMuhuEdit('Bride Name','fam-bride-name','fam_bride_name')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.7rem;padding:0;pointer-events:auto;">✏</button>{% endif %}
+        </h3>
         <p style="color:rgba(147,197,253,0.6);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1rem;">Bride</p>
         <div style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.875rem;color:rgba(219,234,254,0.85);">
           <div style="display:flex;align-items:center;gap:0.5rem;">
-            <span style="font-size:1.1rem;">ðŸ‘¨</span>
-            <div><span style="color:rgba(212,160,23,0.6);font-size:0.7rem;display:block;">Father</span>{{ bride.father_name }}</div>
+            <span>👨</span>
+            <div><span style="color:rgba(212,160,23,0.6);font-size:0.7rem;display:block;">Father</span>
+              <span id="fam-bride-father">{{ bride.father_name }}</span>
+              {% if is_dashboard %}<button onclick="openMuhuEdit('Bride Father','fam-bride-father','fam_bride_father')" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.65rem;padding:0;pointer-events:auto;">✏</button>{% endif %}
+            </div>
           </div>
           <div style="display:flex;align-items:center;gap:0.5rem;">
-            <span style="font-size:1.1rem;">ðŸ‘©</span>
-            <div><span style="color:rgba(212,160,23,0.6);font-size:0.7rem;display:block;">Mother</span>{{ bride.mother_name }}</div>
+            <span>👩</span>
+            <div><span style="color:rgba(212,160,23,0.6);font-size:0.7rem;display:block;">Mother</span>
+              <span id="fam-bride-mother">{{ bride.mother_name }}</span>
+              {% if is_dashboard %}<button onclick="openMuhuEdit('Bride Mother','fam-bride-mother','fam_bride_mother')" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.65rem;padding:0;pointer-events:auto;">✏</button>{% endif %}
+            </div>
           </div>
           <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(212,160,23,0.2);">
-            <span>ðŸ“</span><span style="color:rgba(147,197,253,0.7);font-size:0.8rem;">{{ bride.city }}</span>
+            <span>📍</span>
+            <span id="fam-bride-city" style="color:rgba(147,197,253,0.7);font-size:0.8rem;">{{ bride.city }}</span>
+            {% if is_dashboard %}<button onclick="openMuhuEdit('Bride City','fam-bride-city','fam_bride_city')" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.65rem;padding:0;pointer-events:auto;">✏</button>{% endif %}
           </div>
         </div>
       </div>
@@ -634,7 +656,7 @@ to celebrate our wedding ceremony.{% endif %}</p>
         <h3 style="font-size:1.05rem;font-family:Georgia,serif;font-weight:700;color:#0D1B4B;margin-bottom:0.25rem;">{{ event.title }}</h3>
         <p style="color:#1A3A8F;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.25rem;">{{ event.date }}</p>
         <p style="color:#D4A017;font-size:0.875rem;font-weight:600;margin-bottom:0.75rem;">ðŸ• {{ event.time }}</p>
-        <p style="color:rgba(13,27,75,0.55);font-size:0.75rem;margin-bottom:0.75rem;">ðŸ“ {{ event.venue }}</p>
+        <p style="color:rgba(13,27,75,0.55);font-size:0.75rem;margin-bottom:0.75rem;">📍 {{ event.venue }}</p>
         <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.4),transparent);margin-bottom:0.75rem;"></div>
         <p style="font-size:0.875rem;color:rgba(13,27,75,0.7);line-height:1.6;">{{ event.description }}</p>
       </div>
@@ -646,7 +668,7 @@ to celebrate our wedding ceremony.{% endif %}</p>
       <p style="color:rgba(13,27,75,0.6);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.2em;margin-bottom:0.5rem;">Main Venue</p>
       <h3 style="font-size:1.2rem;font-family:Georgia,serif;color:#0D1B4B;font-weight:700;margin-bottom:0.5rem;">{{ venue.name }}</h3>
       <p style="color:rgba(13,27,75,0.6);font-size:0.875rem;margin-bottom:1rem;">{{ venue.address }}</p>
-      <a href="{{ venue.google_maps_link }}" target="_blank" rel="noopener noreferrer" class="btn-gold">ðŸ“ Open in Google Maps</a>
+      <a href="{{ venue.google_maps_link }}" target="_blank" rel="noopener noreferrer" class="btn-gold">📍 Open in Google Maps</a>
     </div>
   </div>
 </section>

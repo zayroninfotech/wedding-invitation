@@ -176,7 +176,9 @@ def save_names(request):
         groom_name = data.get('groom_name', '').strip()
         bride_name = data.get('bride_name', '').strip()
         for key in ['overlay_text','hero_tagline','hero_invite','hero_date','hero_city','hero_venue','hero_sacred_quote','hero_countdown_date','hero_hashtag',
-                    'hero_muhu_muhurtham','hero_muhu_nakshatra','hero_muhu_tithi','hero_muhu_venue']:
+                    'hero_muhu_muhurtham','hero_muhu_nakshatra','hero_muhu_tithi','hero_muhu_venue',
+                    'fam_groom_name','fam_groom_father','fam_groom_mother','fam_groom_city',
+                    'fam_bride_name','fam_bride_father','fam_bride_mother','fam_bride_city']:
             val = data.get(key, '').strip()
             if val:
                 save_setting(key, val)
