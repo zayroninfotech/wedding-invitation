@@ -113,15 +113,8 @@ async function uploadCoupleVideo(input){
   const res=await fetch('/upload-photo/',{method:'POST',body:fd});
   const data=await res.json();
   if(data.ok){
-    const vid=document.getElementById('couple-video');
-    const img=document.getElementById('photo-couple');
-    const fallback=document.getElementById('couple-fallback');
-    vid.src=data.url+'?t='+Date.now();
-    vid.style.display='block';
-    if(img)img.style.display='none';
-    if(fallback)fallback.style.display='none';
-    vid.play().catch(()=>{});
-    if(label)label.textContent='🎬';
+    if(label)label.textContent='✓ Saved';
+    setTimeout(()=>location.reload(),800);
   } else{alert('Upload failed');if(label)label.textContent='🎬';}
 }
 async function uploadPhoto(input, role){
@@ -531,9 +524,9 @@ to celebrate our wedding ceremony.{% endif %}</p>
               <label title="Change photo" style="position:absolute;top:8px;right:8px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.85rem;" title="Upload photo">📷
                 <input type="file" accept="image/*" style="display:none;" onchange="uploadPhoto(this,'couple')">
               </label>
-              <!-- Video upload -->
-              <label title="Upload video" style="position:absolute;top:8px;right:46px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.85rem;">🎬
-                <input type="file" accept="video/*" style="display:none;" onchange="uploadCoupleVideo(this)">
+              <!-- Video/GIF upload -->
+              <label title="Upload video or GIF" style="position:absolute;top:8px;right:46px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.85rem;">🎬
+                <input type="file" accept="video/*,image/gif,.gif" style="display:none;" onchange="uploadCoupleVideo(this)">
               </label>
               {% endif %}
             </div>
