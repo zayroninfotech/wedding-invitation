@@ -174,24 +174,38 @@ const heroFields={
 };
 function openHeroEdit(field){
   const f=heroFields[field];
+  if(!f)return;
   const inp=document.getElementById('hero-edit-input');
   const ta=document.getElementById('hero-edit-textarea');
   const nm=document.getElementById('hero-names-inputs');
-  document.getElementById('hero-edit-label').textContent='✏ '+f.label;
+  const modal=document.getElementById('hero-edit-modal');
+  if(!inp||!ta||!nm||!modal)return;
+  const lbl=document.getElementById('hero-edit-label');
+  if(lbl)lbl.textContent='✏ '+f.label;
   inp.style.display='none';ta.style.display='none';nm.style.display='none';
   if(f.countdown){
-    ta.style.display='none';nm.style.display='none';inp.style.display='block';
+    inp.style.display='block';
     const el=document.getElementById('countdown');
     inp.value=el?el.dataset.target:'';
     inp.placeholder='YYYY-MM-DDTHH:MM:SS e.g. 2026-08-21T11:25:00';
   } else if(f.names){
     nm.style.display='block';
-    document.getElementById('hero-groom-input').value=document.getElementById('hero-groom-name').textContent.trim();
-    document.getElementById('hero-bride-input').value=document.getElementById('hero-bride-name').textContent.trim();
-  } else if(f.multiline){ta.style.display='block';ta.value=document.getElementById(f.id).textContent.trim();}
-  else{inp.style.display='block';inp.value=document.getElementById(f.id).textContent.trim();}
-  document.getElementById('hero-edit-modal').dataset.field=field;
-  document.getElementById('hero-edit-modal').style.display='flex';
+    const gn=document.getElementById('hero-groom-name');
+    const bn=document.getElementById('hero-bride-name');
+    document.getElementById('hero-groom-input').value=gn?gn.textContent.trim():'';
+    document.getElementById('hero-bride-input').value=bn?bn.textContent.trim():'';
+  } else if(f.multiline){
+    ta.style.display='block';
+    const el=document.getElementById(f.id);
+    ta.value=el?el.textContent.trim():'';
+  } else {
+    inp.style.display='block';
+    const el=document.getElementById(f.id);
+    inp.value=el?el.textContent.trim():'';
+  }
+  modal.dataset.field=field;
+  modal.style.display='flex';
+  setTimeout(()=>(inp.style.display!=='none'?inp:ta).focus(),100);
 }
 function closeHeroEdit(){document.getElementById('hero-edit-modal').style.display='none';}
 async function saveHeroField(){
