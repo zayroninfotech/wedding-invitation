@@ -768,7 +768,7 @@ to celebrate our wedding ceremony.{% endif %}</p>
       <p style=”color:rgba(212,160,23,0.5);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.25em;margin:0;”>✦ Bride &amp; Groom ✦</p>
       {% if is_dashboard %}
       <label for=”gal-couple-input” style=”padding:0.3rem 0.9rem;background:rgba(212,160,23,0.18);border:1px solid rgba(212,160,23,0.55);border-radius:1rem;cursor:pointer;font-size:0.72rem;color:rgba(212,160,23,0.95);pointer-events:auto;user-select:none;”>📷 Add Photos</label>
-      <input id=”gal-couple-input” type=”file” accept=”image/*” multiple style=”display:none;” onchange=”uploadGalleryBulk(this,'couple')”>
+      <input id=”gal-couple-input” type=”file” accept=”image/*” multiple style=”position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;” onchange=”uploadGalleryBulk(this,'couple')”>
       <span id=”gallery-couple-status” style=”font-size:0.7rem;color:rgba(212,160,23,0.7);”></span>
       {% endif %}
     </div>
@@ -804,7 +804,7 @@ to celebrate our wedding ceremony.{% endif %}</p>
       <p style=”color:rgba(212,160,23,0.5);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.25em;margin:0;”>✦ Family ✦</p>
       {% if is_dashboard %}
       <label for=”gal-family-input” style=”padding:0.3rem 0.9rem;background:rgba(212,160,23,0.18);border:1px solid rgba(212,160,23,0.55);border-radius:1rem;cursor:pointer;font-size:0.72rem;color:rgba(212,160,23,0.95);pointer-events:auto;user-select:none;”>📷 Add Photos</label>
-      <input id=”gal-family-input” type=”file” accept=”image/*” multiple style=”display:none;” onchange=”uploadGalleryBulk(this,'family')”>
+      <input id=”gal-family-input” type=”file” accept=”image/*” multiple style=”position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;” onchange=”uploadGalleryBulk(this,'family')”>
       <span id=”gallery-family-status” style=”font-size:0.7rem;color:rgba(212,160,23,0.7);”></span>
       {% endif %}
     </div>
