@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded',function(){
   var nm=document.getElementById('name-edit-modal');if(nm)nm.addEventListener('click',function(e){if(e.target===this)closeNameEdit();});
   var hm=document.getElementById('hero-edit-modal');if(hm)hm.addEventListener('click',function(e){if(e.target===this)closeHeroEdit();});
   var om=document.getElementById('overlay-edit-modal');if(om)om.addEventListener('click',function(e){if(e.target===this)closeOverlayEdit();});
+  var mm=document.getElementById('muhu-modal');if(mm)mm.addEventListener('click',function(e){if(e.target===this)closeMuhuEdit();});
+  var fn=document.getElementById('fullname-edit-modal');if(fn)fn.addEventListener('click',function(e){if(e.target===this)closeNameFullEdit();});
 });
 function openNameEdit(){
   document.getElementById('edit-groom-input').value=document.getElementById('nav-groom-name').textContent.trim();
@@ -65,11 +67,18 @@ async function saveNames(){
   } else {btn.textContent='Error';btn.disabled=false;}
 }
 function openMuhuEdit(label,elemId,key){
+  const el=document.getElementById(elemId);
+  if(!el)return;
+  // get text content excluding any child button text
+  let cur='';
+  el.childNodes.forEach(n=>{if(n.nodeType===3)cur+=n.textContent;});
+  cur=cur.trim();
   document.getElementById('muhu-modal-label').textContent='✏ '+label;
-  document.getElementById('muhu-modal-input').value=document.getElementById(elemId).childNodes[0].textContent.trim();
+  document.getElementById('muhu-modal-input').value=cur;
   document.getElementById('muhu-modal').dataset.elemId=elemId;
   document.getElementById('muhu-modal').dataset.key=key;
   document.getElementById('muhu-modal').style.display='flex';
+  setTimeout(()=>document.getElementById('muhu-modal-input').focus(),100);
 }
 function closeMuhuEdit(){document.getElementById('muhu-modal').style.display='none';}
 async function saveMuhuField(){
@@ -83,7 +92,12 @@ async function saveMuhuField(){
   const res=await fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify(body)});
   if(res.ok){
     const el=document.getElementById(elemId);
-    if(el)el.childNodes[0].textContent=val+' ';
+    if(el){
+      // update only text nodes, preserve buttons
+      let set=false;
+      el.childNodes.forEach(n=>{if(n.nodeType===3&&!set){n.textContent=val+' ';set=true;}});
+      if(!set)el.prepend(document.createTextNode(val+' '));
+    }
     btn.textContent='Saved ✓';setTimeout(()=>{closeMuhuEdit();btn.textContent='Save';btn.disabled=false;},700);
   } else{btn.textContent='Error';btn.disabled=false;}
 }
