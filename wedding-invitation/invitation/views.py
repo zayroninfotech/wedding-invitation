@@ -87,6 +87,14 @@ def dashboard(request):
         {'icon': '📍', 'label': 'Venue',      'val': get_setting('hero_muhu_venue', w['venue']['name'])},
     ]
     groom, bride = apply_name_overrides(w['groom'], w['bride'])
+    groom_ext = get_setting('groom_photo_ext', '')
+    if groom_ext:
+        groom = dict(groom)
+        groom['photo'] = f'/media/photos/groom{groom_ext}'
+    bride_ext = get_setting('bride_photo_ext', '')
+    if bride_ext:
+        bride = dict(bride)
+        bride['photo'] = f'/media/photos/bride{bride_ext}'
     context = {
         'w': w,
         'groom': groom,
