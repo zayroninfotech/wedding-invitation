@@ -92,6 +92,7 @@ def dashboard(request):
         'admin_username': request.session.get('admin_username', 'admin'),
         'overlay_text': get_setting('overlay_text', 'ॐ శుభ వివాహ వేడుక ॐ'),
         'hero_tagline': get_setting('hero_tagline', "We're Getting Married"),
+        'hero_invite':  get_setting('hero_invite', "Together with our families,\nwe request the honour of your presence\nto celebrate our wedding ceremony."),
         'hero_date':    get_setting('hero_date', w['wedding_date']),
         'hero_city':    get_setting('hero_city', w['wedding_city']),
         'hero_venue':   get_setting('hero_venue', w['venue']['name']),
@@ -170,7 +171,7 @@ def save_names(request):
         data = json.loads(request.body)
         groom_name = data.get('groom_name', '').strip()
         bride_name = data.get('bride_name', '').strip()
-        for key in ['overlay_text','hero_tagline','hero_date','hero_city','hero_venue']:
+        for key in ['overlay_text','hero_tagline','hero_invite','hero_date','hero_city','hero_venue']:
             val = data.get(key, '').strip()
             if val:
                 save_setting(key, val)

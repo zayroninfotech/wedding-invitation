@@ -63,14 +63,19 @@ async function saveNames(){
 function getCookie(name){let v=null;document.cookie.split(';').forEach(c=>{c=c.trim();if(c.startsWith(name+'='))v=decodeURIComponent(c.slice(name.length+1));});return v;}
 const heroFields={
   tagline:{id:'hero-tagline',label:'Tagline',key:'hero_tagline'},
+  invite:{id:'hero-invite-text',label:'Invitation Text',key:'hero_invite',multiline:true},
   date:{id:'hero-date',label:'Wedding Date',key:'hero_date'},
   city:{id:'hero-city',label:'City',key:'hero_city'},
   venue:{id:'hero-venue',label:'Venue',key:'hero_venue'},
 };
 function openHeroEdit(field){
   const f=heroFields[field];
-  document.getElementById('hero-edit-label').textContent=f.label;
-  document.getElementById('hero-edit-input').value=document.getElementById(f.id).textContent.trim();
+  const inp=document.getElementById('hero-edit-input');
+  const ta=document.getElementById('hero-edit-textarea');
+  const cur=document.getElementById(f.id).textContent.trim();
+  document.getElementById('hero-edit-label').textContent='✏ '+f.label;
+  if(f.multiline){inp.style.display='none';ta.style.display='block';ta.value=cur;}
+  else{ta.style.display='none';inp.style.display='block';inp.value=cur;}
   document.getElementById('hero-edit-modal').dataset.field=field;
   document.getElementById('hero-edit-modal').style.display='flex';
 }
@@ -79,7 +84,8 @@ async function saveHeroField(){
   const modal=document.getElementById('hero-edit-modal');
   const field=modal.dataset.field;
   const f=heroFields[field];
-  const val=document.getElementById('hero-edit-input').value.trim();
+  const el=f.multiline?document.getElementById('hero-edit-textarea'):document.getElementById('hero-edit-input');
+  const val=el.value.trim();
   const btn=document.getElementById('hero-save-btn');
   btn.textContent='Saving…';btn.disabled=true;
   const body={};body[f.key]=val;
@@ -107,6 +113,7 @@ async function saveOverlayText(){
   <div style="background:linear-gradient(160deg,#3D0010,#5C0A1E);border:1.5px solid rgba(212,160,23,0.4);border-radius:16px;padding:2rem;width:340px;box-shadow:0 30px 80px rgba(0,0,0,0.6);">
     <p id="hero-edit-label" style="color:#D4A017;font-size:0.95rem;letter-spacing:0.1em;margin-bottom:1.25rem;text-align:center;">✏ Edit</p>
     <input id="hero-edit-input" type="text" style="width:100%;padding:0.6rem 0.85rem;border-radius:7px;border:1px solid rgba(212,160,23,0.35);background:rgba(255,255,255,0.07);color:#fff;font-size:0.9rem;margin-bottom:1.25rem;outline:none;">
+    <textarea id="hero-edit-textarea" rows="4" style="display:none;width:100%;padding:0.6rem 0.85rem;border-radius:7px;border:1px solid rgba(212,160,23,0.35);background:rgba(255,255,255,0.07);color:#fff;font-size:0.9rem;margin-bottom:1.25rem;outline:none;resize:vertical;font-family:Georgia,serif;"></textarea>
     <div style="display:flex;gap:0.75rem;">
       <button id="hero-save-btn" onclick="saveHeroField()" style="flex:1;padding:0.6rem;background:linear-gradient(90deg,#8B1A35,#D4A017);border:none;border-radius:8px;color:#fff;font-size:0.88rem;cursor:pointer;">Save</button>
       <button onclick="closeHeroEdit()" style="flex:1;padding:0.6rem;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:0.88rem;cursor:pointer;">Cancel</button>
@@ -213,9 +220,12 @@ async function saveOverlayText(){
           </div>
 
           <!-- Invitation text -->
-          <p style="font-family:Georgia,serif;font-size:clamp(0.8rem,1.5vw,1rem);color:rgba(255,255,255,0.65);line-height:1.8;max-width:520px;margin:0 auto 1.5rem;font-style:italic;">
-            Together with our families,<br>we request the honour of your presence<br>to celebrate our wedding ceremony.
-          </p>
+          <div style="position:relative;display:inline-block;max-width:520px;margin:0 auto 1.5rem;">
+            <p id="hero-invite-text" style="font-family:Georgia,serif;font-size:clamp(0.8rem,1.5vw,1rem);color:rgba(255,255,255,0.65);line-height:1.8;font-style:italic;white-space:pre-line;">{% if hero_invite %}{{ hero_invite }}{% else %}Together with our families,
+we request the honour of your presence
+to celebrate our wedding ceremony.{% endif %}</p>
+            {% if is_dashboard %}<button onclick="openHeroEdit('invite')" style="position:absolute;top:-4px;right:-24px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:0.75rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
+          </div>
 
           <!-- Date & time -->
           <p style="font-size:clamp(0.9rem,1.8vw,1.1rem);color:rgba(255,255,255,0.9);font-family:Georgia,serif;margin-bottom:0.35rem;display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;">
