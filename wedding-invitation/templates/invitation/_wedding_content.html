@@ -39,8 +39,12 @@
 function toggleDrawer(){var d=document.getElementById('admin-drawer'),o=document.getElementById('admin-overlay');var open=d.style.left==='0px';d.style.left=open?'-260px':'0px';o.style.display=open?'none':'block';}
 function closeDrawer(){document.getElementById('admin-drawer').style.left='-260px';document.getElementById('admin-overlay').style.display='none';}
 function showAdminQR(){document.getElementById('admin-qr-url').textContent=window.location.origin+'/preview/';document.getElementById('admin-qr-modal').style.display='flex';closeDrawer();}
-document.getElementById('admin-qr-modal').addEventListener('click',function(e){if(e.target===this)this.style.display='none';});
-document.getElementById('name-edit-modal').addEventListener('click',function(e){if(e.target===this)closeNameEdit();});
+document.addEventListener('DOMContentLoaded',function(){
+  var qrm=document.getElementById('admin-qr-modal');if(qrm)qrm.addEventListener('click',function(e){if(e.target===this)this.style.display='none';});
+  var nm=document.getElementById('name-edit-modal');if(nm)nm.addEventListener('click',function(e){if(e.target===this)closeNameEdit();});
+  var hm=document.getElementById('hero-edit-modal');if(hm)hm.addEventListener('click',function(e){if(e.target===this)closeHeroEdit();});
+  var om=document.getElementById('overlay-edit-modal');if(om)om.addEventListener('click',function(e){if(e.target===this)closeOverlayEdit();});
+});
 function openNameEdit(){
   document.getElementById('edit-groom-input').value=document.getElementById('nav-groom-name').textContent.trim();
   document.getElementById('edit-bride-input').value=document.getElementById('nav-bride-name').textContent.trim();
