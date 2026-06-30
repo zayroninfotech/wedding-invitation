@@ -154,11 +154,27 @@ async function saveNameFull(){
   const res=await fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify(body)});
   if(res.ok){
     document.getElementById('fullname-'+role).textContent=val;
-    // also update couple photo overlay
     const cls=role==='groom'?'live-groom-name':'live-bride-name';
     document.querySelectorAll('.'+cls).forEach(el=>el.textContent=val);
+    // sync hashtag
+    const gn=document.getElementById('hero-groom-name');
+    const bn=document.getElementById('hero-bride-name');
+    const g=role==='groom'?val:(gn?gn.textContent.trim():'');
+    const b=role==='bride'?val:(bn?bn.textContent.trim():'');
+    syncHashtag(g,b);
     btn.textContent='Saved ✓';setTimeout(()=>{closeNameFullEdit();btn.textContent='Save';btn.disabled=false;},700);
   } else{btn.textContent='Error';btn.disabled=false;}
+}
+function syncHashtag(groomFirst,brideFirst){
+  const el=document.getElementById('hero-hashtag');
+  if(!el)return;
+  const g=groomFirst.split(' ')[0];
+  const b=brideFirst.split(' ')[0];
+  const tag='#'+g+'Weds'+b;
+  // update text nodes only, preserve button
+  let set=false;
+  el.childNodes.forEach(n=>{if(n.nodeType===3&&!set){n.textContent=tag+' ';set=true;}});
+  if(!set)el.prepend(document.createTextNode(tag+' '));
 }
 function getCookie(name){let v=null;document.cookie.split(';').forEach(c=>{c=c.trim();if(c.startsWith(name+'='))v=decodeURIComponent(c.slice(name.length+1));});return v;}
 const heroFields={
@@ -229,8 +245,14 @@ async function saveHeroField(){
     const b=document.getElementById('hero-bride-input').value.trim();
     body={groom_name:g,bride_name:b};
     const res=await fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify(body)});
-    if(res.ok){document.getElementById('hero-groom-name').textContent=g;document.getElementById('hero-bride-name').textContent=b;btn.textContent='Saved ✓';setTimeout(()=>{closeHeroEdit();btn.textContent='Save';btn.disabled=false;},700);}
-    else{btn.textContent='Error';btn.disabled=false;}
+    if(res.ok){
+      document.getElementById('hero-groom-name').textContent=g;
+      document.getElementById('hero-bride-name').textContent=b;
+      document.querySelectorAll('.live-groom-name').forEach(el=>el.textContent=g);
+      document.querySelectorAll('.live-bride-name').forEach(el=>el.textContent=b);
+      syncHashtag(g,b);
+      btn.textContent='Saved ✓';setTimeout(()=>{closeHeroEdit();btn.textContent='Save';btn.disabled=false;},700);
+    } else{btn.textContent='Error';btn.disabled=false;}
   } else {
     const el=f.multiline?document.getElementById('hero-edit-textarea'):document.getElementById('hero-edit-input');
     const val=el.value.trim();
