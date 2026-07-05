@@ -433,7 +433,7 @@ async function saveOverlayText(){
     <div style="max-width:1024px;margin:0 auto;position:relative;z-index:3;">
       <!-- Left lantern -->
       <div style="position:absolute;left:4px;top:0;pointer-events:none;z-index:2;transform-origin:top center;animation:swingLantern 4s ease-in-out infinite;">
-        <img src="{% static 'images/hero_side.png' %}" alt="" style="width:98px;display:block;transform:scaleX(-1);animation:glowPulse 2.5s ease-in-out infinite;">
+        <img src="{% static 'images/hero_side.png' %}" alt="" style="width:140px;display:block;transform:scaleX(-1);animation:glowPulse 2.5s ease-in-out infinite;">
         <div style="position:relative;height:0;">
           <span style="position:absolute;left:30px;top:-10px;width:4px;height:4px;border-radius:50%;background:#FFB300;animation:sparkFall 2.5s ease-in-out infinite;opacity:0;"></span>
           <span style="position:absolute;left:50px;top:-5px;width:3px;height:3px;border-radius:50%;background:#D4A017;animation:sparkFall 2.5s ease-in-out infinite 0.6s;opacity:0;"></span>
@@ -442,7 +442,7 @@ async function saveOverlayText(){
       </div>
       <!-- Right lantern -->
       <div style="position:absolute;right:4px;top:0;pointer-events:none;z-index:2;transform-origin:top center;animation:swingLanternR 4s ease-in-out infinite;">
-        <img src="{% static 'images/hero_side.png' %}" alt="" style="width:98px;display:block;animation:glowPulse 2.5s ease-in-out infinite 0.8s;">
+        <img src="{% static 'images/hero_side.png' %}" alt="" style="width:140px;display:block;animation:glowPulse 2.5s ease-in-out infinite 0.8s;">
         <div style="position:relative;height:0;">
           <span style="position:absolute;left:30px;top:-10px;width:4px;height:4px;border-radius:50%;background:#FFB300;animation:sparkFall 2.5s ease-in-out infinite 0.3s;opacity:0;"></span>
           <span style="position:absolute;left:50px;top:-5px;width:3px;height:3px;border-radius:50%;background:#D4A017;animation:sparkFall 2.5s ease-in-out infinite 0.9s;opacity:0;"></span>
@@ -491,15 +491,21 @@ the beginning of our forever.{% endif %}</p>
         <div style="display:grid;grid-template-columns:1fr clamp(160px,28vw,230px) 1fr;gap:1.25rem;align-items:center;margin:0 auto 1.5rem;max-width:860px;">
 
           <!-- Date card -->
-          <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(212,160,23,0.3);border-radius:14px;padding:1.25rem 0.75rem;text-align:center;">
+          <div style="position:relative;background:linear-gradient(160deg,rgba(6,14,36,0.9),rgba(13,27,75,0.85));border:2px solid rgba(212,160,23,0.7);border-radius:14px;padding:1.5rem 0.75rem;text-align:center;box-shadow:0 0 24px rgba(212,160,23,0.2),inset 0 0 20px rgba(212,160,23,0.04);">
+            <!-- Gold corner accents -->
+            <span style="position:absolute;top:5px;left:5px;width:14px;height:14px;border-top:2px solid #D4A017;border-left:2px solid #D4A017;"></span>
+            <span style="position:absolute;top:5px;right:5px;width:14px;height:14px;border-top:2px solid #D4A017;border-right:2px solid #D4A017;"></span>
+            <span style="position:absolute;bottom:5px;left:5px;width:14px;height:14px;border-bottom:2px solid #D4A017;border-left:2px solid #D4A017;"></span>
+            <span style="position:absolute;bottom:5px;right:5px;width:14px;height:14px;border-bottom:2px solid #D4A017;border-right:2px solid #D4A017;"></span>
             <div style="font-size:1.4rem;margin-bottom:0.35rem;">📅</div>
-            <p style="color:rgba(212,160,23,0.6);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.2rem;">
+            <p style="color:#D4A017;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.2rem;font-weight:600;">
               {% if hero_date %}{{ hero_date }}{% else %}{{ w.wedding_date }}{% endif %}
               {% if is_dashboard %}<button onclick="openHeroEdit('date')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.5);font-size:0.6rem;padding:0;pointer-events:auto;">✏</button>{% endif %}
             </p>
-            <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.35),transparent);margin:0.4rem 0;"></div>
-            <p style="color:rgba(255,255,255,0.45);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.1rem;">Muhurtham</p>
-            <p style="color:rgba(255,255,255,0.85);font-family:Georgia,serif;font-size:0.8rem;">11:25 AM</p>
+            <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.6),transparent);margin:0.5rem 0;"></div>
+            <p style="color:rgba(212,160,23,0.7);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.2rem;">Muhurtham</p>
+            <p style="color:#fff;font-family:Georgia,serif;font-size:1rem;font-weight:bold;text-shadow:0 0 12px rgba(212,160,23,0.5);">11:25 AM</p>
+            <div style="margin-top:0.4rem;font-size:0.75rem;">💛</div>
           </div>
 
           <!-- Circular couple photo -->
