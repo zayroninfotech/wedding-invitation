@@ -120,24 +120,30 @@ async function uploadCoupleVideo(input){
 async function uploadPhoto(input, role){
   if(!input.files||!input.files[0])return;
   const lbl=input.closest('label');
-  if(lbl)lbl.textContent='⏳';
+  const origHTML=lbl?lbl.innerHTML:'';
+  if(lbl)lbl.innerHTML='⏳ Uploading...';
   const fd=new FormData();
   fd.append('photo',input.files[0]);
   fd.append('role',role);
   fd.append('csrfmiddlewaretoken',getCookie('csrftoken'));
-  const res=await fetch('/upload-photo/',{method:'POST',body:fd});
-  const data=await res.json();
-  if(data.ok){
-    const img=document.getElementById('photo-'+role);
-    if(img){
-      img.style.display='block';
-      img.src=data.url+'?t='+Date.now();
-      const fallback=img.nextElementSibling;
-      if(fallback&&fallback.style)fallback.style.display='none';
+  try{
+    const res=await fetch('/upload-photo/',{method:'POST',body:fd});
+    const data=await res.json();
+    if(data.ok){
+      const img=document.getElementById('photo-'+role);
+      if(img){img.style.display='block';img.src=data.url+'&t='+Date.now();}
+      const gif=document.getElementById('couple-video-gif');
+      if(gif){gif.src=data.url+'&t='+Date.now();}
+      if(lbl)lbl.innerHTML='✓ Saved!';
+      setTimeout(()=>location.reload(),900);
+    } else{
+      alert('Upload failed: '+(data.error||'unknown error'));
+      if(lbl)lbl.innerHTML=origHTML;
     }
-    if(lbl)lbl.textContent='✓';
-    setTimeout(()=>location.reload(),800);
-  } else{alert('Upload failed');if(lbl)lbl.textContent='📷';}
+  } catch(e){
+    alert('Upload error: '+e.message);
+    if(lbl)lbl.innerHTML=origHTML;
+  }
 }
 function openNameFullEdit(role){
   document.getElementById('fullname-edit-role').value=role;

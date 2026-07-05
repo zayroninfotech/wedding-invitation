@@ -241,11 +241,22 @@ def upload_photo(request):
         if not f:
             return HttpResponse('{"ok":false,"error":"no file"}', content_type='application/json', status=400)
         ext = os.path.splitext(f.name)[1].lower() or '.jpg'
-        save_path = os.path.join('media', 'photos', f'{role}{ext}')
+        save_path = os.path.join('media', 'photos', f'{role}.jpg')
+        ext = '.jpg'
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        with open(save_path, 'wb') as dest:
-            for chunk in f.chunks():
-                dest.write(chunk)
+        try:
+            from PIL import Image
+            import io as _io
+            img = Image.open(f)
+            if img.mode in ('RGBA', 'P', 'LA'):
+                img = img.convert('RGB')
+            img.thumbnail((1200, 1200), Image.LANCZOS)
+            img.save(save_path, 'JPEG', quality=82, optimize=True)
+        except Exception:
+            f.seek(0)
+            with open(save_path, 'wb') as dest:
+                for chunk in f.chunks():
+                    dest.write(chunk)
         import time
         ts = str(int(time.time()))
         url = f'/media/photos/{role}{ext}?v={ts}'
