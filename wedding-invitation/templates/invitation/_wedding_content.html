@@ -66,6 +66,18 @@ async function saveNames(){
     setTimeout(()=>{closeNameEdit();btn.textContent='Save';btn.disabled=false;},800);
   } else {btn.textContent='Error';btn.disabled=false;}
 }
+function openUrlEdit(elemId,key){
+  const el=document.getElementById(elemId);
+  if(!el)return;
+  const cur=el.getAttribute('href')||'';
+  document.getElementById('muhu-modal-label').textContent='✏ Google Maps URL';
+  document.getElementById('muhu-modal-input').value=cur;
+  document.getElementById('muhu-modal').dataset.elemId=elemId;
+  document.getElementById('muhu-modal').dataset.key=key;
+  document.getElementById('muhu-modal').dataset.urlMode='1';
+  document.getElementById('muhu-modal').style.display='flex';
+  setTimeout(()=>document.getElementById('muhu-modal-input').focus(),100);
+}
 function openMuhuEdit(label,elemId,key){
   const el=document.getElementById(elemId);
   if(!el)return;
@@ -93,10 +105,14 @@ async function saveMuhuField(){
   if(res.ok){
     const el=document.getElementById(elemId);
     if(el){
-      // update only text nodes, preserve buttons
-      let set=false;
-      el.childNodes.forEach(n=>{if(n.nodeType===3&&!set){n.textContent=val+' ';set=true;}});
-      if(!set)el.prepend(document.createTextNode(val+' '));
+      if(modal.dataset.urlMode==='1'){
+        el.setAttribute('href',val);
+        delete modal.dataset.urlMode;
+      } else {
+        let set=false;
+        el.childNodes.forEach(n=>{if(n.nodeType===3&&!set){n.textContent=val+' ';set=true;}});
+        if(!set)el.prepend(document.createTextNode(val+' '));
+      }
     }
     btn.textContent='Saved ✓';setTimeout(()=>{closeMuhuEdit();btn.textContent='Save';btn.disabled=false;},700);
   } else{btn.textContent='Error';btn.disabled=false;}
@@ -1057,12 +1073,19 @@ the beginning of our forever.{% endif %}</p>
     <!-- Venue card -->
     <div style="margin-top:3rem;border-radius:1.25rem;padding:1.75rem;text-align:center;border:1px solid rgba(212,160,23,0.35);background:rgba(212,160,23,0.05);">
       <p style="color:rgba(212,160,23,0.65);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.25em;margin-bottom:0.5rem;">Main Venue</p>
-      <h3 style="font-size:1.25rem;font-family:'Palatino Linotype',Georgia,serif;color:#fff;font-weight:700;margin-bottom:0.4rem;">{{ venue.name }}</h3>
-      <p style="color:rgba(147,197,253,0.6);font-size:0.875rem;margin-bottom:1.25rem;">{{ venue.address }}</p>
-      <a href="https://maps.google.com/?q=Shubhasree+Gardens+Secunderabad" target="_blank" rel="noopener noreferrer"
+      <h3 style="font-size:1.25rem;font-family:'Palatino Linotype',Georgia,serif;color:#fff;font-weight:700;margin-bottom:0.4rem;">
+        <span id="venue-name">{{ venue_name_display }}</span>
+        {% if is_dashboard %}<button onclick="openMuhuEdit('Venue Name','venue-name','venue_name_display')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.7rem;padding:0 0 0 4px;">✏</button>{% endif %}
+      </h3>
+      <p style="color:rgba(147,197,253,0.6);font-size:0.875rem;margin-bottom:1.25rem;">
+        <span id="venue-address">{{ venue_address_display }}</span>
+        {% if is_dashboard %}<button onclick="openMuhuEdit('Venue Address','venue-address','venue_address_display')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.7rem;padding:0 0 0 4px;">✏</button>{% endif %}
+      </p>
+      <a id="venue-maps-link" href="{{ venue_maps_url }}" target="_blank" rel="noopener noreferrer"
          style="display:inline-block;padding:0.6rem 1.5rem;background:linear-gradient(135deg,#D4A017,#B8860B);color:#fff;border-radius:2rem;font-size:0.85rem;font-weight:600;text-decoration:none;letter-spacing:0.05em;">
         📍 Open in Google Maps
       </a>
+      {% if is_dashboard %}<div style="margin-top:0.5rem;"><button onclick="openUrlEdit('venue-maps-link','venue_maps_url')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.7rem;padding:0;">✏ Edit Maps URL</button></div>{% endif %}
     </div>
   </div>
 </section>
