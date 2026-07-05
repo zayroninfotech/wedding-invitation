@@ -419,151 +419,155 @@ async function saveOverlayText(){
     <div style="position:absolute;inset:0;pointer-events:none;opacity:0.05;background-image:repeating-linear-gradient(45deg,#D4A017 0px,#D4A017 1px,transparent 0,transparent 50%);background-size:20px 20px;"></div>
 
     <div style="max-width:1024px;margin:0 auto;position:relative;z-index:3;">
-      <!-- 3-col: groom | centre | bride -->
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:1.5rem;">
+      <!-- Doves -->
+      <div style="position:absolute;left:10px;top:0;font-size:3rem;opacity:0.55;animation:floatDove 4s ease-in-out infinite;pointer-events:none;transform:scaleX(-1);">🕊</div>
+      <div style="position:absolute;right:10px;top:20px;font-size:2.2rem;opacity:0.45;animation:floatDove 5s ease-in-out infinite reverse;pointer-events:none;">🕊</div>
 
-        <!-- Groom photo (desktop) -->
-        <div class="desktop-only" style="flex-shrink:0;">
-          {% include "invitation/partials/person_frame.html" with photo=groom.photo name=groom.name role="Groom" %}
+      <!-- Full-width centre -->
+      <div style="text-align:center;padding:0 1rem;">
+
+        <!-- Tagline with decorations -->
+        <p style="font-family:'Palatino Linotype',serif;font-style:italic;font-size:clamp(1.1rem,2.5vw,1.8rem);color:#D4A017;text-shadow:0 2px 12px rgba(212,160,23,0.4);margin-bottom:0.6rem;display:inline-flex;align-items:center;justify-content:center;gap:0.6rem;flex-wrap:wrap;">
+          <span style="opacity:0.6;font-size:0.85em;">✦ ♡ ✦</span>
+          <span id="hero-tagline">{% if hero_tagline %}{{ hero_tagline }}{% else %}We're Getting Married{% endif %}</span>
+          <span style="opacity:0.6;font-size:0.85em;">✦ ♡ ✦</span>
+          {% if is_dashboard %}<button onclick="openHeroEdit('tagline')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.5);font-size:0.75rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
+        </p>
+
+        <!-- OM -->
+        <div style="font-size:2rem;margin-bottom:0.5rem;filter:drop-shadow(0 0 16px rgba(255,179,0,0.6));">ॐ</div>
+
+        <!-- V/A Monogram diamond -->
+        <div style="display:flex;align-items:center;justify-content:center;margin-bottom:0.75rem;">
+          <div style="width:72px;height:72px;border:2px solid rgba(212,160,23,0.75);transform:rotate(45deg);display:flex;align-items:center;justify-content:center;background:rgba(212,160,23,0.07);box-shadow:0 0 24px rgba(212,160,23,0.3),inset 0 0 12px rgba(212,160,23,0.05);">
+            <span style="transform:rotate(-45deg);font-family:'Palatino Linotype',serif;font-size:1rem;color:#D4A017;letter-spacing:-1px;font-weight:bold;">V/A</span>
+          </div>
         </div>
 
-        <!-- Centre content -->
-        <div style="flex:1;text-align:center;">
-          <p style="font-family:'Palatino Linotype',serif;font-style:italic;font-size:clamp(1.4rem,3vw,2.5rem);color:#D4A017;text-shadow:0 2px 12px rgba(212,160,23,0.4);margin-bottom:1rem;display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;">
-            <span id="hero-tagline">{% if hero_tagline %}{{ hero_tagline }}{% else %}We're Getting Married{% endif %}</span>
-            {% if is_dashboard %}<button onclick="openHeroEdit('tagline')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.5);font-size:0.75rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
-          </p>
+        <!-- Couple names UPPERCASE -->
+        <div style="display:inline-flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1rem;position:relative;flex-wrap:wrap;">
+          <h1 style="font-family:'Palatino Linotype',serif;font-size:clamp(2rem,5vw,3.5rem);color:#fff;text-shadow:0 2px 20px rgba(0,0,0,0.5);letter-spacing:0.12em;text-transform:uppercase;margin:0;">
+            <span id="hero-groom-name">{{ groom.first_name }}</span>
+          </h1>
+          <span style="font-family:'Palatino Linotype',serif;font-size:clamp(1.25rem,3vw,2rem);color:#D4A017;font-style:italic;">Weds</span>
+          <h1 style="font-family:'Palatino Linotype',serif;font-size:clamp(2rem,5vw,3.5rem);color:#fff;text-shadow:0 2px 20px rgba(0,0,0,0.5);letter-spacing:0.12em;text-transform:uppercase;margin:0;">
+            <span id="hero-bride-name">{{ bride.first_name }}</span>
+          </h1>
+          {% if is_dashboard %}<button onclick="openHeroEdit('names')" style="position:absolute;top:-4px;right:-28px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:0.8rem;padding:0;pointer-events:auto;" title="Edit names">✏</button>{% endif %}
+        </div>
 
-          <div style="font-size:2.5rem;margin-bottom:0.75rem;filter:drop-shadow(0 0 16px rgba(255,179,0,0.6));">ॐ</div>
+        <!-- Invitation text -->
+        <div style="position:relative;display:inline-block;max-width:440px;margin:0 auto 1.5rem;">
+          <p id="hero-invite-text" style="font-family:Georgia,serif;font-size:clamp(0.8rem,1.5vw,1rem);color:rgba(255,255,255,0.65);line-height:1.8;font-style:italic;white-space:pre-line;">{% if hero_invite %}{{ hero_invite }}{% else %}Together with our beloved families,
+we joyfully invite you to celebrate
+the beginning of our forever.{% endif %}</p>
+          {% if is_dashboard %}<button onclick="openHeroEdit('invite')" style="position:absolute;top:-4px;right:-24px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:0.75rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
+        </div>
 
-          <!-- Couple names -->
-          <div style="display:inline-flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1.25rem;position:relative;">
-            <h1 style="font-family:'Palatino Linotype',serif;font-size:clamp(2rem,5vw,3.5rem);color:#fff;text-shadow:0 2px 20px rgba(0,0,0,0.5);">
-              <span id="hero-groom-name">{{ groom.first_name }}</span>
-            </h1>
-            <span style="font-family:'Palatino Linotype',serif;font-size:clamp(1.25rem,3vw,2rem);color:#D4A017;font-style:italic;">Weds</span>
-            <h1 style="font-family:'Palatino Linotype',serif;font-size:clamp(2rem,5vw,3.5rem);color:#fff;text-shadow:0 2px 20px rgba(0,0,0,0.5);">
-              <span id="hero-bride-name">{{ bride.first_name }}</span>
-            </h1>
-            {% if is_dashboard %}<button onclick="openHeroEdit('names')" style="position:absolute;top:-4px;right:-28px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:0.8rem;padding:0;pointer-events:auto;" title="Edit names">✏</button>{% endif %}
-          </div>
+        <!-- Three-column: Date card | Circular couple photo | Venue card -->
+        <div style="display:grid;grid-template-columns:1fr clamp(160px,28vw,230px) 1fr;gap:1.25rem;align-items:center;margin:0 auto 1.5rem;max-width:860px;">
 
-          <!-- Invitation text -->
-          <div style="position:relative;display:inline-block;max-width:520px;margin:0 auto 1.5rem;">
-            <p id="hero-invite-text" style="font-family:Georgia,serif;font-size:clamp(0.8rem,1.5vw,1rem);color:rgba(255,255,255,0.65);line-height:1.8;font-style:italic;white-space:pre-line;">{% if hero_invite %}{{ hero_invite }}{% else %}Together with our families,
-we request the honour of your presence
-to celebrate our wedding ceremony.{% endif %}</p>
-            {% if is_dashboard %}<button onclick="openHeroEdit('invite')" style="position:absolute;top:-4px;right:-24px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:0.75rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
-          </div>
-
-          <!-- Date & time -->
-          <div style="display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;margin-bottom:0.35rem;flex-wrap:wrap;">
-            <p style="font-size:clamp(0.9rem,1.8vw,1.1rem);color:rgba(255,255,255,0.9);font-family:Georgia,serif;margin:0;">
-              <span id="hero-date">{% if hero_date %}{{ hero_date }}{% else %}{{ w.wedding_date }}{% endif %}</span>&nbsp;&bull;&nbsp;<span id="hero-city">{% if hero_city %}{{ hero_city }}{% else %}{{ w.wedding_city }}{% endif %}</span>
+          <!-- Date card -->
+          <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(212,160,23,0.3);border-radius:14px;padding:1.25rem 0.75rem;text-align:center;">
+            <div style="font-size:1.4rem;margin-bottom:0.35rem;">📅</div>
+            <p style="color:rgba(212,160,23,0.6);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.2rem;">
+              {% if hero_date %}{{ hero_date }}{% else %}{{ w.wedding_date }}{% endif %}
+              {% if is_dashboard %}<button onclick="openHeroEdit('date')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.5);font-size:0.6rem;padding:0;pointer-events:auto;">✏</button>{% endif %}
             </p>
+            <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.35),transparent);margin:0.4rem 0;"></div>
+            <p style="color:rgba(255,255,255,0.45);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.1rem;">Muhurtham</p>
+            <p style="color:rgba(255,255,255,0.85);font-family:Georgia,serif;font-size:0.8rem;">11:25 AM</p>
+          </div>
+
+          <!-- Circular couple photo -->
+          <div id="couple-card" style="position:relative;border-radius:50%;overflow:hidden;border:3px solid rgba(212,160,23,0.8);box-shadow:0 0 50px rgba(212,160,23,0.45),0 0 100px rgba(212,160,23,0.15),0 16px 40px rgba(0,0,0,0.7);aspect-ratio:1/1;width:100%;">
+            {% if couple_video_url %}
+              {% if couple_video_ext == '.gif' %}
+              <img id="couple-video-gif" src="{{ couple_video_url }}" alt="Couple" style="width:100%;height:100%;display:block;object-fit:cover;">
+              {% else %}
+              <video id="couple-video" src="{{ couple_video_url }}" autoplay loop playsinline style="width:100%;height:100%;display:block;object-fit:cover;" onclick="this.muted=!this.muted;document.getElementById('sound-btn').textContent=this.muted?'🔇':'🔊';"></video>
+              <button id="sound-btn" onclick="var v=document.getElementById('couple-video');v.muted=!v.muted;this.textContent=v.muted?'🔇':'🔊';" style="position:absolute;bottom:8px;right:8px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.8rem;">🔊</button>
+              {% endif %}
+            {% else %}
+            <img id="photo-couple" src="{{ w.couple_photo }}" alt="{{ groom.first_name }} &amp; {{ bride.first_name }}"
+                 style="width:100%;height:100%;display:block;object-fit:cover;"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <div id="couple-fallback" style="display:none;width:100%;height:100%;background:linear-gradient(135deg,#8B1A35,#D4A017);"></div>
+            {% endif %}
+            <video id="couple-video-hidden" style="display:none;width:100%;"></video>
             {% if is_dashboard %}
-            <button onclick="openHeroEdit('date')" style="padding:0.15rem 0.5rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);border-radius:0.4rem;cursor:pointer;color:rgba(255,255,255,0.8);font-size:0.65rem;pointer-events:auto;" title="Edit date">✏ Date</button>
-            <button onclick="openHeroEdit('city')" style="padding:0.15rem 0.5rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);border-radius:0.4rem;cursor:pointer;color:rgba(255,255,255,0.8);font-size:0.65rem;pointer-events:auto;" title="Edit city">✏ City</button>
+            <label title="Change photo" style="position:absolute;top:8px;right:8px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.8rem;">📷
+              <input type="file" accept="image/*" style="display:none;" onchange="uploadPhoto(this,'couple')">
+            </label>
+            <label title="Upload video or GIF" style="position:absolute;top:8px;right:44px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.8rem;">🎬
+              <input type="file" accept="video/*,image/gif,.gif" style="display:none;" onchange="uploadCoupleVideo(this)">
+            </label>
             {% endif %}
           </div>
 
-          <!-- Venue with pin -->
-          <p style="font-size:0.9rem;color:rgba(212,160,23,0.85);margin-bottom:1.5rem;display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;">
-            📍 <span id="hero-venue">{% if hero_venue %}{{ hero_venue }}{% else %}{{ venue.name }}{% endif %}</span>
-            {% if is_dashboard %}<button onclick="openHeroEdit('venue')" style="padding:0.15rem 0.5rem;background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.4);border-radius:0.4rem;cursor:pointer;color:rgba(212,160,23,0.9);font-size:0.65rem;pointer-events:auto;" title="Edit venue">✏ Venue</button>{% endif %}
-          </p>
-
-          <div style="height:1px;width:75%;margin:0 auto 1.5rem;background:linear-gradient(90deg,transparent,#D4A017,transparent);"></div>
-
-          <!-- CTA Buttons -->
-          <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
-            <a href="#events" style="padding:0.6rem 1.5rem;border:1.5px solid rgba(212,160,23,0.7);border-radius:50px;color:#D4A017;font-family:Georgia,serif;font-size:0.85rem;text-decoration:none;letter-spacing:0.08em;transition:all 0.2s;background:rgba(212,160,23,0.08);"
-               onmouseover="this.style.background='rgba(212,160,23,0.2)'" onmouseout="this.style.background='rgba(212,160,23,0.08)'">
-              Save the Date
-            </a>
-            <a href="{{ w.invite_pdf|default:'#' }}" style="padding:0.6rem 1.5rem;border-radius:50px;color:#060E24;font-family:Georgia,serif;font-size:0.85rem;text-decoration:none;letter-spacing:0.08em;background:linear-gradient(90deg,#D4A017,#FFB300);font-weight:bold;transition:all 0.2s;"
-               onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
-              View Invitation
-            </a>
-          </div>
-
-          <div style="height:1px;width:75%;margin:0 auto 1rem;background:linear-gradient(90deg,transparent,#D4A017,transparent);"></div>
-
-          <!-- Couple photo / video -->
-          <div style="display:flex;justify-content:center;margin-bottom:1.5rem;">
-            <div id="couple-card" style="position:relative;width:clamp(220px,35vw,320px);border-radius:1.5rem;overflow:hidden;border:3px solid rgba(212,160,23,0.7);box-shadow:0 0 60px rgba(212,160,23,0.3),0 16px 60px rgba(0,0,0,0.6);">
-              {% if couple_video_url %}
-                {% if couple_video_ext == '.gif' %}
-                <img id="couple-video-gif" src="{{ couple_video_url }}" alt="Couple" style="width:100%;display:block;object-fit:cover;">
-                {% else %}
-                <video id="couple-video" src="{{ couple_video_url }}" autoplay loop playsinline style="width:100%;display:block;" onclick="this.muted=!this.muted;document.getElementById('sound-btn').textContent=this.muted?'🔇':'🔊';"></video>
-                <!-- Sound toggle -->
-                <button id="sound-btn" onclick="var v=document.getElementById('couple-video');v.muted=!v.muted;this.textContent=v.muted?'🔇':'🔊';" style="position:absolute;bottom:44px;right:8px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.85rem;">🔊</button>
-                {% endif %}
-              {% else %}
-              <img id="photo-couple" src="{{ w.couple_photo }}" alt="{{ groom.first_name }} &amp; {{ bride.first_name }}"
-                   style="width:100%;display:block;"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-              <div id="couple-fallback" style="display:none;height:300px;background:linear-gradient(135deg,#8B1A35,#D4A017);"></div>
-              {% endif %}
-              <video id="couple-video-hidden" style="display:none;width:100%;"></video>
-              <div class="corner-accent tl"></div><div class="corner-accent tr"></div>
-              <div class="corner-accent bl"></div><div class="corner-accent br"></div>
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:0.6rem;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,0.75));">
-                <p style="color:#fff;font-size:0.8rem;font-family:Georgia,serif;letter-spacing:0.18em;text-shadow:0 1px 6px rgba(0,0,0,0.8);">
-                  <span class="live-groom-name">{{ groom.first_name }}</span> <span style="color:#D4A017;">✦</span> <span class="live-bride-name">{{ bride.first_name }}</span>
-                </p>
-              </div>
-              {% if is_dashboard %}
-              <label title="Change photo" style="position:absolute;top:8px;right:8px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.85rem;">📷
-                <input type="file" accept="image/*" style="display:none;" onchange="uploadPhoto(this,'couple')">
-              </label>
-              <label title="Upload video or GIF" style="position:absolute;top:8px;right:46px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.85rem;">🎬
-                <input type="file" accept="video/*,image/gif,.gif" style="display:none;" onchange="uploadCoupleVideo(this)">
-              </label>
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- Sacred quote -->
-          <div style="position:relative;display:inline-block;max-width:28rem;margin:0 auto 1.5rem;padding:0 1rem;">
-            <p id="hero-sacred-quote" style="font-size:0.85rem;font-style:italic;color:rgba(255,255,255,0.6);font-family:Georgia,serif;line-height:1.6;">
-              {% if hero_sacred_quote %}{{ hero_sacred_quote }}{% else %}{{ w.sacred_quote }}{% endif %}
+          <!-- Venue card -->
+          <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(212,160,23,0.3);border-radius:14px;padding:1.25rem 0.75rem;text-align:center;">
+            <div style="font-size:1.4rem;margin-bottom:0.35rem;">📍</div>
+            <p style="color:#D4A017;font-size:0.8rem;font-family:Georgia,serif;font-weight:600;margin-bottom:0.15rem;">
+              <span id="hero-venue">{% if hero_venue %}{{ hero_venue }}{% else %}{{ venue.name }}{% endif %}</span>
+              {% if is_dashboard %}<button onclick="openHeroEdit('venue')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.5);font-size:0.6rem;padding:0;pointer-events:auto;">✏</button>{% endif %}
             </p>
-            {% if is_dashboard %}<button onclick="openHeroEdit('sacred_quote')" style="position:absolute;top:-2px;right:0;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.35);font-size:0.7rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
-          </div>
-
-          <!-- Mobile photos row -->
-          <div class="mobile-only" style="justify-content:center;gap:1.5rem;margin-bottom:1.5rem;">
-            {% include "invitation/partials/person_frame.html" with photo=groom.photo name=groom.first_name role="Groom" %}
-            {% include "invitation/partials/person_frame.html" with photo=bride.photo name=bride.first_name role="Bride" %}
-          </div>
-
-          <!-- Countdown -->
-          <div style="margin-bottom:1.5rem;">
-            <p style="font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,160,23,0.55);margin-bottom:0.75rem;display:inline-flex;align-items:center;gap:0.4rem;">
-              ✦ Counting down to the big day ✦
-              {% if is_dashboard %}<button onclick="openHeroEdit('countdown_date')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.7rem;padding:0;pointer-events:auto;" title="Edit date">✏</button>{% endif %}
+            <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.35),transparent);margin:0.4rem 0;"></div>
+            <p style="color:rgba(255,255,255,0.55);font-size:0.68rem;margin-bottom:0.15rem;">
+              <span id="hero-city">{% if hero_city %}{{ hero_city }}{% else %}{{ w.wedding_city }}{% endif %}</span>
+              {% if is_dashboard %}<button onclick="openHeroEdit('city')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.5);font-size:0.6rem;padding:0;pointer-events:auto;">✏</button>{% endif %}
             </p>
-            <div id="countdown" data-target="{{ wedding_date_iso }}" style="display:flex;align-items:flex-end;gap:0.75rem;justify-content:center;">
-              <div class="countdown-box"><span class="num" id="cd-days">00</span><span class="lbl">Days</span></div>
-              <span class="countdown-sep">:</span>
-              <div class="countdown-box"><span class="num" id="cd-hours">00</span><span class="lbl">Hours</span></div>
-              <span class="countdown-sep">:</span>
-              <div class="countdown-box"><span class="num" id="cd-mins">00</span><span class="lbl">Mins</span></div>
-              <span class="countdown-sep">:</span>
-              <div class="countdown-box"><span class="num" id="cd-secs">00</span><span class="lbl">Secs</span></div>
-            </div>
+            <p style="color:rgba(255,255,255,0.35);font-size:0.62rem;font-style:italic;">Reception to follow</p>
           </div>
 
-        </div><!-- /centre -->
+        </div><!-- /3-col grid -->
 
-        <!-- Bride photo (desktop) -->
-        <div class="desktop-only" style="flex-shrink:0;">
-          {% include "invitation/partials/person_frame.html" with photo=bride.photo name=bride.name role="Bride" %}
+        <!-- CTA Buttons -->
+        <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+          <a href="#events" style="padding:0.65rem 1.75rem;border:1.5px solid rgba(212,160,23,0.7);border-radius:50px;color:#D4A017;font-family:Georgia,serif;font-size:0.85rem;text-decoration:none;letter-spacing:0.08em;transition:all 0.2s;background:rgba(212,160,23,0.08);display:inline-flex;align-items:center;gap:0.4rem;"
+             onmouseover="this.style.background='rgba(212,160,23,0.2)'" onmouseout="this.style.background='rgba(212,160,23,0.08)'">
+            📅 SAVE THE DATE
+          </a>
+          <a href="#" style="padding:0.65rem 1.75rem;border-radius:50px;color:#060E24;font-family:Georgia,serif;font-size:0.85rem;text-decoration:none;letter-spacing:0.08em;background:linear-gradient(90deg,#D4A017,#FFB300);font-weight:bold;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;"
+             onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+            ✉ VIEW INVITATION
+          </a>
         </div>
 
-      </div><!-- /3-col -->
+        <div style="height:1px;width:60%;margin:0 auto 1.25rem;background:linear-gradient(90deg,transparent,#D4A017,transparent);"></div>
+
+        <!-- Countdown -->
+        <div style="margin-bottom:1.5rem;">
+          <p style="font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,160,23,0.6);margin-bottom:0.75rem;display:inline-flex;align-items:center;gap:0.4rem;">
+            ✦ Wedding Begins In ✦
+            {% if is_dashboard %}<button onclick="openHeroEdit('countdown_date')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.7rem;padding:0;pointer-events:auto;" title="Edit date">✏</button>{% endif %}
+          </p>
+          <div id="countdown" data-target="{{ wedding_date_iso }}" style="display:flex;align-items:flex-end;gap:0.75rem;justify-content:center;">
+            <div class="countdown-box"><span class="num" id="cd-days">00</span><span class="lbl">Days</span></div>
+            <span class="countdown-sep">:</span>
+            <div class="countdown-box"><span class="num" id="cd-hours">00</span><span class="lbl">Hours</span></div>
+            <span class="countdown-sep">:</span>
+            <div class="countdown-box"><span class="num" id="cd-mins">00</span><span class="lbl">Mins</span></div>
+            <span class="countdown-sep">:</span>
+            <div class="countdown-box"><span class="num" id="cd-secs">00</span><span class="lbl">Secs</span></div>
+          </div>
+        </div>
+
+        <!-- Sacred quote -->
+        <div style="position:relative;display:inline-block;max-width:28rem;margin:0 auto 1rem;padding:0 1rem;">
+          <p id="hero-sacred-quote" style="font-size:0.82rem;font-style:italic;color:rgba(255,255,255,0.5);font-family:Georgia,serif;line-height:1.6;">
+            {% if hero_sacred_quote %}{{ hero_sacred_quote }}{% else %}{{ w.sacred_quote }}{% endif %}
+          </p>
+          {% if is_dashboard %}<button onclick="openHeroEdit('sacred_quote')" style="position:absolute;top:-2px;right:0;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.35);font-size:0.7rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
+        </div>
+
+        <!-- Mobile groom/bride photos -->
+        <div class="mobile-only" style="justify-content:center;gap:1.5rem;margin-bottom:1.5rem;">
+          {% include "invitation/partials/person_frame.html" with photo=groom.photo name=groom.first_name role="Groom" %}
+          {% include "invitation/partials/person_frame.html" with photo=bride.photo name=bride.first_name role="Bride" %}
+        </div>
+
+      </div><!-- /full-width centre -->
 
       <!-- Muhurtham strip -->
       <div style="margin-top:2.5rem;border-radius:1rem;padding:1rem 1.5rem;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem;text-align:center;background:rgba(0,0,0,0.25);border:1px solid rgba(212,160,23,0.25);">
@@ -628,6 +632,8 @@ to celebrate our wedding ceremony.{% endif %}</p>
     @keyframes scrollPulse{0%,100%{opacity:0.4;}50%{opacity:0.9;}}
     @keyframes scrollWheel{0%{top:5px;opacity:1;}80%{top:18px;opacity:0;}100%{top:5px;opacity:0;}}
     @keyframes scrollArrow{0%,100%{opacity:0;transform:rotate(45deg) translateY(-4px);}50%{opacity:1;transform:rotate(45deg) translateY(2px);}}
+    @keyframes floatDove{0%,100%{transform:scaleX(-1) translateY(0);}50%{transform:scaleX(-1) translateY(-12px);}}
+    @keyframes floatDoveR{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
     </style>
   </div>
 
