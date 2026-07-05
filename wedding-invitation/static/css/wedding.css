@@ -1,6 +1,25 @@
 /* ── Reset & Base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ── Lantern animations ── */
+@keyframes swingLantern {
+  0%,100% { transform: rotate(-4deg); }
+  50%      { transform: rotate(4deg); }
+}
+@keyframes swingLanternR {
+  0%,100% { transform: rotate(4deg); }
+  50%      { transform: rotate(-4deg); }
+}
+@keyframes glowPulse {
+  0%,100% { filter: drop-shadow(0 0 12px rgba(212,160,23,0.45)) brightness(1); }
+  50%     { filter: drop-shadow(0 0 38px rgba(255,179,0,0.95)) brightness(1.25); }
+}
+@keyframes sparkFall {
+  0%   { opacity:0; transform:translateY(0) scale(1); }
+  40%  { opacity:1; }
+  100% { opacity:0; transform:translateY(28px) scale(0.4); }
+}
+
 :root {
   --gold: #D4A017;
   --gold-light: #FFB300;

@@ -431,12 +431,23 @@ async function saveOverlayText(){
     <div style=”position:absolute;inset:0;pointer-events:none;opacity:0.05;background-image:repeating-linear-gradient(45deg,#D4A017 0px,#D4A017 1px,transparent 0,transparent 50%);background-size:20px 20px;”></div>
 
     <div style="max-width:1024px;margin:0 auto;position:relative;z-index:3;">
-      <!-- Side decoration images -->
-      <div style="position:absolute;left:0;top:0;pointer-events:none;z-index:2;">
-        <img src="{% static 'images/hero_side.png' %}" alt="" style="width:clamp(80px,12vw,150px);opacity:0.92;filter:drop-shadow(0 0 20px rgba(212,160,23,0.3));transform:scaleX(-1);">
+      <!-- Left lantern -->
+      <div style="position:absolute;left:4px;top:0;pointer-events:none;z-index:2;transform-origin:top center;animation:swingLantern 4s ease-in-out infinite;">
+        <img src="{% static 'images/hero_side.png' %}" alt="" style="width:98px;display:block;transform:scaleX(-1);animation:glowPulse 2.5s ease-in-out infinite;">
+        <div style="position:relative;height:0;">
+          <span style="position:absolute;left:30px;top:-10px;width:4px;height:4px;border-radius:50%;background:#FFB300;animation:sparkFall 2.5s ease-in-out infinite;opacity:0;"></span>
+          <span style="position:absolute;left:50px;top:-5px;width:3px;height:3px;border-radius:50%;background:#D4A017;animation:sparkFall 2.5s ease-in-out infinite 0.6s;opacity:0;"></span>
+          <span style="position:absolute;left:20px;top:-8px;width:2px;height:2px;border-radius:50%;background:#FFD700;animation:sparkFall 2.5s ease-in-out infinite 1.2s;opacity:0;"></span>
+        </div>
       </div>
-      <div style="position:absolute;right:0;top:0;pointer-events:none;z-index:2;">
-        <img src="{% static 'images/hero_side.png' %}" alt="" style="width:clamp(80px,12vw,150px);opacity:0.92;filter:drop-shadow(0 0 20px rgba(212,160,23,0.3));">
+      <!-- Right lantern -->
+      <div style="position:absolute;right:4px;top:0;pointer-events:none;z-index:2;transform-origin:top center;animation:swingLanternR 4s ease-in-out infinite;">
+        <img src="{% static 'images/hero_side.png' %}" alt="" style="width:98px;display:block;animation:glowPulse 2.5s ease-in-out infinite 0.8s;">
+        <div style="position:relative;height:0;">
+          <span style="position:absolute;left:30px;top:-10px;width:4px;height:4px;border-radius:50%;background:#FFB300;animation:sparkFall 2.5s ease-in-out infinite 0.3s;opacity:0;"></span>
+          <span style="position:absolute;left:50px;top:-5px;width:3px;height:3px;border-radius:50%;background:#D4A017;animation:sparkFall 2.5s ease-in-out infinite 0.9s;opacity:0;"></span>
+          <span style="position:absolute;left:20px;top:-8px;width:2px;height:2px;border-radius:50%;background:#FFD700;animation:sparkFall 2.5s ease-in-out infinite 1.5s;opacity:0;"></span>
+        </div>
       </div>
 
       <!-- Full-width centre -->
