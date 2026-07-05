@@ -131,6 +131,7 @@ def dashboard(request):
         'w': w,
         'groom': groom,
         'bride': bride,
+        'fam_blessing': get_setting('fam_blessing', 'May the divine bless this union with love, prosperity, and happiness forever'),
         'venue': w['venue'],
         'events': w['events'],
         'youtube': {
@@ -238,7 +239,7 @@ def save_names(request):
         for key in ['overlay_text','hero_tagline','hero_invite','hero_date','hero_city','hero_venue','hero_sacred_quote','hero_countdown_date','hero_hashtag',
                     'hero_muhu_muhurtham','hero_muhu_nakshatra','hero_muhu_tithi','hero_muhu_venue',
                     'fam_groom_name','fam_groom_father','fam_groom_mother','fam_groom_city',
-                    'fam_bride_name','fam_bride_father','fam_bride_mother','fam_bride_city',
+                    'fam_bride_name','fam_bride_father','fam_bride_mother','fam_bride_city','fam_blessing',
                     'yt_video_id','yt_embed_url','yt_channel_url','yt_channel_name','yt_live_date']:
             val = data.get(key, '').strip()
             if val:

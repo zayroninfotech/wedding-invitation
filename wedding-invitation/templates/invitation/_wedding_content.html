@@ -1015,7 +1015,7 @@ the beginning of our forever.{% endif %}</p>
     <!-- Bottom blessing strip -->
     <div style="margin-top:2.5rem;border:1px solid rgba(212,160,23,0.3);border-radius:0.75rem;padding:0.9rem 2rem;background:rgba(212,160,23,0.05);display:flex;align-items:center;justify-content:center;gap:1rem;">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="#D4A017" opacity="0.6"><path d="M12,2 C7,2 3,7 3,12 C3,14.5 4,16.8 5.8,18.4 L7,17.2 C5.7,15.9 5,14 5,12 C5,8.1 8.1,5 12,5 C15.9,5 19,8.1 19,12 C19,14 18.3,15.9 17,17.2 L18.2,18.4 C20,16.8 21,14.5 21,12 C21,7 17,2 12,2 Z M12,7 L10,11 L6,11 L9.5,13.5 L8,18 L12,15 L16,18 L14.5,13.5 L18,11 L14,11 Z"/></svg>
-      <p style="color:rgba(212,160,23,0.75);font-size:0.85rem;font-style:italic;margin:0;">&ldquo;May the divine bless this union with love, prosperity, and happiness forever&rdquo;</p>
+      <p style="color:rgba(212,160,23,0.75);font-size:0.85rem;font-style:italic;margin:0;">&ldquo;<span id="fam-blessing">{{ fam_blessing }}</span>&rdquo;{% if is_dashboard %}<button onclick="openMuhuEdit('Blessing Text','fam-blessing','fam_blessing')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.7rem;padding:0 0 0 4px;">✏</button>{% endif %}</p>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="#D4A017" opacity="0.6"><path d="M12,2 C7,2 3,7 3,12 C3,14.5 4,16.8 5.8,18.4 L7,17.2 C5.7,15.9 5,14 5,12 C5,8.1 8.1,5 12,5 C15.9,5 19,8.1 19,12 C19,14 18.3,15.9 17,17.2 L18.2,18.4 C20,16.8 21,14.5 21,12 C21,7 17,2 12,2 Z M12,7 L10,11 L6,11 L9.5,13.5 L8,18 L12,15 L16,18 L14.5,13.5 L18,11 L14,11 Z"/></svg>
     </div>
   </div>
