@@ -537,7 +537,11 @@ the beginning of our forever.{% endif %}</p>
           </div>
 
           <!-- Venue card -->
-          <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(212,160,23,0.3);border-radius:14px;padding:1.25rem 0.75rem;text-align:center;">
+          <div style="position:relative;background:linear-gradient(160deg,rgba(6,14,36,0.9),rgba(13,27,75,0.85));border:2px solid rgba(212,160,23,0.7);border-radius:14px;padding:1.25rem 0.75rem;text-align:center;box-shadow:0 0 24px rgba(212,160,23,0.2),inset 0 0 20px rgba(212,160,23,0.04);">
+            <span style="position:absolute;top:5px;left:5px;width:14px;height:14px;border-top:2px solid #D4A017;border-left:2px solid #D4A017;"></span>
+            <span style="position:absolute;top:5px;right:5px;width:14px;height:14px;border-top:2px solid #D4A017;border-right:2px solid #D4A017;"></span>
+            <span style="position:absolute;bottom:5px;left:5px;width:14px;height:14px;border-bottom:2px solid #D4A017;border-left:2px solid #D4A017;"></span>
+            <span style="position:absolute;bottom:5px;right:5px;width:14px;height:14px;border-bottom:2px solid #D4A017;border-right:2px solid #D4A017;"></span>
             <div style="font-size:1.4rem;margin-bottom:0.35rem;">📍</div>
             <p style="color:#D4A017;font-size:0.8rem;font-family:Georgia,serif;font-weight:600;margin-bottom:0.15rem;">
               <span id="hero-venue">{% if hero_venue %}{{ hero_venue }}{% else %}{{ venue.name }}{% endif %}</span>
