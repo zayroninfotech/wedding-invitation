@@ -511,41 +511,80 @@ the beginning of our forever.{% endif %}</p>
           </div>
 
           <!-- Circular couple photo -->
-          <div style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;">
-          <!-- Ornate gold frame wrapper -->
-          <div style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:100%;">
-            <!-- Outer decorative ring -->
-            <div style="position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(212,160,23,0.35);pointer-events:none;z-index:3;"></div>
-            <!-- Mid decorative ring -->
-            <div style="position:absolute;inset:-4px;border-radius:50%;border:3px solid rgba(212,160,23,0.6);box-shadow:0 0 18px rgba(212,160,23,0.5),inset 0 0 12px rgba(212,160,23,0.1);pointer-events:none;z-index:3;"></div>
-            <!-- Decorative dots at cardinal points -->
-            <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,#FFD700,#D4A017);box-shadow:0 0 8px rgba(212,160,23,0.9);z-index:4;pointer-events:none;"></div>
-            <div style="position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,#FFD700,#D4A017);box-shadow:0 0 8px rgba(212,160,23,0.9);z-index:4;pointer-events:none;"></div>
-            <div style="position:absolute;left:-10px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,#FFD700,#D4A017);box-shadow:0 0 8px rgba(212,160,23,0.9);z-index:4;pointer-events:none;"></div>
-            <div style="position:absolute;right:-10px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,#FFD700,#D4A017);box-shadow:0 0 8px rgba(212,160,23,0.9);z-index:4;pointer-events:none;"></div>
-          <div id="couple-card" style="position:relative;border-radius:50%;overflow:hidden;border:4px solid #D4A017;box-shadow:0 0 0 3px rgba(212,160,23,0.25),0 0 35px rgba(212,160,23,0.7),0 0 70px rgba(212,160,23,0.3),inset 0 0 30px rgba(212,160,23,0.12);aspect-ratio:1/1;width:100%;">
-            {% if couple_video_url %}
-              {% if couple_video_ext == '.gif' or couple_video_ext == '.jpg' or couple_video_ext == '.jpeg' or couple_video_ext == '.png' or couple_video_ext == '.webp' %}
-              <img id="couple-video-gif" src="{{ couple_video_url }}" alt="Couple" style="width:100%;height:100%;display:block;object-fit:cover;">
-              {% else %}
-              <video id="couple-video" src="{{ couple_video_url }}" autoplay loop playsinline style="width:100%;height:100%;display:block;object-fit:cover;" onclick="this.muted=!this.muted;document.getElementById('sound-btn').textContent=this.muted?'🔇':'🔊';"></video>
-              <button id="sound-btn" onclick="var v=document.getElementById('couple-video');v.muted=!v.muted;this.textContent=v.muted?'🔇':'🔊';" style="position:absolute;bottom:8px;right:8px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.8rem;">🔊</button>
-              {% endif %}
-            {% else %}
-            <img id="photo-couple" src="{{ w.couple_photo }}" alt="{{ groom.first_name }} &amp; {{ bride.first_name }}"
-                 style="width:100%;height:100%;display:block;object-fit:cover;"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-            <div id="couple-fallback" style="display:none;width:100%;height:100%;background:linear-gradient(135deg,#8B1A35,#D4A017);"></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
+            <div style="position:relative;width:clamp(160px,22vw,210px);height:clamp(160px,22vw,210px);">
+              <!-- Outer glow ring -->
+              <div style="position:absolute;inset:-14px;border-radius:50%;border:5px solid #D4A017;box-shadow:0 0 30px rgba(212,160,23,0.95),0 0 60px rgba(255,200,0,0.5);pointer-events:none;z-index:4;"></div>
+              <!-- Second ring -->
+              <div style="position:absolute;inset:-5px;border-radius:50%;border:1.5px solid rgba(212,160,23,0.45);pointer-events:none;z-index:4;"></div>
+              <!-- Inner ring -->
+              <div style="position:absolute;inset:5px;border-radius:50%;border:2px solid rgba(212,160,23,0.7);pointer-events:none;z-index:4;"></div>
+              <!-- Inner glow -->
+              <div style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,rgba(212,160,23,0.1),transparent 68%);pointer-events:none;z-index:0;"></div>
+              <!-- Photo circle -->
+              <div id="couple-card" style="position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#060E24;z-index:1;">
+                {% if couple_video_url %}
+                  {% if couple_video_ext == '.gif' or couple_video_ext == '.jpg' or couple_video_ext == '.jpeg' or couple_video_ext == '.png' or couple_video_ext == '.webp' %}
+                  <img id="couple-video-gif" src="{{ couple_video_url }}" alt="Couple" style="width:100%;height:100%;display:block;object-fit:cover;">
+                  {% else %}
+                  <video id="couple-video" src="{{ couple_video_url }}" autoplay loop playsinline style="width:100%;height:100%;display:block;object-fit:cover;" onclick="this.muted=!this.muted;document.getElementById('sound-btn').textContent=this.muted?'🔇':'🔊';"></video>
+                  <button id="sound-btn" onclick="var v=document.getElementById('couple-video');v.muted=!v.muted;this.textContent=v.muted?'🔇':'🔊';" style="position:absolute;bottom:8px;right:8px;background:rgba(6,14,36,0.8);border:1px solid rgba(212,160,23,0.5);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;z-index:10;font-size:0.8rem;">🔊</button>
+                  {% endif %}
+                {% else %}
+                <img id="photo-couple" src="{{ w.couple_photo }}" alt="{{ groom.first_name }} &amp; {{ bride.first_name }}"
+                     style="width:100%;height:100%;display:block;object-fit:cover;"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <div id="couple-fallback" style="display:none;width:100%;height:100%;background:linear-gradient(135deg,#8B1A35,#D4A017);"></div>
+                {% endif %}
+                <video id="couple-video-hidden" style="display:none;width:100%;"></video>
+              </div>
+              <!-- SVG ornamental frame decorations -->
+              <svg style="position:absolute;top:-22px;left:-22px;width:calc(100% + 44px);height:calc(100% + 44px);pointer-events:none;z-index:5;overflow:visible;" viewBox="0 0 254 254" xmlns="http://www.w3.org/2000/svg">
+                <!-- Top crown ornament -->
+                <g transform="translate(127,5)" fill="#D4A017">
+                  <polygon points="0,-12 7,0 0,9 -7,0" fill="#FFD700"/>
+                  <polygon points="0,-18 4,-10 0,-5 -4,-10"/>
+                  <polygon points="-10,-4 -6,-10 -3,-4" fill="#FFD700" opacity="0.7"/>
+                  <polygon points="10,-4 6,-10 3,-4" fill="#FFD700" opacity="0.7"/>
+                </g>
+                <!-- Bottom floral branch -->
+                <g transform="translate(127,249)" fill="#D4A017">
+                  <!-- center flower -->
+                  <circle cx="0" cy="-10" r="10"/><circle cx="0" cy="-10" r="5" fill="#FFD700"/>
+                  <ellipse cx="0" cy="-24" rx="3.5" ry="7" transform="rotate(0,0,-10)"/>
+                  <ellipse cx="0" cy="-24" rx="3.5" ry="7" transform="rotate(51.4,0,-10)"/>
+                  <ellipse cx="0" cy="-24" rx="3.5" ry="7" transform="rotate(102.9,0,-10)"/>
+                  <ellipse cx="0" cy="-24" rx="3.5" ry="7" transform="rotate(154.3,0,-10)"/>
+                  <ellipse cx="0" cy="-24" rx="3.5" ry="7" transform="rotate(205.7,0,-10)"/>
+                  <ellipse cx="0" cy="-24" rx="3.5" ry="7" transform="rotate(257.1,0,-10)"/>
+                  <ellipse cx="0" cy="-24" rx="3.5" ry="7" transform="rotate(308.6,0,-10)"/>
+                  <!-- left branch stem -->
+                  <path d="M-10,-7 C-32,-12 -56,-8 -74,-22" stroke="#C8941A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                  <ellipse cx="-34" cy="-15" rx="10" ry="5" transform="rotate(-20,-34,-15)"/>
+                  <ellipse cx="-56" cy="-16" rx="8" ry="4" transform="rotate(-35,-56,-16)"/>
+                  <path d="M-23,-11 C-27,-24 -18,-28 -16,-20"/>
+                  <path d="M-46,-13 C-51,-26 -42,-30 -38,-21"/>
+                  <circle cx="-75" cy="-22" r="7"/><circle cx="-75" cy="-22" r="3.5" fill="#FFD700"/>
+                  <!-- right branch stem -->
+                  <path d="M10,-7 C32,-12 56,-8 74,-22" stroke="#C8941A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                  <ellipse cx="34" cy="-15" rx="10" ry="5" transform="rotate(20,34,-15)"/>
+                  <ellipse cx="56" cy="-16" rx="8" ry="4" transform="rotate(35,56,-16)"/>
+                  <path d="M23,-11 C27,-24 18,-28 16,-20"/>
+                  <path d="M46,-13 C51,-26 42,-30 38,-21"/>
+                  <circle cx="75" cy="-22" r="7"/><circle cx="75" cy="-22" r="3.5" fill="#FFD700"/>
+                </g>
+                <!-- Left diamond ornament -->
+                <polygon points="4,127 13,120 18,127 13,134" fill="#D4A017" opacity="0.9"/>
+                <!-- Right diamond ornament -->
+                <polygon points="250,127 241,120 236,127 241,134" fill="#D4A017" opacity="0.9"/>
+              </svg>
+            </div>
+            {% if is_dashboard %}
+            <label title="Change photo" style="background:rgba(6,14,36,0.85);border:1px solid rgba(212,160,23,0.6);border-radius:20px;padding:5px 14px;display:flex;align-items:center;gap:5px;cursor:pointer;z-index:10;font-size:0.72rem;color:#D4A017;letter-spacing:0.05em;white-space:nowrap;">
+              📷 <span>Change Photo</span>
+              <input type="file" accept="image/*" style="display:none;" onchange="uploadPhoto(this,'couple')">
+            </label>
             {% endif %}
-            <video id="couple-video-hidden" style="display:none;width:100%;"></video>
-          </div>
-          </div><!-- end ornate frame wrapper -->
-          {% if is_dashboard %}
-          <label title="Change photo" style="background:rgba(6,14,36,0.85);border:1px solid rgba(212,160,23,0.6);border-radius:20px;padding:5px 14px;display:flex;align-items:center;gap:5px;cursor:pointer;z-index:10;font-size:0.72rem;color:#D4A017;letter-spacing:0.05em;white-space:nowrap;">
-            📷 <span>Change Photo</span>
-            <input type="file" accept="image/*" style="display:none;" onchange="uploadPhoto(this,'couple')">
-          </label>
-          {% endif %}
           </div>
 
           <!-- Venue card -->
