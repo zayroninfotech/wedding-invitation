@@ -8,22 +8,32 @@
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
   body{
-    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem;
     background:linear-gradient(160deg,#060E24 0%,#0D1B4B 50%,#060E24 100%);
     font-family:'Palatino Linotype',Georgia,serif;
   }
   .card{
-    width:100%;max-width:420px;padding:2.5rem 2rem;
+    width:100%;max-width:420px;padding:2rem 2rem 1.5rem;
     background:linear-gradient(160deg,rgba(92,10,30,0.55),rgba(61,0,16,0.7));
     border:1.5px solid rgba(212,160,23,0.35);
     border-radius:16px;
     box-shadow:0 24px 60px rgba(0,0,0,0.5),inset 0 1px 0 rgba(212,160,23,0.1);
   }
-  .logo{text-align:center;margin-bottom:1.75rem;}
-  .logo-om{font-size:2rem;color:#D4A017;filter:drop-shadow(0 0 12px rgba(212,160,23,0.6));}
-  .logo-names{font-size:1.4rem;color:#D4A017;letter-spacing:0.1em;margin:0.25rem 0;}
-  .logo-sub{color:rgba(212,160,23,0.4);font-size:0.7rem;letter-spacing:0.4em;}
-  .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.4),transparent);margin:1rem 0 1.5rem;}
+  .logo{text-align:center;margin-bottom:1.25rem;}
+  .ganesh-wrap{
+    display:inline-block;
+    border-radius:50%;
+    border:2.5px solid rgba(212,160,23,0.7);
+    box-shadow:0 0 28px rgba(212,160,23,0.45),0 0 8px rgba(212,160,23,0.2);
+    overflow:hidden;
+    width:130px;height:130px;
+    background:radial-gradient(circle,rgba(212,160,23,0.08),transparent);
+    margin-bottom:0.75rem;
+  }
+  .ganesh-wrap img{width:130px;height:130px;object-fit:cover;display:block;}
+  .logo-names{font-size:1.35rem;color:#D4A017;letter-spacing:0.1em;margin:0.1rem 0;}
+  .logo-sub{color:rgba(212,160,23,0.45);font-size:0.65rem;letter-spacing:0.4em;text-transform:uppercase;}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.4),transparent);margin:1rem 0 1.4rem;}
   .label{display:block;color:rgba(212,160,23,0.7);font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.4rem;}
   .input{
     width:100%;padding:0.7rem 1rem;margin-bottom:1.1rem;
@@ -45,14 +55,23 @@
     color:#fca5a5;border-radius:8px;padding:0.6rem 0.9rem;
     font-size:0.85rem;margin-bottom:1rem;text-align:center;
   }
-  .hint{text-align:center;color:rgba(255,255,255,0.2);font-size:0.7rem;margin-top:1.2rem;}
+  .footer-brand{
+    display:flex;flex-direction:column;align-items:center;gap:0.35rem;
+    padding:0.5rem 0;
+  }
+  .footer-brand img{height:28px;width:auto;object-fit:contain;opacity:0.85;filter:brightness(1.1);}
+  .footer-text{color:rgba(255,255,255,0.25);font-size:0.62rem;letter-spacing:0.08em;text-align:center;}
+  .project-tag{color:rgba(212,160,23,0.35);font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;text-align:center;}
 </style>
 </head>
 <body>
 <div class="card">
   <div class="logo">
-    <img src="{% static 'images/login_page_logo.png' %}" alt="Vamsi & Anausha" style="max-width:160px;width:100%;display:block;margin:0 auto 0.5rem;mix-blend-mode:multiply;filter:drop-shadow(0 0 20px rgba(212,160,23,0.7));">
-    <div class="logo-sub">ADMIN PORTAL</div>
+    <div class="ganesh-wrap">
+      <img src="{% static 'images/login_page_logo.png' %}" alt="Ganesh">
+    </div>
+    <div class="logo-names">Vamsi ✦ Anausha</div>
+    <div class="logo-sub">Admin Portal</div>
   </div>
   <div class="divider"></div>
 
@@ -70,8 +89,12 @@
     <input class="input" type="password" name="password" autocomplete="current-password" required>
     <button class="btn" type="submit">Sign In</button>
   </form>
+</div>
 
-  <p class="hint">Wedding Admin · Vanteddu Family</p>
+<div class="footer-brand">
+  <img src="{% static 'images/main_logo.png' %}" alt="Zayron Infotech">
+  <div class="project-tag">ZayronVivah · Wedding Invitation Platform</div>
+  <div class="footer-text">Developed by Zayron Infotech Pvt. Ltd.</div>
 </div>
 </body>
 </html>
