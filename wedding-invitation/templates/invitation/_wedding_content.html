@@ -869,9 +869,18 @@ the beginning of our forever.{% endif %}</p>
         <div style="display:flex;justify-content:center;margin-top:-1px;padding-top:1.5rem;margin-bottom:1rem;">
           <div style="position:relative;width:100px;height:100px;">
             <div style="position:absolute;inset:-4px;border-radius:50%;border:2px solid #D4A017;box-shadow:0 0 20px rgba(212,160,23,0.6);"></div>
-            <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#0D1B4B,#1a2a6c);border:3px solid rgba(212,160,23,0.4);display:flex;align-items:center;justify-content:center;">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="21" r="12" fill="rgba(212,160,23,0.35)"/><ellipse cx="28" cy="52" rx="20" ry="14" fill="rgba(212,160,23,0.25)"/></svg>
+            <div id="fam-groom-photo-wrap" style="width:100%;height:100%;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#0D1B4B,#1a2a6c);border:3px solid rgba(212,160,23,0.4);display:flex;align-items:center;justify-content:center;">
+              {% if groom.photo %}
+                <img src="{{ groom.photo }}" alt="Groom" style="width:100%;height:100%;object-fit:cover;display:block;">
+              {% else %}
+                <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="21" r="12" fill="rgba(212,160,23,0.35)"/><ellipse cx="28" cy="52" rx="20" ry="14" fill="rgba(212,160,23,0.25)"/></svg>
+              {% endif %}
             </div>
+            {% if is_dashboard %}
+            <label title="Upload groom photo" style="position:absolute;bottom:-2px;right:-2px;width:28px;height:28px;border-radius:50%;background:rgba(6,14,36,0.9);border:1.5px solid #D4A017;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;font-size:0.75rem;">
+              📷<input type="file" accept="image/*" style="display:none;" onchange="uploadPhoto(this,'groom');document.getElementById('fam-groom-photo-wrap').innerHTML='<img src=\'' + URL.createObjectURL(this.files[0]) + '\' style=\'width:100%;height:100%;object-fit:cover;display:block;\'>';">
+            </label>
+            {% endif %}
           </div>
         </div>
 
@@ -947,9 +956,18 @@ the beginning of our forever.{% endif %}</p>
         <div style="display:flex;justify-content:center;margin-top:-1px;padding-top:1.5rem;margin-bottom:1rem;">
           <div style="position:relative;width:100px;height:100px;">
             <div style="position:absolute;inset:-4px;border-radius:50%;border:2px solid #D4A017;box-shadow:0 0 20px rgba(212,160,23,0.6);"></div>
-            <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#0D1B4B,#1a2a6c);border:3px solid rgba(212,160,23,0.4);display:flex;align-items:center;justify-content:center;">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="21" r="12" fill="rgba(212,160,23,0.35)"/><ellipse cx="28" cy="52" rx="20" ry="14" fill="rgba(212,160,23,0.25)"/><path d="M20,18 Q24,14 28,18 Q32,14 36,18" stroke="rgba(212,160,23,0.6)" stroke-width="1.5" fill="none"/></svg>
+            <div id="fam-bride-photo-wrap" style="width:100%;height:100%;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#0D1B4B,#1a2a6c);border:3px solid rgba(212,160,23,0.4);display:flex;align-items:center;justify-content:center;">
+              {% if bride.photo %}
+                <img src="{{ bride.photo }}" alt="Bride" style="width:100%;height:100%;object-fit:cover;display:block;">
+              {% else %}
+                <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="21" r="12" fill="rgba(212,160,23,0.35)"/><ellipse cx="28" cy="52" rx="20" ry="14" fill="rgba(212,160,23,0.25)"/><path d="M20,18 Q24,14 28,18 Q32,14 36,18" stroke="rgba(212,160,23,0.6)" stroke-width="1.5" fill="none"/></svg>
+              {% endif %}
             </div>
+            {% if is_dashboard %}
+            <label title="Upload bride photo" style="position:absolute;bottom:-2px;right:-2px;width:28px;height:28px;border-radius:50%;background:rgba(6,14,36,0.9);border:1.5px solid #D4A017;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;font-size:0.75rem;">
+              📷<input type="file" accept="image/*" style="display:none;" onchange="uploadPhoto(this,'bride');document.getElementById('fam-bride-photo-wrap').innerHTML='<img src=\'' + URL.createObjectURL(this.files[0]) + '\' style=\'width:100%;height:100%;object-fit:cover;display:block;\'>';">
+            </label>
+            {% endif %}
           </div>
         </div>
 
