@@ -698,12 +698,13 @@ the beginning of our forever.{% endif %}</p>
   <div style="height:3px;background:linear-gradient(90deg,transparent,#D4A017,#FFB300,#D4A017,transparent);"></div>
 
   <div style="position:relative;overflow:hidden;min-height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 1rem;">
-    <!-- New photo full-width background -->
-    <img src="{{ w.divine_photo2 }}" alt=""
-         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;z-index:0;"
-         onerror="this.style.display='none'">
-    <!-- Blue overlay -->
-    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,27,75,0.78) 0%,rgba(6,14,36,0.85) 100%);z-index:1;"></div>
+    <!-- Video background -->
+    <video autoplay loop muted playsinline preload="auto"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;z-index:0;">
+      <source src="/media/photos/divine-bg.mp4" type="video/mp4">
+    </video>
+    <!-- Subtle overlay -->
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,14,36,0.45) 0%,rgba(6,14,36,0.6) 100%);z-index:1;"></div>
 
     <!-- Content -->
     <div style="position:relative;z-index:2;text-align:center;">
