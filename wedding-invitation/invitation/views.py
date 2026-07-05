@@ -87,6 +87,28 @@ def dashboard(request):
         {'icon': '📍', 'label': 'Venue',      'val': get_setting('hero_muhu_venue', w['venue']['name'])},
     ]
     groom, bride = apply_name_overrides(w['groom'], w['bride'])
+    # Apply family field overrides saved via dashboard edits
+    fam_overrides = {
+        'groom': ['fam_groom_name', 'fam_groom_father', 'fam_groom_mother', 'fam_groom_city'],
+        'bride': ['fam_bride_name', 'fam_bride_father', 'fam_bride_mother', 'fam_bride_city'],
+    }
+    field_map = {'name': 2, 'father_name': 3, 'mother_name': 4, 'city': 5}
+    key_to_field = {
+        'fam_groom_name': 'name', 'fam_groom_father': 'father_name',
+        'fam_groom_mother': 'mother_name', 'fam_groom_city': 'city',
+        'fam_bride_name': 'name', 'fam_bride_father': 'father_name',
+        'fam_bride_mother': 'mother_name', 'fam_bride_city': 'city',
+    }
+    for key in fam_overrides['groom']:
+        val = get_setting(key)
+        if val:
+            groom = dict(groom)
+            groom[key_to_field[key]] = val
+    for key in fam_overrides['bride']:
+        val = get_setting(key)
+        if val:
+            bride = dict(bride)
+            bride[key_to_field[key]] = val
     groom_ext = get_setting('groom_photo_ext', '')
     if groom_ext:
         groom = dict(groom)
