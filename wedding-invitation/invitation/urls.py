@@ -11,4 +11,5 @@ urlpatterns = [
     path('qr/', views.generate_qr, name='generate_qr'),
     path('save-names/', views.save_names, name='save_names'),
     path('upload-photo/', views.upload_photo, name='upload_photo'),
+    path('qr-page/', views.qr_page, name='qr_page'),
 ]

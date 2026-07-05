@@ -218,7 +218,7 @@ def wedding_preview(request):
 @login_required
 def generate_qr(request):
     import qrcode.image.svg as qr_svg
-    base_url = request.build_absolute_uri('/preview/')
+    base_url = request.build_absolute_uri('/')
     qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=10, border=4)
     qr.add_data(base_url)
     qr.make(fit=True)
@@ -227,10 +227,21 @@ def generate_qr(request):
     buf = io.BytesIO()
     img.save(buf)
     svg = buf.getvalue().decode('utf-8')
-    # Apply gold fill color
     svg = svg.replace('fill:#000000', 'fill:#D4A017').replace('fill="black"', 'fill="#D4A017"')
     svg = svg.replace('<svg ', '<svg style="background:#060E24;" ')
     return HttpResponse(svg, content_type='image/svg+xml')
+
+
+@login_required
+def qr_page(request):
+    w = WEDDING
+    invite_url = request.build_absolute_uri('/')
+    return render(request, 'invitation/qr_page.html', {
+        'invite_url': invite_url,
+        'groom_name': w['groom']['name'],
+        'bride_name': w['bride']['name'],
+        'wedding_date': w['wedding_date'],
+    })
 
 
 @login_required
