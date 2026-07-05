@@ -425,9 +425,13 @@ async function saveOverlayText(){
     <div style="position:absolute;inset:0;pointer-events:none;opacity:0.05;background-image:repeating-linear-gradient(45deg,#D4A017 0px,#D4A017 1px,transparent 0,transparent 50%);background-size:20px 20px;"></div>
 
     <div style="max-width:1024px;margin:0 auto;position:relative;z-index:3;">
-      <!-- Doves -->
-      <div style="position:absolute;left:10px;top:0;font-size:3rem;opacity:0.55;animation:floatDove 4s ease-in-out infinite;pointer-events:none;transform:scaleX(-1);">🕊</div>
-      <div style="position:absolute;right:10px;top:20px;font-size:2.2rem;opacity:0.45;animation:floatDove 5s ease-in-out infinite reverse;pointer-events:none;">🕊</div>
+      <!-- Side decoration images -->
+      <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);pointer-events:none;z-index:2;">
+        <img src="{% static 'images/hero_side.png' %}" alt="" style="width:clamp(80px,12vw,160px);opacity:0.92;filter:drop-shadow(0 0 20px rgba(212,160,23,0.3));transform:scaleX(-1);">
+      </div>
+      <div style="position:absolute;right:0;top:50%;transform:translateY(-50%);pointer-events:none;z-index:2;">
+        <img src="{% static 'images/hero_side.png' %}" alt="" style="width:clamp(80px,12vw,160px);opacity:0.92;filter:drop-shadow(0 0 20px rgba(212,160,23,0.3));">
+      </div>
 
       <!-- Full-width centre -->
       <div style="text-align:center;padding:0 1rem;">
