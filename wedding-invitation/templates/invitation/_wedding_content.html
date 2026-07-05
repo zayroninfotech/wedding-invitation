@@ -697,14 +697,105 @@ the beginning of our forever.{% endif %}</p>
   <!-- Gold divider line between maroon and blue -->
   <div style="height:3px;background:linear-gradient(90deg,transparent,#D4A017,#FFB300,#D4A017,transparent);"></div>
 
-  <div style="position:relative;overflow:hidden;height:60vh;">
-    <!-- Video background -->
-    <video autoplay loop muted playsinline preload="auto"
-           style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;background:#060E24;z-index:0;">
-      <source src="/media/photos/divine-bg.mp4" type="video/mp4">
-    </video>
-    <!-- Subtle top/bottom fade only -->
-    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,14,36,0.35) 0%,transparent 20%,transparent 80%,rgba(6,14,36,0.5) 100%);z-index:1;pointer-events:none;"></div>
+  <div style="position:relative;overflow:hidden;background:linear-gradient(160deg,#060E24 0%,#0D1B4B 50%,#060E24 100%);padding:2.5rem 1rem 3rem;">
+    <!-- Background glow -->
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(212,160,23,0.04),transparent 70%);pointer-events:none;"></div>
+
+    <div style="position:relative;z-index:1;max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:1.5rem;">
+
+      <!-- LEFT PANEL -->
+      <div style="flex:0 0 140px;display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
+        <!-- Floral vine SVG -->
+        <svg width="100" height="200" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+          <g fill="#D4A017" stroke="none">
+            <!-- Main stem -->
+            <path d="M50,200 C45,160 55,130 48,100 C42,70 55,45 50,10" stroke="#C8941A" stroke-width="2" fill="none"/>
+            <!-- Leaves and flowers -->
+            <ellipse cx="35" cy="160" rx="14" ry="6" transform="rotate(-30,35,160)"/>
+            <ellipse cx="62" cy="140" rx="14" ry="6" transform="rotate(30,62,140)"/>
+            <ellipse cx="33" cy="115" rx="12" ry="5" transform="rotate(-40,33,115)"/>
+            <ellipse cx="64" cy="95" rx="12" ry="5" transform="rotate(35,64,95)"/>
+            <ellipse cx="36" cy="72" rx="11" ry="5" transform="rotate(-30,36,72)"/>
+            <!-- Top flower -->
+            <circle cx="50" cy="10" r="9"/><circle cx="50" cy="10" r="4.5" fill="#FFD700"/>
+            <ellipse cx="50" cy="-2" rx="3" ry="6"/><ellipse cx="50" cy="-2" rx="3" ry="6" transform="rotate(60,50,10)"/>
+            <ellipse cx="50" cy="-2" rx="3" ry="6" transform="rotate(120,50,10)"/>
+            <ellipse cx="50" cy="-2" rx="3" ry="6" transform="rotate(180,50,10)"/>
+            <ellipse cx="50" cy="-2" rx="3" ry="6" transform="rotate(240,50,10)"/>
+            <ellipse cx="50" cy="-2" rx="3" ry="6" transform="rotate(300,50,10)"/>
+            <!-- Mid flower -->
+            <circle cx="67" cy="75" r="6"/><circle cx="67" cy="75" r="3" fill="#FFD700"/>
+            <circle cx="32" cy="118" r="5"/><circle cx="32" cy="118" r="2.5" fill="#FFD700"/>
+          </g>
+        </svg>
+        <!-- Text card -->
+        <div style="position:relative;border:1.5px solid rgba(212,160,23,0.75);border-radius:8px;padding:0.65rem 0.9rem;text-align:center;background:rgba(6,14,36,0.8);box-shadow:0 0 14px rgba(212,160,23,0.2);">
+          <span style="position:absolute;top:3px;left:3px;width:8px;height:8px;border-top:1.5px solid #D4A017;border-left:1.5px solid #D4A017;"></span>
+          <span style="position:absolute;top:3px;right:3px;width:8px;height:8px;border-top:1.5px solid #D4A017;border-right:1.5px solid #D4A017;"></span>
+          <span style="position:absolute;bottom:3px;left:3px;width:8px;height:8px;border-bottom:1.5px solid #D4A017;border-left:1.5px solid #D4A017;"></span>
+          <span style="position:absolute;bottom:3px;right:3px;width:8px;height:8px;border-bottom:1.5px solid #D4A017;border-right:1.5px solid #D4A017;"></span>
+          <p style="color:#D4A017;font-size:0.78rem;font-family:'Palatino Linotype',Georgia,serif;font-style:italic;line-height:1.55;margin:0;">Two Hearts<br>One Journey</p>
+        </div>
+      </div>
+
+      <!-- CENTER VIDEO -->
+      <div style="flex:1;position:relative;">
+        <!-- Outer glow ring -->
+        <div style="position:absolute;inset:-4px;border-radius:12px;border:1px solid rgba(212,160,23,0.3);pointer-events:none;z-index:5;"></div>
+        <!-- Top center ornament -->
+        <svg style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);z-index:6;pointer-events:none;overflow:visible;" width="28" height="16" viewBox="0 0 28 16">
+          <g fill="#D4A017" transform="translate(14,14)">
+            <polygon points="0,-14 4,-6 0,-2 -4,-6" fill="#FFD700"/>
+            <polygon points="-8,-4 -4,-8 0,-4" opacity="0.7"/>
+            <polygon points="8,-4 4,-8 0,-4" opacity="0.7"/>
+          </g>
+        </svg>
+        <!-- Corner flower ornaments -->
+        <svg style="position:absolute;top:-8px;left:-8px;z-index:6;pointer-events:none;" width="20" height="20" viewBox="0 0 20 20"><g transform="translate(10,10)" fill="#D4A017"><ellipse cx="0" cy="-6" rx="2.5" ry="5"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(90,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(180,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(270,0,0)"/><circle cx="0" cy="0" r="3" fill="#FFD700"/></g></svg>
+        <svg style="position:absolute;top:-8px;right:-8px;z-index:6;pointer-events:none;" width="20" height="20" viewBox="0 0 20 20"><g transform="translate(10,10)" fill="#D4A017"><ellipse cx="0" cy="-6" rx="2.5" ry="5"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(90,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(180,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(270,0,0)"/><circle cx="0" cy="0" r="3" fill="#FFD700"/></g></svg>
+        <svg style="position:absolute;bottom:-8px;left:-8px;z-index:6;pointer-events:none;" width="20" height="20" viewBox="0 0 20 20"><g transform="translate(10,10)" fill="#D4A017"><ellipse cx="0" cy="-6" rx="2.5" ry="5"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(90,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(180,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(270,0,0)"/><circle cx="0" cy="0" r="3" fill="#FFD700"/></g></svg>
+        <svg style="position:absolute;bottom:-8px;right:-8px;z-index:6;pointer-events:none;" width="20" height="20" viewBox="0 0 20 20"><g transform="translate(10,10)" fill="#D4A017"><ellipse cx="0" cy="-6" rx="2.5" ry="5"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(90,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(180,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(270,0,0)"/><circle cx="0" cy="0" r="3" fill="#FFD700"/></g></svg>
+        <!-- Gold frame + video -->
+        <div style="border:3px solid #D4A017;border-radius:10px;overflow:hidden;box-shadow:0 0 0 1px rgba(212,160,23,0.25),0 0 28px rgba(212,160,23,0.5),inset 0 0 12px rgba(212,160,23,0.08);">
+          <video autoplay loop muted playsinline preload="auto"
+                 style="width:100%;display:block;max-height:55vh;object-fit:contain;background:#060E24;">
+            <source src="/media/photos/divine-bg.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div style="flex:0 0 140px;display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
+        <!-- Floral vine SVG (mirrored) -->
+        <svg width="100" height="200" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;transform:scaleX(-1);">
+          <g fill="#D4A017" stroke="none">
+            <path d="M50,200 C45,160 55,130 48,100 C42,70 55,45 50,10" stroke="#C8941A" stroke-width="2" fill="none"/>
+            <ellipse cx="35" cy="160" rx="14" ry="6" transform="rotate(-30,35,160)"/>
+            <ellipse cx="62" cy="140" rx="14" ry="6" transform="rotate(30,62,140)"/>
+            <ellipse cx="33" cy="115" rx="12" ry="5" transform="rotate(-40,33,115)"/>
+            <ellipse cx="64" cy="95" rx="12" ry="5" transform="rotate(35,64,95)"/>
+            <ellipse cx="36" cy="72" rx="11" ry="5" transform="rotate(-30,36,72)"/>
+            <circle cx="50" cy="10" r="9"/><circle cx="50" cy="10" r="4.5" fill="#FFD700"/>
+            <ellipse cx="50" cy="-2" rx="3" ry="6"/><ellipse cx="50" cy="-2" rx="3" ry="6" transform="rotate(60,50,10)"/>
+            <ellipse cx="50" cy="-2" rx="3" ry="6" transform="rotate(120,50,10)"/>
+            <ellipse cx="50" cy="-2" rx="3" ry="6" transform="rotate(180,50,10)"/>
+            <ellipse cx="50" cy="-2" rx="3" ry="6" transform="rotate(240,50,10)"/>
+            <ellipse cx="50" cy="-2" rx="3" ry="6" transform="rotate(300,50,10)"/>
+            <circle cx="67" cy="75" r="6"/><circle cx="67" cy="75" r="3" fill="#FFD700"/>
+            <circle cx="32" cy="118" r="5"/><circle cx="32" cy="118" r="2.5" fill="#FFD700"/>
+          </g>
+        </svg>
+        <!-- Text card -->
+        <div style="position:relative;border:1.5px solid rgba(212,160,23,0.75);border-radius:8px;padding:0.65rem 0.9rem;text-align:center;background:rgba(6,14,36,0.8);box-shadow:0 0 14px rgba(212,160,23,0.2);">
+          <span style="position:absolute;top:3px;left:3px;width:8px;height:8px;border-top:1.5px solid #D4A017;border-left:1.5px solid #D4A017;"></span>
+          <span style="position:absolute;top:3px;right:3px;width:8px;height:8px;border-top:1.5px solid #D4A017;border-right:1.5px solid #D4A017;"></span>
+          <span style="position:absolute;bottom:3px;left:3px;width:8px;height:8px;border-bottom:1.5px solid #D4A017;border-left:1.5px solid #D4A017;"></span>
+          <span style="position:absolute;bottom:3px;right:3px;width:8px;height:8px;border-bottom:1.5px solid #D4A017;border-right:1.5px solid #D4A017;"></span>
+          <p style="color:#D4A017;font-size:0.78rem;font-family:'Palatino Linotype',Georgia,serif;font-style:italic;line-height:1.55;margin:0;">Forever<br>Starts Here</p>
+        </div>
+      </div>
+
+    </div>
   </div>
 
 </div><!-- /hero -->
