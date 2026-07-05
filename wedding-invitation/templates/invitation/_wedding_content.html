@@ -440,6 +440,11 @@ async function saveOverlayText(){
           {% if is_dashboard %}<button onclick="openHeroEdit('tagline')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.5);font-size:0.75rem;padding:0;pointer-events:auto;" title="Edit">✏</button>{% endif %}
         </p>
 
+        <!-- Hero divine image -->
+        <div style="display:flex;justify-content:center;margin-bottom:1rem;">
+          <img src="{% static 'images/hero_divine.png' %}" alt=""
+               style="width:clamp(160px,30vw,240px);height:clamp(160px,30vw,240px);border-radius:50%;object-fit:cover;border:3px solid rgba(212,160,23,0.8);box-shadow:0 0 40px rgba(212,160,23,0.4),0 16px 40px rgba(0,0,0,0.6);">
+        </div>
 
         <!-- Couple names UPPERCASE -->
         <div style="display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1rem;position:relative;flex-wrap:wrap;width:100%;">
