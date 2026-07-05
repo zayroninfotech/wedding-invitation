@@ -100,6 +100,11 @@ def dashboard(request):
     cv_ext = get_setting('couple_video_photo_ext', '')
     cv_ts = get_setting('couple_video_photo_ts', '1')
     couple_video_url = f'/media/photos/couple_video{cv_ext}?v={cv_ts}' if cv_ext else ''
+    couple_ext = get_setting('couple_photo_ext', '')
+    if couple_ext:
+        cp_ts = get_setting('couple_photo_ts', '1')
+        w = dict(w)
+        w['couple_photo'] = f'/media/photos/couple{couple_ext}?v={cp_ts}'
     context = {
         'w': w,
         'groom': groom,
