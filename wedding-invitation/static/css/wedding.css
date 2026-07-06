@@ -397,3 +397,60 @@ body {
 .relative { position: relative; }
 .overflow-hidden { overflow: hidden; }
 .select-none { user-select: none; }
+
+/* ── Mobile Responsive ── */
+@media (max-width: 640px) {
+
+  /* Hero 3-col: stack vertically */
+  .hero-3col {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Video section: stack vertically, side panels go below */
+  .video-flex-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1rem !important;
+  }
+  .video-flex-row > div:first-child,
+  .video-flex-row > div:last-child {
+    width: 100% !important;
+    max-width: 320px !important;
+    min-height: auto !important;
+    min-width: unset !important;
+  }
+  .video-flex-row > div:nth-child(2) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Family cards row: stack to single column */
+  .family-cards-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1.25rem !important;
+  }
+  .family-cards-row > div {
+    width: 100% !important;
+    max-width: 360px !important;
+    min-width: unset !important;
+  }
+
+  /* Hide center ornament on mobile — cards stack vertically */
+  .family-center-ornament {
+    display: none !important;
+  }
+
+  /* Gallery frames: smaller on mobile */
+  .photo-frame {
+    width: 10rem !important;
+    height: 13rem !important;
+  }
+
+  /* General section padding reduction */
+  section, .section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
