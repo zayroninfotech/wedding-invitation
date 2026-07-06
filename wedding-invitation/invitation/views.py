@@ -192,10 +192,33 @@ def wedding_preview(request):
         {'icon': '📍', 'label': 'Venue',      'val': w['venue']['name']},
     ]
 
+    groom, bride = apply_name_overrides(w['groom'], w['bride'])
+    key_to_field = {
+        'fam_groom_name': 'name', 'fam_groom_father': 'father_name',
+        'fam_groom_mother': 'mother_name', 'fam_groom_city': 'city',
+        'fam_bride_name': 'name', 'fam_bride_father': 'father_name',
+        'fam_bride_mother': 'mother_name', 'fam_bride_city': 'city',
+    }
+    for key in ['fam_groom_name','fam_groom_father','fam_groom_mother','fam_groom_city']:
+        val = get_setting(key)
+        if val:
+            groom = dict(groom); groom[key_to_field[key]] = val
+    for key in ['fam_bride_name','fam_bride_father','fam_bride_mother','fam_bride_city']:
+        val = get_setting(key)
+        if val:
+            bride = dict(bride); bride[key_to_field[key]] = val
+    groom_ext = get_setting('groom_photo_ext', '')
+    if groom_ext:
+        groom = dict(groom)
+        groom['photo'] = f'/media/photos/groom{groom_ext}?v={get_setting("groom_photo_ts","1")}'
+    bride_ext = get_setting('bride_photo_ext', '')
+    if bride_ext:
+        bride = dict(bride)
+        bride['photo'] = f'/media/photos/bride{bride_ext}?v={get_setting("bride_photo_ts","1")}'
     context = {
         'w':                  w,
-        'groom':              w['groom'],
-        'bride':              w['bride'],
+        'groom':              groom,
+        'bride':              bride,
         'venue':              w['venue'],
         'events':             w['events'],
         'youtube':            w['youtube'],
@@ -203,6 +226,10 @@ def wedding_preview(request):
         'quick_links':        quick_links,
         'muhurtham_items':    muhurtham_items,
         'wedding_date_iso':   w['wedding_date_iso'],
+        'fam_blessing': get_setting('fam_blessing', 'May the divine bless this union with love, prosperity, and happiness forever'),
+        'venue_name_display': get_setting('venue_name_display', w['venue']['name']),
+        'venue_address_display': get_setting('venue_address_display', w['venue']['address']),
+        'venue_maps_url': get_setting('venue_maps_url', w['venue'].get('maps_url','https://maps.google.com/?q=Shubhasree+Gardens+Secunderabad')),
         'bride_groom_photos': list(zip(
             w['bride_groom_photos'],
             w['photo_placeholder_colors']['couple'],
