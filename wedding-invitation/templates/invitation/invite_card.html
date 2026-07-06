@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wedding Invitation Card — {{ groom_name }} & {{ bride_name }}</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{min-height:100vh;background:#1a0a00;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:1.5rem 1rem;font-family:'Palatino Linotype',Georgia,serif;}
+
+  .btn-row{display:flex;gap:0.75rem;justify-content:center;margin-bottom:1.25rem;flex-wrap:wrap;}
+  .btn{padding:0.55rem 1.25rem;border-radius:2rem;font-size:0.85rem;font-weight:600;cursor:pointer;text-decoration:none;border:none;display:inline-flex;align-items:center;gap:0.4rem;transition:transform 0.15s;font-family:inherit;}
+  .btn:hover{transform:scale(1.04);}
+  .btn-gold{background:linear-gradient(135deg,#D4A017,#B8860B);color:#1a0a00;}
+  .btn-outline{background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.5);color:#D4A017;}
+  .btn-back{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);}
+
+  /* The card */
+  .card-wrap{position:relative;width:100%;max-width:480px;}
+  .card-img{width:100%;display:block;border-radius:4px;}
+
+  /* Text overlay — positioned in the blank cream area (approx 20%–72% top of image) */
+  .text-overlay{
+    position:absolute;
+    top:22%;left:8%;right:8%;
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;
+    gap:0;
+  }
+  .om{font-size:clamp(1.4rem,4vw,2rem);color:#8B4513;line-height:1;}
+  .sub-label{font-size:clamp(0.5rem,1.5vw,0.75rem);color:#8B4513;letter-spacing:0.2em;text-transform:uppercase;margin-top:0.2rem;opacity:0.8;}
+  .ganesha-text{font-size:clamp(0.55rem,1.4vw,0.72rem);color:#7a3a10;font-style:italic;margin-top:0.3rem;opacity:0.85;}
+  .couple-names{font-size:clamp(1.1rem,3.5vw,1.8rem);color:#7B2D00;font-weight:700;margin-top:0.6rem;line-height:1.2;text-shadow:0 1px 2px rgba(255,255,255,0.5);}
+  .amp{color:#C8691A;font-size:clamp(0.9rem,2.5vw,1.3rem);}
+  .divider-line{width:60%;height:1px;background:linear-gradient(90deg,transparent,rgba(180,100,20,0.5),transparent);margin:0.5rem auto;}
+  .invite-text{font-size:clamp(0.5rem,1.3vw,0.68rem);color:#7a3a10;font-style:italic;opacity:0.9;margin-top:0.2rem;line-height:1.5;}
+  .detail-block{margin-top:0.5rem;display:flex;flex-direction:column;gap:0.2rem;}
+  .detail-row{font-size:clamp(0.55rem,1.4vw,0.72rem);color:#7B2D00;}
+  .detail-row strong{font-size:clamp(0.65rem,1.6vw,0.85rem);color:#5C1A00;}
+  .venue-text{font-size:clamp(0.6rem,1.5vw,0.78rem);color:#7B2D00;margin-top:0.3rem;}
+
+  /* QR overlay — positioned over the template's QR placeholder (~74%–90% top) */
+  .qr-overlay{
+    position:absolute;
+    top:72%;
+    left:50%;transform:translateX(-50%);
+    width:clamp(80px,17%,120px);
+    text-align:center;
+  }
+  .qr-overlay img{width:100%;display:block;border-radius:4px;}
+  .qr-overlay .scan-text{font-size:clamp(0.4rem,1vw,0.55rem);color:#7a3a10;margin-top:2px;opacity:0.8;}
+
+  @media print{
+    body{padding:0;background:#fff;}
+    .btn-row,.no-print{display:none!important;}
+    .card-wrap{max-width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<div class="btn-row no-print">
+  <a href="/qr-page/" class="btn btn-back">← Back</a>
+  <button class="btn btn-gold" onclick="window.print()">🖨 Print / Save PDF</button>
+  <button class="btn btn-outline" onclick="copyLink()">📋 Copy Invite Link</button>
+</div>
+
+<div class="card-wrap" id="invite-card">
+  <!-- Template background -->
+  <img class="card-img" src="/static/images/invite-card-template.png" alt="Wedding Invitation Card">
+
+  <!-- Text overlay in the cream area -->
+  <div class="text-overlay">
+    <div class="om">ॐ</div>
+    <div class="sub-label">Shree Ganeshaya Namaha</div>
+    <div class="ganesha-text">With divine blessings, we joyfully invite you to celebrate</div>
+
+    <div class="couple-names">
+      {{ groom_name }}<br>
+      <span class="amp">&amp;</span><br>
+      {{ bride_name }}
+    </div>
+
+    <div class="divider-line"></div>
+
+    <div class="invite-text">Together with our families, we request the honour of<br>your presence at our wedding celebration</div>
+
+    <div class="detail-block">
+      <div class="detail-row"><strong>{{ wedding_date }}</strong></div>
+      <div class="detail-row">{{ muhurtham_time }}</div>
+      <div class="detail-row venue-text">📍 {{ venue_name }}, {{ venue_city }}</div>
+    </div>
+  </div>
+
+  <!-- Real QR code overlaid on template's QR placeholder -->
+  <div class="qr-overlay">
+    <img src="/qr/" alt="Scan to open invitation">
+    <div class="scan-text">Scan to open</div>
+  </div>
+</div>
+
+<div style="margin-top:0.75rem;color:rgba(212,160,23,0.4);font-size:0.65rem;text-align:center;" class="no-print">
+  Use Print → Save as PDF to download this card
+</div>
+
+<script>
+function copyLink(){
+  navigator.clipboard.writeText('{{ invite_url }}').then(function(){
+    alert('Invite link copied!');
+  });
+}
+</script>
+</body>
+</html>

@@ -245,6 +245,21 @@ def qr_page(request):
 
 
 @login_required
+def invite_card(request):
+    w = WEDDING
+    invite_url = request.build_absolute_uri('/')
+    return render(request, 'invitation/invite_card.html', {
+        'invite_url': invite_url,
+        'groom_name': get_setting('fam_groom_name', w['groom']['name']),
+        'bride_name': get_setting('fam_bride_name', w['bride']['name']),
+        'wedding_date': w['wedding_date'],
+        'muhurtham_time': get_setting('hero_muhu_muhurtham', w['muhurtham_time']),
+        'venue_name': get_setting('venue_name_display', w['venue']['name']),
+        'venue_city': w['venue'].get('city', 'Secunderabad'),
+    })
+
+
+@login_required
 def save_names(request):
     if request.method == 'POST':
         data = json.loads(request.body)
