@@ -66,8 +66,8 @@ def admin_panel(request):
     return redirect('dashboard')
 
 
-@login_required
-def dashboard(request):
+def _wedding_context(request):
+    """Shared context builder for both dashboard (admin) and public invite page."""
     w = WEDDING
     quick_links = [
         {'href': '#family',  'emoji': '👨‍👩‍👧', 'label': 'Family'},
@@ -153,8 +153,6 @@ def dashboard(request):
         'family_photos': list(zip(_gallery_photos('family', w['family_photos']), w['photo_placeholder_colors']['family'])),
         'couple_video_url': couple_video_url,
         'couple_video_ext': cv_ext,
-        'is_dashboard': True,
-        'admin_username': request.session.get('admin_username', 'admin'),
         'overlay_text': get_setting('overlay_text', 'ॐ శుభ వివాహ వేడుక ॐ'),
         'hero_tagline': get_setting('hero_tagline', "We're Getting Married"),
         'hero_invite':  get_setting('hero_invite', "Together with our families,\nwe request the honour of your presence\nto celebrate our wedding ceremony."),
@@ -165,6 +163,14 @@ def dashboard(request):
         'hero_hashtag':      get_setting('hero_hashtag', w['hashtag']),
         'wedding_date_iso':  get_setting('hero_countdown_date', w['wedding_date_iso']),
     }
+    return context
+
+
+@login_required
+def dashboard(request):
+    context = _wedding_context(request)
+    context['is_dashboard'] = True
+    context['admin_username'] = request.session.get('admin_username', 'admin')
     return render(request, 'invitation/home.html', context)
 
 
@@ -385,7 +391,9 @@ def invite_page(request, slug):
     inv = get_invitation(slug)
     if not inv:
         return redirect('/')
-    return home(request)
+    context = _wedding_context(request)
+    context['is_dashboard'] = False
+    return render(request, 'invitation/home.html', context)
 
 
 @login_required
