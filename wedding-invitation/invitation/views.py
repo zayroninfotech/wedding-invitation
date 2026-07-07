@@ -285,6 +285,7 @@ def qr_page(request):
         'groom_name': get_setting('groom_display_name', get_setting('fam_groom_name', w['groom']['name'])),
         'bride_name': get_setting('bride_display_name', get_setting('fam_bride_name', w['bride']['name'])),
         'wedding_date': w['wedding_date'],
+        'admin_username': request.session.get('admin_username', ''),
     })
 
 
