@@ -38,38 +38,29 @@
 </button>
 
 <!-- Cards Modal -->
-<div id="thanks-modal" style="display:none;position:fixed;inset:0;z-index:999999;background:linear-gradient(160deg,#060E24 0%,#0D1B4B 50%,#060E24 100%);align-items:flex-start;justify-content:center;overflow-y:auto;padding:2rem 1rem;">
-  <div style="position:relative;max-width:560px;width:100%;background:linear-gradient(145deg,rgba(13,27,75,0.95),rgba(6,14,36,0.98));border:1.5px solid rgba(212,160,23,0.4);border-radius:1.5rem;padding:2rem;box-shadow:0 30px 80px rgba(0,0,0,0.7);margin:auto;">
+<div id="thanks-modal" style="display:none;position:fixed;inset:0;z-index:999999;background:linear-gradient(160deg,#060E24 0%,#0D1B4B 50%,#060E24 100%);flex-direction:column;align-items:stretch;overflow-y:auto;">
 
-    <!-- Close -->
-    <button onclick="closeThanksModal()" style="position:absolute;top:14px;right:14px;background:none;border:none;color:rgba(212,160,23,0.5);font-size:1.1rem;cursor:pointer;padding:0.2rem;">&#10005;</button>
+  <!-- Top bar -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid rgba(212,160,23,0.15);flex-shrink:0;">
+    <p style="font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;color:rgba(212,160,23,0.5);margin:0;">&#10022; &nbsp; Invite Cards &nbsp; &#10022;</p>
+    <button onclick="closeThanksModal()" style="background:none;border:none;color:rgba(212,160,23,0.6);font-size:1.2rem;cursor:pointer;padding:0.2rem;line-height:1;">&#10005;</button>
+  </div>
 
-    <!-- Header -->
-    <p style="font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;color:rgba(212,160,23,0.5);text-align:center;margin-bottom:1.25rem;">&#10022; &nbsp; Invite Cards &nbsp; &#10022;</p>
-
-    <!-- Template images -->
-    <p style="font-size:0.65rem;color:rgba(212,160,23,0.45);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.6rem;">Templates</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.5rem;">
-      <div onclick="selectCardTemplate(this,'{% static 'images/invite-card-template.png' %}')" id="card-tpl-1" style="border:2px solid rgba(212,160,23,0.25);border-radius:0.6rem;overflow:hidden;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,160,23,0.7)'" onmouseout="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.25)'">
-        <img src="{% static 'images/invite-card-template.png' %}" style="width:100%;height:120px;object-fit:cover;display:block;">
-        <div style="padding:0.3rem 0.5rem;background:#060E24;color:rgba(212,160,23,0.7);font-size:0.7rem;text-align:center;">Template 1</div>
-      </div>
-      <div onclick="selectCardTemplate(this,'{% static 'images/invite-card-template-2.png' %}')" id="card-tpl-2" style="border:2px solid rgba(212,160,23,0.25);border-radius:0.6rem;overflow:hidden;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,160,23,0.7)'" onmouseout="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.25)'">
-        <img src="{% static 'images/invite-card-template-2.png' %}" style="width:100%;height:120px;object-fit:cover;display:block;">
-        <div style="padding:0.3rem 0.5rem;background:#060E24;color:rgba(212,160,23,0.7);font-size:0.7rem;text-align:center;">Template 2</div>
-      </div>
+  <!-- Template images: full width side by side -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;flex:1;min-height:0;">
+    <div onclick="selectCardTemplate(this,'{% static 'images/invite-card-template.png' %}')" id="card-tpl-1" style="position:relative;cursor:pointer;border-right:1px solid rgba(212,160,23,0.15);border-bottom:3px solid transparent;transition:border-color 0.2s;" onmouseover="if(!this.classList.contains('selected'))this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+      <img src="{% static 'images/invite-card-template.png' %}" style="width:100%;height:100%;object-fit:contain;display:block;min-height:260px;max-height:60vh;">
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:0.4rem;background:rgba(6,14,36,0.75);color:rgba(212,160,23,0.8);font-size:0.7rem;text-align:center;letter-spacing:0.15em;text-transform:uppercase;">Template 1</div>
     </div>
-
-    <!-- Preview -->
-    <div id="card-preview-wrap" style="display:none;margin-bottom:1.25rem;text-align:center;">
-      <p style="font-size:0.62rem;color:rgba(212,160,23,0.45);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.5rem;">Selected Preview</p>
-      <img id="card-preview-img" src="" style="max-width:100%;border-radius:0.6rem;border:1.5px solid rgba(212,160,23,0.4);box-shadow:0 0 20px rgba(0,0,0,0.5);">
+    <div onclick="selectCardTemplate(this,'{% static 'images/invite-card-template-2.png' %}')" id="card-tpl-2" style="position:relative;cursor:pointer;border-bottom:3px solid transparent;transition:border-color 0.2s;" onmouseover="if(!this.classList.contains('selected'))this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+      <img src="{% static 'images/invite-card-template-2.png' %}" style="width:100%;height:100%;object-fit:contain;display:block;min-height:260px;max-height:60vh;">
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:0.4rem;background:rgba(6,14,36,0.75);color:rgba(212,160,23,0.8);font-size:0.7rem;text-align:center;letter-spacing:0.15em;text-transform:uppercase;">Template 2</div>
     </div>
+  </div>
 
-    <!-- Upload -->
-    <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.3),transparent);margin-bottom:1.25rem;"></div>
-    <p style="font-size:0.65rem;color:rgba(212,160,23,0.45);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.6rem;">Upload Your Card</p>
-    <label style="display:flex;align-items:center;gap:0.75rem;padding:0.9rem 1rem;border:1.5px dashed rgba(212,160,23,0.3);border-radius:0.75rem;cursor:pointer;transition:border-color 0.2s;background:rgba(13,27,75,0.4);" onmouseover="this.style.borderColor='rgba(212,160,23,0.6)'" onmouseout="this.style.borderColor='rgba(212,160,23,0.3)'">
+  <!-- Bottom bar: upload + submit -->
+  <div style="padding:1.25rem 1.5rem;border-top:1px solid rgba(212,160,23,0.15);flex-shrink:0;">
+    <label style="display:flex;align-items:center;gap:0.75rem;padding:0.85rem 1rem;border:1.5px dashed rgba(212,160,23,0.3);border-radius:0.75rem;cursor:pointer;background:rgba(13,27,75,0.4);margin-bottom:0.9rem;" onmouseover="this.style.borderColor='rgba(212,160,23,0.6)'" onmouseout="this.style.borderColor='rgba(212,160,23,0.3)'">
       <span style="font-size:1.4rem;">📁</span>
       <div>
         <p style="color:rgba(255,255,255,0.8);font-size:0.85rem;margin:0;">Choose file</p>
@@ -77,14 +68,10 @@
       </div>
       <input type="file" id="card-upload-input" accept="image/*" onchange="previewUploadedCard(this)" style="display:none;">
     </label>
-
-    <!-- Upload preview -->
-    <div id="card-upload-preview-wrap" style="display:none;margin-top:0.75rem;text-align:center;">
-      <img id="card-upload-preview-img" src="" style="max-width:100%;border-radius:0.6rem;border:1.5px solid rgba(212,160,23,0.35);">
+    <div id="card-upload-preview-wrap" style="display:none;margin-bottom:0.9rem;text-align:center;">
+      <img id="card-upload-preview-img" src="" style="max-width:100%;max-height:180px;border-radius:0.5rem;border:1.5px solid rgba(212,160,23,0.35);object-fit:contain;">
     </div>
-
-    <!-- Submit -->
-    <button onclick="submitCard()" style="margin-top:1.25rem;width:100%;padding:0.85rem;background:linear-gradient(90deg,#B8860B,#D4A017,#B8860B);border:none;border-radius:0.75rem;color:#060E24;font-size:0.95rem;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:0.06em;">Submit Card</button>
+    <button onclick="submitCard()" style="width:100%;padding:0.9rem;background:linear-gradient(90deg,#B8860B,#D4A017,#B8860B);border:none;border-radius:0.75rem;color:#060E24;font-size:0.95rem;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:0.06em;">Submit Card</button>
     <p id="card-submit-msg" style="display:none;text-align:center;color:rgba(37,211,102,0.8);font-size:0.8rem;margin-top:0.6rem;">&#10003; Card submitted successfully!</p>
   </div>
 </div>
