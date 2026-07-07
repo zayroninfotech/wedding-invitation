@@ -14,6 +14,7 @@ urlpatterns = [
     path('qr-page/', views.qr_page, name='qr_page'),
     path('invite-card/', views.invite_card, name='invite_card'),
     path('thanks/', views.thanks_page, name='thanks_page'),
+    path('invite/<slug:slug>/', views.invite_page, name='invite_page'),
     path('upload-card/', views.upload_card, name='upload_card'),
     path('list-cards/', views.list_cards, name='list_cards'),
     path('delete-card/', views.delete_card, name='delete_card'),

@@ -6,7 +6,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from .wedding_data import WEDDING
-from .mongo_db import verify_user, get_setting, save_setting
+import re
+from .mongo_db import verify_user, get_setting, save_setting, create_invitation, get_invitation
 
 
 def _gallery_photos(type_, defaults):
@@ -259,29 +260,44 @@ def wedding_preview(request):
     return render(request, 'invitation/home.html', context)
 
 
-@login_required
-def generate_qr(request):
+def _make_slug(groom, bride):
+    def s(n): return re.sub(r'[^a-z0-9]+', '-', n.lower().strip()).strip('-')
+    return s(groom) + '-' + s(bride)
+
+
+def _build_qr_svg(target_url):
     import qrcode.image.svg as qr_svg
-    base_url = request.build_absolute_uri('/')
     qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=10, border=4)
-    qr.add_data(base_url)
+    qr.add_data(target_url)
     qr.make(fit=True)
-    factory = qr_svg.SvgPathFillImage
-    img = qr.make_image(image_factory=factory)
+    img = qr.make_image(image_factory=qr_svg.SvgPathFillImage)
     buf = io.BytesIO()
     img.save(buf)
     svg = buf.getvalue().decode('utf-8')
-    svg = svg.replace('fill:#000000', 'fill:#D4A017').replace('fill="black"', 'fill="#D4A017"')
-    svg = svg.replace('<svg ', '<svg style="background:#060E24;" ')
-    return HttpResponse(svg, content_type='image/svg+xml')
+    svg = svg.replace('fill:#000000', 'fill:#000000').replace('fill="black"', 'fill="#000000"')
+    svg = svg.replace('<svg ', '<svg style="background:#ffffff;" ')
+    return svg
+
+
+@login_required
+def generate_qr(request):
+    slug = request.GET.get('slug', '').strip()
+    if slug:
+        inv = get_invitation(slug)
+        target_url = inv['url'] if inv else request.build_absolute_uri('/')
+    else:
+        target_url = request.build_absolute_uri('/')
+    return HttpResponse(_build_qr_svg(target_url), content_type='image/svg+xml')
 
 
 @login_required
 def qr_page(request):
     w = WEDDING
-    invite_url = request.build_absolute_uri('/')
+    slug = get_setting('active_invite_slug', '')
+    invite_url = get_setting('active_invite_url', '') or request.build_absolute_uri('/')
     return render(request, 'invitation/qr_page.html', {
         'invite_url': invite_url,
+        'invite_slug': slug,
         'groom_name': get_setting('groom_display_name', get_setting('fam_groom_name', w['groom']['name'])),
         'bride_name': get_setting('bride_display_name', get_setting('fam_bride_name', w['bride']['name'])),
         'wedding_date': w['wedding_date'],
@@ -364,6 +380,14 @@ def delete_card(request):
     return HttpResponse('{"ok":true}', content_type='application/json')
 
 
+def invite_page(request, slug):
+    """Public invite page — guests visit /invite/<slug>/ to see the wedding invitation."""
+    inv = get_invitation(slug)
+    if not inv:
+        return redirect('/')
+    return home(request)
+
+
 @login_required
 def thanks_page(request):
     w = WEDDING
@@ -394,7 +418,18 @@ def save_names(request):
             save_setting('groom_display_name', groom_name)
         if bride_name:
             save_setting('bride_display_name', bride_name)
-        return HttpResponse('{"ok":true}', content_type='application/json')
+        slug = ''
+        invite_url = ''
+        if groom_name and bride_name:
+            slug = _make_slug(groom_name, bride_name)
+            invite_url = request.build_absolute_uri('/invite/' + slug + '/')
+            create_invitation(slug, groom_name, bride_name, invite_url)
+            save_setting('active_invite_slug', slug)
+            save_setting('active_invite_url', invite_url)
+        return HttpResponse(
+            json.dumps({'ok': True, 'slug': slug, 'invite_url': invite_url}),
+            content_type='application/json',
+        )
     return HttpResponse('{"ok":false}', content_type='application/json', status=400)
 
 

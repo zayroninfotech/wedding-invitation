@@ -122,7 +122,7 @@
       <div class="divider"></div>
       <div class="label">Scan to Open Invitation</div>
       <div class="qr-wrap">
-        <img src="/qr/" alt="Wedding QR Code">
+        <img src="/qr/{% if invite_slug %}?slug={{ invite_slug }}{% endif %}" alt="Wedding QR Code">
       </div>
       <div class="url" id="invite-url">{{ invite_url }}</div>
       <div id="copy-msg">✓ Link copied!</div>

@@ -247,17 +247,20 @@ async function generatePublishQR(){
   if(!groom||!bride){alert('Please enter both names.');return;}
   var btn=document.getElementById('pub-gen-btn');
   btn.textContent='Saving…';btn.disabled=true;
+  var slug='',inviteUrl=window.location.origin+'/';
   try{
-    await fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify({groom_name:groom,bride_name:bride})});
+    var resp=await fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify({groom_name:groom,bride_name:bride})});
+    var data=await resp.json();
+    if(data.slug){slug=data.slug;inviteUrl=data.invite_url||inviteUrl;}
   }catch(e){}
   btn.textContent='📲 Generate QR Code';btn.disabled=false;
   closePublishModal();
-  // Update QR modal with saved names and show
+  // Update QR modal with invite URL and show
   var qrTitle=document.querySelector('#admin-qr-modal p:first-child');
   if(qrTitle)qrTitle.textContent='ॐ '+groom+' ✦ '+bride+' ॐ';
   var qrImg=document.querySelector('#admin-qr-modal img');
-  if(qrImg)qrImg.src='/qr/?t='+Date.now();
-  document.getElementById('admin-qr-url').textContent=window.location.origin+'/';
+  if(qrImg)qrImg.src='/qr/'+(slug?'?slug='+encodeURIComponent(slug)+'&t=':'?t=')+Date.now();
+  document.getElementById('admin-qr-url').textContent=inviteUrl;
   document.getElementById('admin-qr-modal').style.display='flex';
 }
 document.addEventListener('DOMContentLoaded',function(){

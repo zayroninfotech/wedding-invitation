@@ -1,5 +1,6 @@
 import pymongo
 import hashlib
+from datetime import datetime
 
 MONGO_URI = 'mongodb://localhost:27017/'
 DB_NAME   = 'wedding_vamsi_anausha'
@@ -44,6 +45,33 @@ def save_setting(key, value):
         return True
     except Exception:
         return False
+
+
+def create_invitation(slug, groom_name, bride_name, url):
+    try:
+        db = get_db()
+        db.invitations.update_one(
+            {'slug': slug},
+            {'$set': {
+                'slug': slug,
+                'groom_name': groom_name,
+                'bride_name': bride_name,
+                'url': url,
+                'updated_at': datetime.utcnow(),
+            }},
+            upsert=True,
+        )
+        return True
+    except Exception:
+        return False
+
+
+def get_invitation(slug):
+    try:
+        db = get_db()
+        return db.invitations.find_one({'slug': slug}, {'_id': 0})
+    except Exception:
+        return None
 
 
 def seed_superadmin():
