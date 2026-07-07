@@ -46,39 +46,41 @@
     <button onclick="closeThanksModal()" style="background:none;border:none;color:rgba(212,160,23,0.6);font-size:1.2rem;cursor:pointer;padding:0.2rem;line-height:1;">&#10005;</button>
   </div>
 
-  <!-- Template images: two small portrait thumbnails centred side by side -->
-  <div style="display:flex;align-items:center;justify-content:center;gap:2rem;padding:1rem 1rem 0.5rem;flex-shrink:0;border-bottom:1px solid rgba(212,160,23,0.15);">
-    <div id="card-tpl-1" style="position:relative;border:2px solid rgba(212,160,23,0.25);border-radius:6px;overflow:visible;transition:border-color 0.2s;width:160px;flex-shrink:0;" onmouseover="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.6)'" onmouseout="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.25)'">
-      <div style="overflow:hidden;border-radius:4px;cursor:pointer;" onclick="selectCardTemplate(document.getElementById('card-tpl-1'),'{% static 'images/invite-card-template.jpg' %}')">
-        <img src="{% static 'images/invite-card-template.jpg' %}" style="width:160px;height:210px;object-fit:cover;display:block;" loading="eager">
-        <div style="padding:0.3rem;background:#060E24;color:rgba(212,160,23,0.8);font-size:0.62rem;text-align:center;letter-spacing:0.15em;text-transform:uppercase;">Template 1</div>
-      </div>
-      <button id="card-tpl-1-x" onclick="deselectTemplate('card-tpl-1')" style="display:none;position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;background:rgba(220,38,38,0.9);border:none;color:#fff;font-size:0.6rem;cursor:pointer;z-index:2;line-height:1;padding:0;">&#10005;</button>
-    </div>
-    <div id="card-tpl-2" style="position:relative;border:2px solid rgba(212,160,23,0.25);border-radius:6px;overflow:visible;transition:border-color 0.2s;width:160px;flex-shrink:0;" onmouseover="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.6)'" onmouseout="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.25)'">
-      <div style="overflow:hidden;border-radius:4px;cursor:pointer;" onclick="selectCardTemplate(document.getElementById('card-tpl-2'),'{% static 'images/invite-card-template-2.jpg' %}')">
-        <img src="{% static 'images/invite-card-template-2.jpg' %}" style="width:160px;height:210px;object-fit:cover;display:block;" loading="eager">
-        <div style="padding:0.3rem;background:#060E24;color:rgba(212,160,23,0.8);font-size:0.62rem;text-align:center;letter-spacing:0.15em;text-transform:uppercase;">Template 2</div>
-      </div>
-      <button id="card-tpl-2-x" onclick="deselectTemplate('card-tpl-2')" style="display:none;position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;background:rgba(220,38,38,0.9);border:none;color:#fff;font-size:0.6rem;cursor:pointer;z-index:2;line-height:1;padding:0;">&#10005;</button>
-    </div>
+  <!-- Header with Add Photos -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 1.25rem;border-bottom:1px solid rgba(212,160,23,0.12);flex-shrink:0;">
+    <p style="font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(212,160,23,0.5);margin:0;">All Cards <span id="card-count-badge" style="color:rgba(212,160,23,0.8);margin-left:0.3rem;"></span></p>
+    <label id="add-photos-btn" style="display:flex;align-items:center;gap:0.4rem;padding:0.35rem 0.9rem;background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.3);border-radius:2rem;cursor:pointer;color:rgba(212,160,23,0.85);font-size:0.78rem;" onmouseover="this.style.background='rgba(212,160,23,0.22)'" onmouseout="this.style.background='rgba(212,160,23,0.12)'">
+      <span style="font-size:1rem;line-height:1;">+</span> Add Photos
+      <input type="file" id="card-upload-input" accept="image/*" multiple onchange="addUploadedCards(this)" style="display:none;">
+    </label>
   </div>
 
-  <!-- Upload section -->
-  <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
-    <!-- Header row -->
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1.25rem;border-bottom:1px solid rgba(212,160,23,0.1);flex-shrink:0;">
-      <p style="font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(212,160,23,0.5);margin:0;">Uploaded Cards <span id="card-count-badge" style="color:rgba(212,160,23,0.8);margin-left:0.4rem;"></span></p>
-      <label id="add-photos-btn" style="display:flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.3);border-radius:2rem;cursor:pointer;color:rgba(212,160,23,0.85);font-size:0.78rem;" onmouseover="this.style.background='rgba(212,160,23,0.22)'" onmouseout="this.style.background='rgba(212,160,23,0.12)'">
-        <span style="font-size:1.1rem;line-height:1;font-weight:300;">+</span> Add Photos
-        <input type="file" id="card-upload-input" accept="image/*" multiple onchange="addUploadedCards(this)" style="display:none;">
-      </label>
+  <!-- Single scrollable area: templates + uploaded all in one row -->
+  <div style="flex:1;overflow-y:auto;padding:1.25rem;">
+    <div id="all-cards-row" style="display:flex;flex-wrap:wrap;gap:0.85rem;align-content:flex-start;">
+
+      <!-- Template 1 (always position 1) -->
+      <div id="card-tpl-1" style="position:relative;border:2px solid rgba(212,160,23,0.25);border-radius:6px;overflow:visible;transition:border-color 0.2s;flex-shrink:0;width:130px;" onmouseover="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.6)'" onmouseout="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.25)'">
+        <div style="overflow:hidden;border-radius:4px;cursor:pointer;" onclick="selectCardTemplate(document.getElementById('card-tpl-1'),'{% static 'images/invite-card-template.jpg' %}')">
+          <img src="{% static 'images/invite-card-template.jpg' %}" style="width:130px;height:175px;object-fit:cover;display:block;" loading="eager">
+          <div style="padding:0.28rem;background:#060E24;color:rgba(212,160,23,0.8);font-size:0.58rem;text-align:center;letter-spacing:0.1em;text-transform:uppercase;">Template 1</div>
+        </div>
+        <button id="card-tpl-1-x" onclick="deselectTemplate('card-tpl-1')" style="display:none;position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;background:rgba(220,38,38,0.9);border:none;color:#fff;font-size:0.6rem;cursor:pointer;z-index:2;line-height:1;padding:0;">&#10005;</button>
+      </div>
+
+      <!-- Template 2 (always position 2) -->
+      <div id="card-tpl-2" style="position:relative;border:2px solid rgba(212,160,23,0.25);border-radius:6px;overflow:visible;transition:border-color 0.2s;flex-shrink:0;width:130px;" onmouseover="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.6)'" onmouseout="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.25)'">
+        <div style="overflow:hidden;border-radius:4px;cursor:pointer;" onclick="selectCardTemplate(document.getElementById('card-tpl-2'),'{% static 'images/invite-card-template-2.jpg' %}')">
+          <img src="{% static 'images/invite-card-template-2.jpg' %}" style="width:130px;height:175px;object-fit:cover;display:block;" loading="eager">
+          <div style="padding:0.28rem;background:#060E24;color:rgba(212,160,23,0.8);font-size:0.58rem;text-align:center;letter-spacing:0.1em;text-transform:uppercase;">Template 2</div>
+        </div>
+        <button id="card-tpl-2-x" onclick="deselectTemplate('card-tpl-2')" style="display:none;position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;background:rgba(220,38,38,0.9);border:none;color:#fff;font-size:0.6rem;cursor:pointer;z-index:2;line-height:1;padding:0;">&#10005;</button>
+      </div>
+
+      <!-- Uploaded cards injected here by JS (numbered 3, 4, 5...) -->
+      <div id="card-upload-row" style="display:contents;"></div>
     </div>
-    <!-- Horizontal scrolling numbered row -->
-    <div style="flex:1;overflow-y:auto;padding:0.9rem 1.25rem;">
-      <div id="card-upload-row" style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.6rem;"></div>
-      <div id="card-upload-empty" style="text-align:center;padding:2rem 0;color:rgba(255,255,255,0.18);font-size:0.82rem;">No cards uploaded yet — tap Add Photos</div>
-    </div>
+    <div id="card-upload-empty" style="display:none;text-align:center;padding:1rem 0;color:rgba(255,255,255,0.18);font-size:0.8rem;">Add photos with the button above</div>
   </div>
 
   <!-- Bottom: submit -->
@@ -131,31 +133,33 @@ function deselectTemplate(id){
 }
 function _cardUpdateEmpty(){
   var row=document.getElementById('card-upload-row');
-  var empty=document.getElementById('card-upload-empty');
   var badge=document.getElementById('card-count-badge');
   var n=row.children.length;
-  empty.style.display=n?'none':'block';
-  badge.textContent=n?'('+n+')':'';
+  badge.textContent=n?'('+(2+n)+' total)':'(2 templates)';
+}
+function _reNumberUploaded(){
+  var row=document.getElementById('card-upload-row');
+  Array.from(row.children).forEach(function(c,i){
+    var b=c.querySelector('.card-num-badge');if(b)b.textContent=i+3;
+  });
 }
 function _cardAddThumb(url,name,num){
   var row=document.getElementById('card-upload-row');
   var wrap=document.createElement('div');
-  wrap.style.cssText='position:relative;border-radius:0.5rem;overflow:hidden;border:1.5px solid rgba(212,160,23,0.25);background:#060E24;';
+  wrap.style.cssText='position:relative;flex-shrink:0;width:130px;border:2px solid rgba(212,160,23,0.25);border-radius:6px;overflow:hidden;background:#060E24;';
   var img=document.createElement('img');
-  img.src=url;img.style.cssText='width:100%;height:140px;object-fit:cover;display:block;';
-  var numBadge=document.createElement('div');
-  numBadge.textContent=num;
-  numBadge.style.cssText='position:absolute;top:4px;left:5px;background:rgba(212,160,23,0.85);color:#060E24;font-size:0.6rem;font-weight:700;border-radius:3px;padding:1px 5px;line-height:1.4;';
+  img.src=url;img.style.cssText='width:130px;height:175px;object-fit:cover;display:block;';
+  var label=document.createElement('div');
+  label.className='card-num-badge';label.textContent=num;
+  label.style.cssText='padding:0.28rem;background:#060E24;color:rgba(212,160,23,0.8);font-size:0.58rem;text-align:center;letter-spacing:0.1em;text-transform:uppercase;';
   var del=document.createElement('button');
   del.innerHTML='&#10005;';
-  del.style.cssText='position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(220,38,38,0.85);border:none;color:#fff;font-size:0.6rem;cursor:pointer;line-height:1;padding:0;';
+  del.style.cssText='position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:rgba(220,38,38,0.85);border:none;color:#fff;font-size:0.65rem;cursor:pointer;line-height:1;padding:0;z-index:2;';
   del.onclick=function(){
     if(name){fetch('/delete-card/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':_csrfToken()},body:JSON.stringify({name:name})});}
-    wrap.remove();
-    document.querySelectorAll('#card-upload-row > div').forEach(function(c,i){var b=c.querySelector('div');if(b)b.textContent=i+1;});
-    _cardUpdateEmpty();
+    wrap.remove();_reNumberUploaded();_cardUpdateEmpty();
   };
-  wrap.appendChild(img);wrap.appendChild(numBadge);wrap.appendChild(del);
+  wrap.appendChild(img);wrap.appendChild(label);wrap.appendChild(del);
   row.appendChild(wrap);
   _cardUpdateEmpty();
 }
@@ -167,7 +171,7 @@ function loadSavedCards(){
   fetch('/list-cards/').then(function(r){return r.json();}).then(function(d){
     var row=document.getElementById('card-upload-row');
     row.innerHTML='';
-    (d.cards||[]).forEach(function(c,i){_cardAddThumb(c.url,c.name,i+1);});
+    (d.cards||[]).forEach(function(c,i){_cardAddThumb(c.url,c.name,i+3);});
     _cardUpdateEmpty();
   });
 }
@@ -183,7 +187,7 @@ function addUploadedCards(input){
     fetch('/upload-card/',{method:'POST',headers:{'X-CSRFToken':_csrfToken()},body:fd})
       .then(function(r){return r.json();})
       .then(function(d){
-        if(d.ok){var n=row.children.length+1;_cardAddThumb(d.url,d.name,n);}
+        if(d.ok){var n=row.children.length+3;_cardAddThumb(d.url,d.name,n);}
       }).finally(function(){
         done++;if(done===files.length){btn.style.opacity='1';btn.style.pointerEvents='';}
       });
