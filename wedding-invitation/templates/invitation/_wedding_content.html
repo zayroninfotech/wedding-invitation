@@ -1137,63 +1137,72 @@ the beginning of our forever.{% endif %}</p>
     </div>
 
     <!-- Invite card -->
-    <div style="border-radius:1.5rem;padding:3rem 2rem 2.5rem;margin-bottom:2rem;text-align:center;background:linear-gradient(145deg,rgba(13,27,75,0.7),rgba(6,14,36,0.85));border:1.5px solid rgba(212,160,23,0.4);box-shadow:0 0 0 1px rgba(212,160,23,0.1),0 20px 60px rgba(0,0,0,0.5),inset 0 1px 0 rgba(212,160,23,0.15);">
+    <div style="position:relative;border-radius:1.5rem;padding:3rem 2.5rem 2.5rem;margin-bottom:2rem;text-align:center;background:linear-gradient(145deg,rgba(13,27,75,0.75),rgba(6,14,36,0.9));border:1.5px solid rgba(212,160,23,0.45);box-shadow:0 0 0 1px rgba(212,160,23,0.08),0 24px 64px rgba(0,0,0,0.55),inset 0 1px 0 rgba(212,160,23,0.12);">
 
       <!-- Corner accents -->
-      <span style="position:absolute;top:10px;left:10px;width:18px;height:18px;border-top:2px solid rgba(212,160,23,0.7);border-left:2px solid rgba(212,160,23,0.7);border-radius:2px 0 0 0;"></span>
-      <span style="position:absolute;top:10px;right:10px;width:18px;height:18px;border-top:2px solid rgba(212,160,23,0.7);border-right:2px solid rgba(212,160,23,0.7);border-radius:0 2px 0 0;"></span>
-      <span style="position:absolute;bottom:10px;left:10px;width:18px;height:18px;border-bottom:2px solid rgba(212,160,23,0.7);border-left:2px solid rgba(212,160,23,0.7);border-radius:0 0 0 2px;"></span>
-      <span style="position:absolute;bottom:10px;right:10px;width:18px;height:18px;border-bottom:2px solid rgba(212,160,23,0.7);border-right:2px solid rgba(212,160,23,0.7);border-radius:0 0 2px 0;"></span>
+      <span style="position:absolute;top:12px;left:12px;width:20px;height:20px;border-top:2px solid rgba(212,160,23,0.8);border-left:2px solid rgba(212,160,23,0.8);border-radius:3px 0 0 0;pointer-events:none;"></span>
+      <span style="position:absolute;top:12px;right:12px;width:20px;height:20px;border-top:2px solid rgba(212,160,23,0.8);border-right:2px solid rgba(212,160,23,0.8);border-radius:0 3px 0 0;pointer-events:none;"></span>
+      <span style="position:absolute;bottom:12px;left:12px;width:20px;height:20px;border-bottom:2px solid rgba(212,160,23,0.8);border-left:2px solid rgba(212,160,23,0.8);border-radius:0 0 0 3px;pointer-events:none;"></span>
+      <span style="position:absolute;bottom:12px;right:12px;width:20px;height:20px;border-bottom:2px solid rgba(212,160,23,0.8);border-right:2px solid rgba(212,160,23,0.8);border-radius:0 0 3px 0;pointer-events:none;"></span>
 
       <!-- Wedding of label -->
-      <p style="color:rgba(212,160,23,0.5);font-size:0.65rem;letter-spacing:0.4em;text-transform:uppercase;margin-bottom:1.25rem;">✦ &nbsp; Wedding of &nbsp; ✦</p>
+      <p style="color:rgba(212,160,23,0.55);font-size:0.65rem;letter-spacing:0.45em;text-transform:uppercase;margin-bottom:1.5rem;">&#10022; &nbsp; Wedding of &nbsp; &#10022;</p>
 
       <!-- Names stacked centered -->
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.15rem;margin-bottom:1.25rem;position:relative;">
-        <span style="font-family:'Palatino Linotype',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:#fff;text-shadow:0 2px 20px rgba(0,0,0,0.5);letter-spacing:0.12em;text-transform:uppercase;font-weight:700;" class="live-groom-name">{{ groom.first_name }}</span>
-        <span style="font-family:'Great Vibes',cursive;color:#D4A017;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:400;text-shadow:0 0 20px rgba(212,160,23,0.8);line-height:1.1;">Weds</span>
-        <span style="font-family:'Palatino Linotype',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:#fff;text-shadow:0 2px 20px rgba(0,0,0,0.5);letter-spacing:0.12em;text-transform:uppercase;font-weight:700;" class="live-bride-name">{{ bride.first_name }}</span>
-        {% if is_dashboard %}<button onclick="openHeroEdit('names')" style="position:absolute;top:0;right:-28px;background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.5);font-size:0.75rem;padding:0;" title="Edit names">✏</button>{% endif %}
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.1rem;margin-bottom:0.25rem;">
+        <span style="font-family:'Palatino Linotype',serif;font-size:clamp(2rem,5vw,3rem);color:#ffffff;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;text-shadow:0 2px 24px rgba(0,0,0,0.6);" class="live-groom-name">{{ groom.first_name }}</span>
+        <span style="font-family:'Great Vibes',cursive;color:#D4A017;font-size:clamp(2rem,5vw,3rem);font-weight:400;text-shadow:0 0 24px rgba(212,160,23,0.9);line-height:1.15;">Weds</span>
+        <span style="font-family:'Palatino Linotype',serif;font-size:clamp(2rem,5vw,3rem);color:#ffffff;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;text-shadow:0 2px 24px rgba(0,0,0,0.6);" class="live-bride-name">{{ bride.first_name }}</span>
       </div>
 
+      <!-- Edit names button (dashboard only) -->
+      {% if is_dashboard %}
+      <div style="margin-bottom:1rem;">
+        <button onclick="openHeroEdit('names')" style="background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.3);border-radius:2rem;padding:0.2rem 0.8rem;color:rgba(212,160,23,0.8);font-size:0.65rem;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;">Edit Names</button>
+      </div>
+      {% else %}
+      <div style="margin-bottom:1rem;"></div>
+      {% endif %}
+
       <!-- Divider -->
-      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.5),transparent);width:60%;margin:0 auto 1rem;"></div>
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.55),transparent);width:55%;margin:0 auto 1.25rem;"></div>
 
       <!-- Date & City -->
-      <div style="display:inline-flex;align-items:center;gap:0.5rem;color:rgba(212,160,23,0.75);font-size:0.9rem;margin-bottom:2rem;font-family:Georgia,serif;position:relative;">
-        📅 <span id="rsvp-date">{{ hero_date }}</span>
-        <span style="opacity:0.4;">•</span>
-        📍 <span id="rsvp-city">{{ hero_city }}</span>
+      <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0.5rem;color:rgba(212,160,23,0.8);font-size:0.9rem;margin-bottom:2rem;font-family:Georgia,serif;">
+        <span>&#128197;</span>
+        <span id="rsvp-date">{{ hero_date }}</span>
+        <span style="opacity:0.4;margin:0 0.2rem;">&#8226;</span>
+        <span>&#128205;</span>
+        <span id="rsvp-city">{{ hero_city }}</span>
         {% if is_dashboard %}
-        <button onclick="openMuhuEdit('Wedding Date','rsvp-date','hero_date')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.65rem;padding:0;margin-left:4px;">✏</button>
-        <button onclick="openMuhuEdit('City','rsvp-city','hero_city')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.4);font-size:0.65rem;padding:0;">✏</button>
+        <button onclick="openMuhuEdit('Wedding Date','rsvp-date','hero_date')" style="background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.25);border-radius:2rem;padding:0.15rem 0.5rem;color:rgba(212,160,23,0.7);font-size:0.6rem;cursor:pointer;text-transform:uppercase;letter-spacing:0.08em;">edit</button>
+        <button onclick="openMuhuEdit('City','rsvp-city','hero_city')" style="background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.25);border-radius:2rem;padding:0.15rem 0.5rem;color:rgba(212,160,23,0.7);font-size:0.6rem;cursor:pointer;text-transform:uppercase;letter-spacing:0.08em;">edit</button>
         {% endif %}
       </div>
 
-      <!-- 3 contact buttons -->
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;" class="grid-3col">
+      <!-- Contact buttons — horizontal pills -->
+      <div style="display:flex;flex-direction:column;gap:0.85rem;">
 
         <a href="https://wa.me/{{ rsvp.whatsapp }}?text=Congratulations!%20I%20will%20attend%20{{ groom.first_name }}%20%26%20{{ bride.first_name }}%27s%20wedding"
            target="_blank" rel="noopener noreferrer"
-           class="rsvp-contact-card"
-           style="background:linear-gradient(135deg,rgba(37,211,102,0.15),rgba(37,211,102,0.05));border:1px solid rgba(37,211,102,0.35);border-radius:1rem;">
-          <div class="rsvp-icon-circle" style="background:rgba(37,211,102,0.2);">💬</div>
-          <div>
-            <p style="color:#fff;font-weight:700;font-size:0.875rem;">WhatsApp</p>
-            <p style="font-size:0.75rem;color:rgba(37,211,102,0.8);margin-top:0.25rem;">Confirm on WhatsApp</p>
+           style="display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;border-radius:3rem;background:linear-gradient(135deg,rgba(37,211,102,0.18),rgba(37,211,102,0.06));border:1px solid rgba(37,211,102,0.4);text-decoration:none;transition:background 0.2s;">
+          <span style="font-size:1.4rem;flex-shrink:0;width:2.2rem;height:2.2rem;background:rgba(37,211,102,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;">💬</span>
+          <div style="text-align:left;flex:1;">
+            <p style="color:#fff;font-weight:700;font-size:0.95rem;margin:0;">WhatsApp</p>
+            <p style="color:rgba(37,211,102,0.8);font-size:0.75rem;margin:0.1rem 0 0;">Confirm attendance on WhatsApp</p>
           </div>
+          <span style="color:rgba(37,211,102,0.6);font-size:1.1rem;">&#8250;</span>
         </a>
 
         <a href="tel:{{ rsvp.phone }}"
-           class="rsvp-contact-card"
-           style="background:linear-gradient(135deg,rgba(212,160,23,0.15),rgba(212,160,23,0.05));border:1px solid rgba(212,160,23,0.4);border-radius:1rem;">
-          <div class="rsvp-icon-circle" style="background:rgba(212,160,23,0.2);">📞</div>
-          <div>
-            <p style="color:#fff;font-weight:700;font-size:0.875rem;">Call Us</p>
-            <p style="font-size:0.75rem;color:rgba(212,160,23,0.8);margin-top:0.25rem;">{{ rsvp.phone }}</p>
+           style="display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;border-radius:3rem;background:linear-gradient(135deg,rgba(212,160,23,0.18),rgba(212,160,23,0.06));border:1px solid rgba(212,160,23,0.45);text-decoration:none;transition:background 0.2s;">
+          <span style="font-size:1.4rem;flex-shrink:0;width:2.2rem;height:2.2rem;background:rgba(212,160,23,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;">📞</span>
+          <div style="text-align:left;flex:1;">
+            <p style="color:#fff;font-weight:700;font-size:0.95rem;margin:0;">Call Us</p>
+            <p style="color:rgba(212,160,23,0.8);font-size:0.75rem;margin:0.1rem 0 0;">{{ rsvp.phone }}</p>
           </div>
+          <span style="color:rgba(212,160,23,0.6);font-size:1.1rem;">&#8250;</span>
         </a>
-
 
       </div>
     </div>
