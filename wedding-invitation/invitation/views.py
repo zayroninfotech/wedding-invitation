@@ -397,6 +397,68 @@ def invite_page(request, slug):
 
 
 @login_required
+def sms_page(request):
+    w = WEDDING
+    invite_url = get_setting('active_invite_url', '') or request.build_absolute_uri('/')
+    return render(request, 'invitation/sms.html', {
+        'admin_username': request.session.get('admin_username', ''),
+        'invite_url': invite_url,
+        'groom_name': get_setting('groom_display_name', w['groom']['name']),
+        'bride_name': get_setting('bride_display_name', w['bride']['name']),
+    })
+
+
+@login_required
+def sms_add(request):
+    if request.method != 'POST':
+        return HttpResponse('{"ok":false}', content_type='application/json', status=400)
+    data = json.loads(request.body)
+    name    = data.get('name', '').strip()
+    phone   = data.get('phone', '').strip()
+    message = data.get('message', '').strip()
+    attach  = data.get('attach', '').strip()
+    if not name or not phone:
+        return HttpResponse('{"ok":false,"error":"name and phone required"}', content_type='application/json', status=400)
+    from .mongo_db import get_db
+    from datetime import datetime
+    db = get_db()
+    result = db.sms_contacts.insert_one({
+        'name': name, 'phone': phone, 'message': message,
+        'attach': attach, 'sent': False, 'created_at': datetime.utcnow(),
+    })
+    return HttpResponse(
+        json.dumps({'ok': True, 'id': str(result.inserted_id)}),
+        content_type='application/json',
+    )
+
+
+@login_required
+def sms_list(request):
+    from .mongo_db import get_db
+    db = get_db()
+    contacts = []
+    for c in db.sms_contacts.find({}, {'_id': 1, 'name': 1, 'phone': 1, 'message': 1, 'attach': 1, 'sent': 1}):
+        c['id'] = str(c.pop('_id'))
+        contacts.append(c)
+    return HttpResponse(json.dumps({'contacts': contacts}), content_type='application/json')
+
+
+@login_required
+def sms_delete(request):
+    if request.method != 'POST':
+        return HttpResponse('{"ok":false}', content_type='application/json', status=400)
+    from .mongo_db import get_db
+    from bson import ObjectId
+    data = json.loads(request.body)
+    cid = data.get('id', '')
+    try:
+        get_db().sms_contacts.delete_one({'_id': ObjectId(cid)})
+        return HttpResponse('{"ok":true}', content_type='application/json')
+    except Exception:
+        return HttpResponse('{"ok":false}', content_type='application/json', status=400)
+
+
+@login_required
 def thanks_page(request):
     w = WEDDING
     groom, bride = apply_name_overrides(w['groom'], w['bride'])
