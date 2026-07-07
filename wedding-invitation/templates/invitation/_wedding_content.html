@@ -1183,23 +1183,29 @@ the beginning of our forever.{% endif %}</p>
       <!-- Contact buttons — horizontal pills -->
       <div style="display:flex;flex-direction:column;gap:0.85rem;">
 
-        <a href="https://wa.me/{{ rsvp.whatsapp }}?text=Congratulations!%20I%20will%20attend%20{{ groom.first_name }}%20%26%20{{ bride.first_name }}%27s%20wedding"
+        <a id="rsvp-wa-link" href="https://wa.me/{{ rsvp.whatsapp }}?text=Congratulations!%20I%20will%20attend%20{{ groom.first_name }}%20%26%20{{ bride.first_name }}%27s%20wedding"
            target="_blank" rel="noopener noreferrer"
            style="display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;border-radius:3rem;background:linear-gradient(135deg,rgba(37,211,102,0.18),rgba(37,211,102,0.06));border:1px solid rgba(37,211,102,0.4);text-decoration:none;transition:background 0.2s;">
           <span style="font-size:1.4rem;flex-shrink:0;width:2.2rem;height:2.2rem;background:rgba(37,211,102,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;">💬</span>
           <div style="text-align:left;flex:1;">
             <p style="color:#fff;font-weight:700;font-size:0.95rem;margin:0;">WhatsApp</p>
-            <p style="color:rgba(37,211,102,0.8);font-size:0.75rem;margin:0.1rem 0 0;">Confirm attendance on WhatsApp</p>
+            <p style="color:rgba(37,211,102,0.8);font-size:0.75rem;margin:0.1rem 0 0;">
+              <span id="rsvp-whatsapp">{{ rsvp.whatsapp }}</span>
+              {% if is_dashboard %}<button onclick="event.preventDefault();openMuhuEdit('WhatsApp Number','rsvp-whatsapp','rsvp_whatsapp')" style="background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);border-radius:2rem;padding:0.1rem 0.5rem;color:rgba(37,211,102,0.9);font-size:0.6rem;cursor:pointer;text-transform:uppercase;letter-spacing:0.08em;margin-left:6px;">edit</button>{% endif %}
+            </p>
           </div>
           <span style="color:rgba(37,211,102,0.6);font-size:1.1rem;">&#8250;</span>
         </a>
 
-        <a href="tel:{{ rsvp.phone }}"
+        <a id="rsvp-phone-link" href="tel:{{ rsvp.phone }}"
            style="display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;border-radius:3rem;background:linear-gradient(135deg,rgba(212,160,23,0.18),rgba(212,160,23,0.06));border:1px solid rgba(212,160,23,0.45);text-decoration:none;transition:background 0.2s;">
           <span style="font-size:1.4rem;flex-shrink:0;width:2.2rem;height:2.2rem;background:rgba(212,160,23,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;">📞</span>
           <div style="text-align:left;flex:1;">
             <p style="color:#fff;font-weight:700;font-size:0.95rem;margin:0;">Call Us</p>
-            <p style="color:rgba(212,160,23,0.8);font-size:0.75rem;margin:0.1rem 0 0;">{{ rsvp.phone }}</p>
+            <p style="color:rgba(212,160,23,0.8);font-size:0.75rem;margin:0.1rem 0 0;">
+              <span id="rsvp-phone">{{ rsvp.phone }}</span>
+              {% if is_dashboard %}<button onclick="event.preventDefault();openMuhuEdit('Phone Number','rsvp-phone','rsvp_phone')" style="background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.3);border-radius:2rem;padding:0.1rem 0.5rem;color:rgba(212,160,23,0.9);font-size:0.6rem;cursor:pointer;text-transform:uppercase;letter-spacing:0.08em;margin-left:6px;">edit</button>{% endif %}
+            </p>
           </div>
           <span style="color:rgba(212,160,23,0.6);font-size:1.1rem;">&#8250;</span>
         </a>
