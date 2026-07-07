@@ -47,10 +47,8 @@
 <div id="admin-overlay" onclick="closeDrawer()" style="display:none;position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,0.45);backdrop-filter:blur(2px);"></div>
 
 <!-- Hamburger button -->
-<button onclick="toggleDrawer()" id="admin-ham-btn" style="position:fixed;top:0.75rem;left:0.75rem;z-index:9999999;background:rgba(6,14,36,0.75);border:1px solid rgba(212,160,23,0.35);border-radius:8px;padding:0.4rem 0.55rem;cursor:pointer;display:flex;flex-direction:column;gap:4px;backdrop-filter:blur(6px);">
-  <span style="display:block;width:20px;height:2px;background:#D4A017;border-radius:2px;"></span>
-  <span style="display:block;width:20px;height:2px;background:#D4A017;border-radius:2px;"></span>
-  <span style="display:block;width:20px;height:2px;background:#D4A017;border-radius:2px;"></span>
+<button onclick="toggleDrawer()" id="admin-ham-btn" style="position:fixed;top:0.75rem;left:0.75rem;z-index:9999999;background:rgba(6,14,36,0.75);border:1px solid rgba(212,160,23,0.35);border-radius:8px;padding:0.45rem 0.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);min-width:38px;min-height:34px;transition:all 0.2s;">
+  <span id="admin-ham-icon" style="color:#D4A017;font-size:1.2rem;line-height:1;font-weight:bold;">&#9776;</span>
 </button>
 
 <!-- Thanks Modal -->
@@ -116,8 +114,8 @@ function openThanksModal(){document.getElementById('thanks-modal').style.display
 function closeThanksModal(){document.getElementById('thanks-modal').style.display='none';}
 function openTemplatePhoto(src,label){var m=document.getElementById('template-photo-modal');document.getElementById('template-photo-img').src=src;document.getElementById('template-photo-label').textContent=label;m.style.display='flex';closeDrawer();}
 function closeTemplatePhoto(){document.getElementById('template-photo-modal').style.display='none';}
-function toggleDrawer(){var d=document.getElementById('admin-drawer'),o=document.getElementById('admin-overlay');var open=d.style.left==='0px';d.style.left=open?'-270px':'0px';o.style.display=open?'none':'block';}
-function closeDrawer(){var d=document.getElementById('admin-drawer'),o=document.getElementById('admin-overlay');if(d)d.style.left='-270px';if(o)o.style.display='none';}
+function toggleDrawer(){var d=document.getElementById('admin-drawer'),o=document.getElementById('admin-overlay'),ic=document.getElementById('admin-ham-icon');var open=d.style.left==='0px';d.style.left=open?'-270px':'0px';o.style.display=open?'none':'block';if(ic)ic.innerHTML=open?'&#9776;':'&#8592;';}
+function closeDrawer(){var d=document.getElementById('admin-drawer'),o=document.getElementById('admin-overlay'),ic=document.getElementById('admin-ham-icon');if(d)d.style.left='-270px';if(o)o.style.display='none';if(ic)ic.innerHTML='&#9776;';}
 function showAdminQR(){document.getElementById('admin-qr-url').textContent=window.location.origin+'/';document.getElementById('admin-qr-modal').style.display='flex';closeDrawer();}
 function toggleSidebarQR(){
   var panel=document.getElementById('sidebar-qr-panel');
