@@ -311,7 +311,8 @@ def upload_card(request):
     if not f:
         return HttpResponse('{"ok":false,"error":"no file"}', content_type='application/json', status=400)
     import time, uuid
-    cards_dir = os.path.join('media', 'cards')
+    from django.conf import settings
+    cards_dir = os.path.join(settings.MEDIA_ROOT, 'cards')
     os.makedirs(cards_dir, exist_ok=True)
     ts = int(time.time())
     uid = uuid.uuid4().hex[:8]
@@ -336,7 +337,8 @@ def upload_card(request):
 
 @login_required
 def list_cards(request):
-    cards_dir = os.path.join('media', 'cards')
+    from django.conf import settings
+    cards_dir = os.path.join(settings.MEDIA_ROOT, 'cards')
     if not os.path.exists(cards_dir):
         return HttpResponse('{"cards":[]}', content_type='application/json')
     files = sorted(f for f in os.listdir(cards_dir) if f.lower().endswith(('.jpg','.jpeg','.png','.webp')))
@@ -350,11 +352,12 @@ def delete_card(request):
     if request.method != 'POST':
         return HttpResponse('{"ok":false}', content_type='application/json', status=400)
     import json as _json, re
+    from django.conf import settings
     data = _json.loads(request.body)
     name = data.get('name', '')
     if not re.match(r'^card_\d+_[a-f0-9]+\.jpg$', name):
         return HttpResponse('{"ok":false,"error":"invalid"}', content_type='application/json', status=400)
-    path = os.path.join('media', 'cards', name)
+    path = os.path.join(settings.MEDIA_ROOT, 'cards', name)
     if os.path.exists(path):
         os.remove(path)
     return HttpResponse('{"ok":true}', content_type='application/json')

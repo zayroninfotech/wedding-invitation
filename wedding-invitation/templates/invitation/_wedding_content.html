@@ -48,13 +48,19 @@
 
   <!-- Template images: two small portrait thumbnails centred side by side -->
   <div style="display:flex;align-items:center;justify-content:center;gap:2rem;padding:1rem 1rem 0.5rem;flex-shrink:0;border-bottom:1px solid rgba(212,160,23,0.15);">
-    <div onclick="selectCardTemplate(this,'{% static 'images/invite-card-template.jpg' %}')" id="card-tpl-1" style="position:relative;cursor:pointer;border:2px solid rgba(212,160,23,0.25);border-radius:6px;overflow:hidden;transition:border-color 0.2s;width:160px;flex-shrink:0;" onmouseover="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.6)'" onmouseout="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.25)'">
-      <img src="{% static 'images/invite-card-template.jpg' %}" style="width:160px;height:210px;object-fit:cover;display:block;" loading="eager">
-      <div style="padding:0.3rem;background:#060E24;color:rgba(212,160,23,0.8);font-size:0.62rem;text-align:center;letter-spacing:0.15em;text-transform:uppercase;">Template 1</div>
+    <div id="card-tpl-1" style="position:relative;border:2px solid rgba(212,160,23,0.25);border-radius:6px;overflow:visible;transition:border-color 0.2s;width:160px;flex-shrink:0;" onmouseover="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.6)'" onmouseout="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.25)'">
+      <div style="overflow:hidden;border-radius:4px;cursor:pointer;" onclick="selectCardTemplate(document.getElementById('card-tpl-1'),'{% static 'images/invite-card-template.jpg' %}')">
+        <img src="{% static 'images/invite-card-template.jpg' %}" style="width:160px;height:210px;object-fit:cover;display:block;" loading="eager">
+        <div style="padding:0.3rem;background:#060E24;color:rgba(212,160,23,0.8);font-size:0.62rem;text-align:center;letter-spacing:0.15em;text-transform:uppercase;">Template 1</div>
+      </div>
+      <button id="card-tpl-1-x" onclick="deselectTemplate('card-tpl-1')" style="display:none;position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;background:rgba(220,38,38,0.9);border:none;color:#fff;font-size:0.6rem;cursor:pointer;z-index:2;line-height:1;padding:0;">&#10005;</button>
     </div>
-    <div onclick="selectCardTemplate(this,'{% static 'images/invite-card-template-2.jpg' %}')" id="card-tpl-2" style="position:relative;cursor:pointer;border:2px solid rgba(212,160,23,0.25);border-radius:6px;overflow:hidden;transition:border-color 0.2s;width:160px;flex-shrink:0;" onmouseover="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.6)'" onmouseout="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.25)'">
-      <img src="{% static 'images/invite-card-template-2.jpg' %}" style="width:160px;height:210px;object-fit:cover;display:block;" loading="eager">
-      <div style="padding:0.3rem;background:#060E24;color:rgba(212,160,23,0.8);font-size:0.62rem;text-align:center;letter-spacing:0.15em;text-transform:uppercase;">Template 2</div>
+    <div id="card-tpl-2" style="position:relative;border:2px solid rgba(212,160,23,0.25);border-radius:6px;overflow:visible;transition:border-color 0.2s;width:160px;flex-shrink:0;" onmouseover="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.6)'" onmouseout="if(!this.classList.contains('selected'))this.style.borderColor='rgba(212,160,23,0.25)'">
+      <div style="overflow:hidden;border-radius:4px;cursor:pointer;" onclick="selectCardTemplate(document.getElementById('card-tpl-2'),'{% static 'images/invite-card-template-2.jpg' %}')">
+        <img src="{% static 'images/invite-card-template-2.jpg' %}" style="width:160px;height:210px;object-fit:cover;display:block;" loading="eager">
+        <div style="padding:0.3rem;background:#060E24;color:rgba(212,160,23,0.8);font-size:0.62rem;text-align:center;letter-spacing:0.15em;text-transform:uppercase;">Template 2</div>
+      </div>
+      <button id="card-tpl-2-x" onclick="deselectTemplate('card-tpl-2')" style="display:none;position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;background:rgba(220,38,38,0.9);border:none;color:#fff;font-size:0.6rem;cursor:pointer;z-index:2;line-height:1;padding:0;">&#10005;</button>
     </div>
   </div>
 
@@ -110,10 +116,18 @@
 function openThanksModal(){document.getElementById('thanks-modal').style.display='flex';history.replaceState(null,'','#thanks');loadSavedCards();}
 function closeThanksModal(){document.getElementById('thanks-modal').style.display='none';history.replaceState(null,'',window.location.pathname);}
 function selectCardTemplate(el,src){
-  document.querySelectorAll('#card-tpl-1,#card-tpl-2').forEach(function(t){t.classList.remove('selected');t.style.borderColor='rgba(212,160,23,0.25)';});
+  document.querySelectorAll('#card-tpl-1,#card-tpl-2').forEach(function(t){
+    t.classList.remove('selected');t.style.borderColor='rgba(212,160,23,0.25)';
+    var x=document.getElementById(t.id+'-x');if(x)x.style.display='none';
+  });
   el.classList.add('selected');el.style.borderColor='rgba(212,160,23,0.8)';
-  document.getElementById('card-preview-img').src=src;
-  document.getElementById('card-preview-wrap').style.display='block';
+  var xb=document.getElementById(el.id+'-x');if(xb)xb.style.display='flex';
+}
+function deselectTemplate(id){
+  var el=document.getElementById(id);
+  if(!el)return;
+  el.classList.remove('selected');el.style.borderColor='rgba(212,160,23,0.25)';
+  var xb=document.getElementById(id+'-x');if(xb)xb.style.display='none';
 }
 function _cardUpdateEmpty(){
   var row=document.getElementById('card-upload-row');
