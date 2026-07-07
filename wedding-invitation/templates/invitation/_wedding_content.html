@@ -19,17 +19,13 @@
     <!-- Invite Card Templates -->
     <div style="padding:0.9rem 1rem 0.4rem;font-size:0.6rem;color:rgba(212,160,23,0.4);letter-spacing:0.3em;text-transform:uppercase;margin-top:0.5rem;">Invite Templates</div>
 
-    <!-- Template 1 -->
-    <div style="margin:0 0.75rem 0.75rem;border-radius:0.6rem;overflow:hidden;border:1px solid rgba(212,160,23,0.25);cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,160,23,0.6)'" onmouseout="this.style.borderColor='rgba(212,160,23,0.25)'">
-      <img src="{% static 'images/invite-card-template.png' %}" alt="Invite Template 1" style="width:100%;display:block;object-fit:cover;">
-      <div style="padding:0.4rem 0.6rem;background:rgba(212,160,23,0.08);font-size:0.72rem;color:rgba(212,160,23,0.7);text-align:center;">Template 1</div>
-    </div>
+    <button onclick="openTemplatePhoto('{% static 'images/invite-card-template.png' %}','Template 1')" style="display:flex;align-items:center;gap:0.75rem;width:100%;padding:0.7rem 1.25rem;background:none;border:none;border-right:3px solid transparent;cursor:pointer;transition:all 0.2s;text-align:left;" onmouseover="this.style.background='rgba(212,160,23,0.07)'" onmouseout="this.style.background=''">
+      <span style="font-size:1.1rem;">🖼️</span><span style="color:rgba(255,255,255,0.7);font-size:0.9rem;">Template 1</span>
+    </button>
 
-    <!-- Template 2 -->
-    <div style="margin:0 0.75rem 0.75rem;border-radius:0.6rem;overflow:hidden;border:1px solid rgba(212,160,23,0.25);cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,160,23,0.6)'" onmouseout="this.style.borderColor='rgba(212,160,23,0.25)'">
-      <img src="{% static 'images/invite-card-template-2.png' %}" alt="Invite Template 2" style="width:100%;display:block;object-fit:cover;">
-      <div style="padding:0.4rem 0.6rem;background:rgba(212,160,23,0.08);font-size:0.72rem;color:rgba(212,160,23,0.7);text-align:center;">Template 2</div>
-    </div>
+    <button onclick="openTemplatePhoto('{% static 'images/invite-card-template-2.png' %}','Template 2')" style="display:flex;align-items:center;gap:0.75rem;width:100%;padding:0.7rem 1.25rem;background:none;border:none;border-right:3px solid transparent;cursor:pointer;transition:all 0.2s;text-align:left;" onmouseover="this.style.background='rgba(212,160,23,0.07)'" onmouseout="this.style.background=''">
+      <span style="font-size:1.1rem;">🖼️</span><span style="color:rgba(255,255,255,0.7);font-size:0.9rem;">Template 2</span>
+    </button>
   </nav>
   <!-- Footer -->
   <div style="padding:1rem 1.25rem;border-top:1px solid rgba(212,160,23,0.15);">
@@ -48,6 +44,15 @@
   <span style="display:block;width:20px;height:2px;background:#D4A017;border-radius:2px;"></span>
 </button>
 
+<!-- Template Photo Lightbox -->
+<div id="template-photo-modal" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.88);align-items:center;justify-content:center;flex-direction:column;gap:1rem;" onclick="if(event.target===this)closeTemplatePhoto()">
+  <div style="position:relative;max-width:90vw;max-height:85vh;">
+    <img id="template-photo-img" src="" alt="" style="max-width:90vw;max-height:80vh;object-fit:contain;border-radius:10px;border:1.5px solid rgba(212,160,23,0.4);box-shadow:0 0 60px rgba(0,0,0,0.8);">
+    <button onclick="closeTemplatePhoto()" style="position:absolute;top:-12px;right:-12px;width:28px;height:28px;border-radius:50%;background:#0D1B4B;border:1px solid rgba(212,160,23,0.4);color:#D4A017;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;">&#10005;</button>
+  </div>
+  <p id="template-photo-label" style="color:rgba(212,160,23,0.7);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;"></p>
+</div>
+
 <!-- QR Modal -->
 <div id="admin-qr-modal" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.75);align-items:center;justify-content:center;">
   <div style="background:linear-gradient(160deg,#3D0010,#5C0A1E);border:1.5px solid rgba(212,160,23,0.4);border-radius:16px;padding:2rem;max-width:340px;width:90%;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,0.6);">
@@ -64,6 +69,8 @@
   </div>
 </div>
 <script>
+function openTemplatePhoto(src,label){var m=document.getElementById('template-photo-modal');document.getElementById('template-photo-img').src=src;document.getElementById('template-photo-label').textContent=label;m.style.display='flex';closeDrawer();}
+function closeTemplatePhoto(){document.getElementById('template-photo-modal').style.display='none';}
 function toggleDrawer(){var d=document.getElementById('admin-drawer'),o=document.getElementById('admin-overlay');var open=d.style.left==='0px';d.style.left=open?'-270px':'0px';o.style.display=open?'none':'block';}
 function closeDrawer(){var d=document.getElementById('admin-drawer'),o=document.getElementById('admin-overlay');if(d)d.style.left='-270px';if(o)o.style.display='none';}
 function showAdminQR(){document.getElementById('admin-qr-url').textContent=window.location.origin+'/';document.getElementById('admin-qr-modal').style.display='flex';closeDrawer();}
