@@ -12,9 +12,9 @@
     <a href="/dashboard/" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#D4A017;font-size:0.9rem;text-decoration:none;background:rgba(212,160,23,0.08);border-right:3px solid #D4A017;">
       <span style="font-size:1.1rem;">💍</span><span>Wedding Site</span>
     </a>
-    <a href="/qr-page/" target="_blank" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:rgba(255,255,255,0.7);font-size:0.9rem;text-decoration:none;border-right:3px solid transparent;background:#060E24;" onmouseover="this.style.background='rgba(212,160,23,0.12)';this.style.color='#D4A017'" onmouseout="this.style.background='#060E24';this.style.color='rgba(255,255,255,0.7)'">
+    <button onclick="showAdminQR();closeDrawer();" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:rgba(255,255,255,0.7);font-size:0.9rem;border:none;border-right:3px solid transparent;width:100%;cursor:pointer;font-family:inherit;background:#060E24;" onmouseover="this.style.background='rgba(212,160,23,0.12)';this.style.color='#D4A017'" onmouseout="this.style.background='#060E24';this.style.color='rgba(255,255,255,0.7)'">
       <span style="font-size:1.1rem;">📲</span><span>QR Code</span>
-    </a>
+    </button>
     {% if admin_username == 'sai' %}
     <button onclick="openThanksModal();closeDrawer();" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:rgba(255,255,255,0.7);font-size:0.9rem;border:none;border-right:3px solid transparent;width:100%;cursor:pointer;font-family:inherit;background:#060E24;" onmouseover="this.style.background='rgba(212,160,23,0.12)';this.style.color='#D4A017'" onmouseout="this.style.background='#060E24';this.style.color='rgba(255,255,255,0.7)'">
       <span style="font-size:1.1rem;">🃏</span><span>Cards</span>
@@ -229,8 +229,34 @@ function copyInviteLink(){
   });
 }
 function publishInvitation(){
-  var url=window.location.origin+'/';
-  document.getElementById('admin-qr-url').textContent=url;
+  var g='',b='';
+  var gn=document.getElementById('nav-groom-name')||document.querySelector('.live-groom-name');
+  var bn=document.getElementById('nav-bride-name')||document.querySelector('.live-bride-name');
+  if(gn)g=gn.textContent.trim();
+  if(bn)b=bn.textContent.trim();
+  document.getElementById('pub-groom-input').value=g;
+  document.getElementById('pub-bride-input').value=b;
+  document.getElementById('publish-modal').style.display='flex';
+  setTimeout(function(){document.getElementById('pub-groom-input').focus();},100);
+}
+function closePublishModal(){document.getElementById('publish-modal').style.display='none';}
+async function generatePublishQR(){
+  var groom=document.getElementById('pub-groom-input').value.trim();
+  var bride=document.getElementById('pub-bride-input').value.trim();
+  if(!groom||!bride){alert('Please enter both names.');return;}
+  var btn=document.getElementById('pub-gen-btn');
+  btn.textContent='Saving…';btn.disabled=true;
+  try{
+    await fetch('/save-names/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},body:JSON.stringify({groom_name:groom,bride_name:bride})});
+  }catch(e){}
+  btn.textContent='📲 Generate QR Code';btn.disabled=false;
+  closePublishModal();
+  // Update QR modal with saved names and show
+  var qrTitle=document.querySelector('#admin-qr-modal p:first-child');
+  if(qrTitle)qrTitle.textContent='ॐ '+groom+' ✦ '+bride+' ॐ';
+  var qrImg=document.querySelector('#admin-qr-modal img');
+  if(qrImg)qrImg.src='/qr/?t='+Date.now();
+  document.getElementById('admin-qr-url').textContent=window.location.origin+'/';
   document.getElementById('admin-qr-modal').style.display='flex';
 }
 document.addEventListener('DOMContentLoaded',function(){
@@ -1387,10 +1413,28 @@ the beginning of our forever.{% endif %}</p>
 {% if is_dashboard %}
 <footer style="text-align:center;padding:2rem 1rem;background:#060E24;border-top:1px solid rgba(212,160,23,0.15);">
   <p style="color:rgba(212,160,23,0.5);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1rem;">Ready to Share?</p>
-  <a href="/qr-page/" target="_blank" style="display:inline-flex;align-items:center;gap:0.75rem;padding:0.9rem 2.5rem;background:linear-gradient(135deg,#D4A017,#B8860B);color:#060E24;border:none;border-radius:2rem;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:0.06em;box-shadow:0 0 30px rgba(212,160,23,0.4);transition:transform 0.2s;text-decoration:none;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+  <button onclick="publishInvitation()" style="display:inline-flex;align-items:center;gap:0.75rem;padding:0.9rem 2.5rem;background:linear-gradient(135deg,#D4A017,#B8860B);color:#060E24;border:none;border-radius:2rem;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:0.06em;box-shadow:0 0 30px rgba(212,160,23,0.4);transition:transform 0.2s;font-family:inherit;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
     📤 Publish Invitation
-  </a>
+  </button>
 </footer>
+
+<!-- Publish Modal -->
+<div id="publish-modal" style="display:none;position:fixed;inset:0;z-index:9999999;background:rgba(0,0,0,0.72);align-items:center;justify-content:center;">
+  <div style="background:linear-gradient(160deg,#060E24,#0D1B4B);border:1.5px solid rgba(212,160,23,0.4);border-radius:16px;padding:2rem 1.75rem;max-width:360px;width:90%;text-align:center;position:relative;box-shadow:0 30px 80px rgba(0,0,0,0.7);">
+    <button onclick="closePublishModal()" style="position:absolute;top:12px;right:12px;background:none;border:none;color:rgba(212,160,23,0.5);font-size:1.1rem;cursor:pointer;line-height:1;">&#10005;</button>
+    <p style="color:#D4A017;font-size:0.6rem;letter-spacing:0.35em;text-transform:uppercase;margin-bottom:0.4rem;">&#10022; Publish Invitation &#10022;</p>
+    <p style="color:rgba(255,255,255,0.4);font-size:0.75rem;margin-bottom:1.5rem;">Confirm couple names, then generate the QR code</p>
+    <div style="text-align:left;margin-bottom:0.9rem;">
+      <label style="font-size:0.65rem;color:rgba(212,160,23,0.55);letter-spacing:0.15em;text-transform:uppercase;display:block;margin-bottom:0.3rem;">Groom Name</label>
+      <input id="pub-groom-input" type="text" placeholder="e.g. Vamsi Krishna" style="width:100%;padding:0.65rem 0.85rem;background:rgba(255,255,255,0.06);border:1px solid rgba(212,160,23,0.3);border-radius:8px;color:#fff;font-size:0.9rem;outline:none;font-family:inherit;box-sizing:border-box;">
+    </div>
+    <div style="text-align:left;margin-bottom:1.5rem;">
+      <label style="font-size:0.65rem;color:rgba(212,160,23,0.55);letter-spacing:0.15em;text-transform:uppercase;display:block;margin-bottom:0.3rem;">Bride Name</label>
+      <input id="pub-bride-input" type="text" placeholder="e.g. Anausha" style="width:100%;padding:0.65rem 0.85rem;background:rgba(255,255,255,0.06);border:1px solid rgba(212,160,23,0.3);border-radius:8px;color:#fff;font-size:0.9rem;outline:none;font-family:inherit;box-sizing:border-box;">
+    </div>
+    <button id="pub-gen-btn" onclick="generatePublishQR()" style="width:100%;padding:0.85rem;background:linear-gradient(90deg,#B8860B,#D4A017,#B8860B);border:none;border-radius:0.75rem;color:#060E24;font-size:0.95rem;font-weight:700;cursor:pointer;letter-spacing:0.06em;font-family:inherit;">📲 Generate QR Code</button>
+  </div>
+</div>
 {% endif %}
 
 </div><!-- /pt-58 -->
