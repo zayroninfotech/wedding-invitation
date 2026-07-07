@@ -282,8 +282,8 @@ def qr_page(request):
     invite_url = request.build_absolute_uri('/')
     return render(request, 'invitation/qr_page.html', {
         'invite_url': invite_url,
-        'groom_name': w['groom']['name'],
-        'bride_name': w['bride']['name'],
+        'groom_name': get_setting('groom_display_name', get_setting('fam_groom_name', w['groom']['name'])),
+        'bride_name': get_setting('bride_display_name', get_setting('fam_bride_name', w['bride']['name'])),
         'wedding_date': w['wedding_date'],
     })
 
