@@ -58,23 +58,25 @@
     </div>
   </div>
 
-  <!-- Upload section: scrollable -->
-  <div style="flex:1;overflow-y:auto;padding:1rem 1.25rem;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
-      <p style="font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(212,160,23,0.5);margin:0;">Upload Your Cards</p>
-      <label style="display:flex;align-items:center;gap:0.4rem;padding:0.4rem 0.9rem;background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.3);border-radius:2rem;cursor:pointer;color:rgba(212,160,23,0.85);font-size:0.78rem;" onmouseover="this.style.background='rgba(212,160,23,0.22)'" onmouseout="this.style.background='rgba(212,160,23,0.12)'">
-        <span style="font-size:1rem;line-height:1;">+</span> Add Photos
+  <!-- Upload section -->
+  <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
+    <!-- Header row -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1.25rem;border-bottom:1px solid rgba(212,160,23,0.1);flex-shrink:0;">
+      <p style="font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(212,160,23,0.5);margin:0;">Uploaded Cards <span id="card-count-badge" style="color:rgba(212,160,23,0.8);margin-left:0.4rem;"></span></p>
+      <label id="add-photos-btn" style="display:flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.3);border-radius:2rem;cursor:pointer;color:rgba(212,160,23,0.85);font-size:0.78rem;" onmouseover="this.style.background='rgba(212,160,23,0.22)'" onmouseout="this.style.background='rgba(212,160,23,0.12)'">
+        <span style="font-size:1.1rem;line-height:1;font-weight:300;">+</span> Add Photos
         <input type="file" id="card-upload-input" accept="image/*" multiple onchange="addUploadedCards(this)" style="display:none;">
       </label>
     </div>
-    <!-- Uploaded cards grid -->
-    <div id="card-upload-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;"></div>
-    <!-- Empty state -->
-    <div id="card-upload-empty" style="text-align:center;padding:1.5rem 0;color:rgba(255,255,255,0.2);font-size:0.8rem;">No cards uploaded yet</div>
+    <!-- Horizontal scrolling numbered row -->
+    <div style="flex:1;overflow-y:auto;padding:0.9rem 1.25rem;">
+      <div id="card-upload-row" style="display:flex;flex-wrap:wrap;gap:0.65rem;align-content:flex-start;"></div>
+      <div id="card-upload-empty" style="text-align:center;padding:2rem 0;color:rgba(255,255,255,0.18);font-size:0.82rem;">No cards uploaded yet — tap Add Photos</div>
+    </div>
   </div>
 
   <!-- Bottom: submit -->
-  <div style="padding:0.9rem 1.25rem;border-top:1px solid rgba(212,160,23,0.15);flex-shrink:0;">
+  <div style="padding:0.85rem 1.25rem;border-top:1px solid rgba(212,160,23,0.15);flex-shrink:0;">
     <button onclick="submitCard()" style="width:100%;padding:0.85rem;background:linear-gradient(90deg,#B8860B,#D4A017,#B8860B);border:none;border-radius:0.75rem;color:#060E24;font-size:0.95rem;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:0.06em;">Submit Cards</button>
     <p id="card-submit-msg" style="display:none;text-align:center;color:rgba(37,211,102,0.8);font-size:0.8rem;margin-top:0.5rem;">&#10003; Cards submitted successfully!</p>
   </div>
@@ -105,7 +107,7 @@
   </div>
 </div>
 <script>
-function openThanksModal(){document.getElementById('thanks-modal').style.display='flex';history.replaceState(null,'','#thanks');}
+function openThanksModal(){document.getElementById('thanks-modal').style.display='flex';history.replaceState(null,'','#thanks');loadSavedCards();}
 function closeThanksModal(){document.getElementById('thanks-modal').style.display='none';history.replaceState(null,'',window.location.pathname);}
 function selectCardTemplate(el,src){
   document.querySelectorAll('#card-tpl-1,#card-tpl-2').forEach(function(t){t.classList.remove('selected');t.style.borderColor='rgba(212,160,23,0.25)';});
@@ -113,35 +115,71 @@ function selectCardTemplate(el,src){
   document.getElementById('card-preview-img').src=src;
   document.getElementById('card-preview-wrap').style.display='block';
 }
+function _cardUpdateEmpty(){
+  var row=document.getElementById('card-upload-row');
+  var empty=document.getElementById('card-upload-empty');
+  var badge=document.getElementById('card-count-badge');
+  var n=row.children.length;
+  empty.style.display=n?'none':'block';
+  badge.textContent=n?'('+n+')':'';
+}
+function _cardAddThumb(url,name,num){
+  var row=document.getElementById('card-upload-row');
+  var wrap=document.createElement('div');
+  wrap.style.cssText='position:relative;flex-shrink:0;width:100px;border-radius:0.5rem;overflow:hidden;border:1.5px solid rgba(212,160,23,0.25);background:#060E24;';
+  var img=document.createElement('img');
+  img.src=url;img.style.cssText='width:100%;height:140px;object-fit:cover;display:block;';
+  var numBadge=document.createElement('div');
+  numBadge.textContent=num;
+  numBadge.style.cssText='position:absolute;top:4px;left:5px;background:rgba(212,160,23,0.85);color:#060E24;font-size:0.6rem;font-weight:700;border-radius:3px;padding:1px 5px;line-height:1.4;';
+  var del=document.createElement('button');
+  del.innerHTML='&#10005;';
+  del.style.cssText='position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(220,38,38,0.85);border:none;color:#fff;font-size:0.6rem;cursor:pointer;line-height:1;padding:0;';
+  del.onclick=function(){
+    if(name){fetch('/delete-card/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':_csrfToken()},body:JSON.stringify({name:name})});}
+    wrap.remove();
+    document.querySelectorAll('#card-upload-row > div').forEach(function(c,i){var b=c.querySelector('div');if(b)b.textContent=i+1;});
+    _cardUpdateEmpty();
+  };
+  wrap.appendChild(img);wrap.appendChild(numBadge);wrap.appendChild(del);
+  row.appendChild(wrap);
+  _cardUpdateEmpty();
+}
+function _csrfToken(){
+  var c=document.cookie.split(';').find(function(s){return s.trim().startsWith('csrftoken=');});
+  return c?c.trim().split('=')[1]:'';
+}
+function loadSavedCards(){
+  fetch('/list-cards/').then(function(r){return r.json();}).then(function(d){
+    var row=document.getElementById('card-upload-row');
+    row.innerHTML='';
+    (d.cards||[]).forEach(function(c,i){_cardAddThumb(c.url,c.name,i+1);});
+    _cardUpdateEmpty();
+  });
+}
 function addUploadedCards(input){
   if(!input.files||!input.files.length)return;
-  var grid=document.getElementById('card-upload-grid');
-  var empty=document.getElementById('card-upload-empty');
-  empty.style.display='none';
-  Array.from(input.files).forEach(function(file,i){
-    var reader=new FileReader();
-    reader.onload=function(e){
-      var wrap=document.createElement('div');
-      wrap.style.cssText='position:relative;border-radius:0.5rem;overflow:hidden;border:1.5px solid rgba(212,160,23,0.2);aspect-ratio:3/4;background:#060E24;';
-      var img=document.createElement('img');
-      img.src=e.target.result;
-      img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;';
-      var del=document.createElement('button');
-      del.innerHTML='&#10005;';
-      del.style.cssText='position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:rgba(220,38,38,0.8);border:none;color:#fff;font-size:0.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0;';
-      del.onclick=function(){wrap.remove();if(!grid.children.length)empty.style.display='block';};
-      wrap.appendChild(img);wrap.appendChild(del);
-      grid.appendChild(wrap);
-    };
-    reader.readAsDataURL(file);
+  var btn=document.getElementById('add-photos-btn');
+  btn.style.opacity='0.5';btn.style.pointerEvents='none';
+  var files=Array.from(input.files);
+  var done=0;
+  var row=document.getElementById('card-upload-row');
+  files.forEach(function(file){
+    var fd=new FormData();fd.append('card',file);
+    fetch('/upload-card/',{method:'POST',headers:{'X-CSRFToken':_csrfToken()},body:fd})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d.ok){var n=row.children.length+1;_cardAddThumb(d.url,d.name,n);}
+      }).finally(function(){
+        done++;if(done===files.length){btn.style.opacity='1';btn.style.pointerEvents='';}
+      });
   });
   input.value='';
 }
 function submitCard(){
-  var grid=document.getElementById('card-upload-grid');
-  var count=grid.children.length;
+  var count=document.getElementById('card-upload-row').children.length;
   var msg=document.getElementById('card-submit-msg');
-  msg.textContent='✓ '+(count?count+' card'+(count>1?'s':'')+' submitted!':'Cards submitted!');
+  msg.textContent='✓ '+(count?count+' card'+(count>1?'s':'')+' saved!':'Done!');
   msg.style.display='block';
   setTimeout(function(){msg.style.display='none';},3000);
 }

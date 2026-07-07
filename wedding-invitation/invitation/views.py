@@ -304,6 +304,63 @@ def invite_card(request):
 
 
 @login_required
+def upload_card(request):
+    if request.method != 'POST':
+        return HttpResponse('{"ok":false}', content_type='application/json', status=400)
+    f = request.FILES.get('card')
+    if not f:
+        return HttpResponse('{"ok":false,"error":"no file"}', content_type='application/json', status=400)
+    import time, uuid
+    cards_dir = os.path.join('media', 'cards')
+    os.makedirs(cards_dir, exist_ok=True)
+    ts = int(time.time())
+    uid = uuid.uuid4().hex[:8]
+    filename = f'card_{ts}_{uid}.jpg'
+    save_path = os.path.join(cards_dir, filename)
+    try:
+        from PIL import Image
+        import io as _io
+        img = Image.open(f)
+        if img.mode in ('RGBA', 'P', 'LA'):
+            img = img.convert('RGB')
+        img.thumbnail((1200, 1600), Image.LANCZOS)
+        img.save(save_path, 'JPEG', quality=85, optimize=True)
+    except Exception:
+        f.seek(0)
+        with open(save_path, 'wb') as dest:
+            for chunk in f.chunks():
+                dest.write(chunk)
+    url = f'/media/cards/{filename}'
+    return HttpResponse(f'{{"ok":true,"url":"{url}","name":"{filename}"}}', content_type='application/json')
+
+
+@login_required
+def list_cards(request):
+    cards_dir = os.path.join('media', 'cards')
+    if not os.path.exists(cards_dir):
+        return HttpResponse('{"cards":[]}', content_type='application/json')
+    files = sorted(f for f in os.listdir(cards_dir) if f.lower().endswith(('.jpg','.jpeg','.png','.webp')))
+    cards = [{'url': f'/media/cards/{f}', 'name': f} for f in files]
+    import json as _json
+    return HttpResponse(_json.dumps({'cards': cards}), content_type='application/json')
+
+
+@login_required
+def delete_card(request):
+    if request.method != 'POST':
+        return HttpResponse('{"ok":false}', content_type='application/json', status=400)
+    import json as _json, re
+    data = _json.loads(request.body)
+    name = data.get('name', '')
+    if not re.match(r'^card_\d+_[a-f0-9]+\.jpg$', name):
+        return HttpResponse('{"ok":false,"error":"invalid"}', content_type='application/json', status=400)
+    path = os.path.join('media', 'cards', name)
+    if os.path.exists(path):
+        os.remove(path)
+    return HttpResponse('{"ok":true}', content_type='application/json')
+
+
+@login_required
 def thanks_page(request):
     w = WEDDING
     groom, bride = apply_name_overrides(w['groom'], w['bride'])
