@@ -1139,10 +1139,12 @@ the beginning of our forever.{% endif %}</p>
     <!-- Invite card -->
     <div style="border-radius:1.5rem;padding:2.5rem;margin-bottom:2rem;text-align:center;background:linear-gradient(135deg,rgba(0,0,0,0.35),rgba(0,0,0,0.2));border:1.5px solid rgba(212,160,23,0.3);box-shadow:0 20px 60px rgba(0,0,0,0.4),inset 0 1px 0 rgba(212,160,23,0.1);">
       <p style="color:rgba(255,255,255,0.4);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.5rem;">Wedding of</p>
-      <h3 style="font-family:'Palatino Linotype',serif;font-size:clamp(1.5rem,3vw,2.25rem);color:#fff;margin-bottom:0.25rem;text-shadow:0 0 20px rgba(212,160,23,0.3);position:relative;display:inline-block;">
-        <span class="live-groom-name">{{ groom.first_name }}</span> <span style="font-family:'Great Vibes',cursive;color:#D4A017;font-size:clamp(1.4rem,3vw,2rem);font-weight:400;text-shadow:0 0 16px rgba(212,160,23,0.7);">Weds</span> <span class="live-bride-name">{{ bride.first_name }}</span>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.1rem;margin-bottom:0.25rem;position:relative;display:inline-flex;">
+        <span style="font-family:'Palatino Linotype',serif;font-size:clamp(1.5rem,3vw,2.25rem);color:#fff;text-shadow:0 0 20px rgba(212,160,23,0.3);letter-spacing:0.08em;text-transform:uppercase;" class="live-groom-name">{{ groom.first_name }}</span>
+        <span style="font-family:'Great Vibes',cursive;color:#D4A017;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:400;text-shadow:0 0 16px rgba(212,160,23,0.7);line-height:1;">Weds</span>
+        <span style="font-family:'Palatino Linotype',serif;font-size:clamp(1.5rem,3vw,2.25rem);color:#fff;text-shadow:0 0 20px rgba(212,160,23,0.3);letter-spacing:0.08em;text-transform:uppercase;" class="live-bride-name">{{ bride.first_name }}</span>
         {% if is_dashboard %}<button onclick="openHeroEdit('names')" style="position:absolute;top:-4px;right:-24px;background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.5);font-size:0.75rem;padding:0;" title="Edit names">✏</button>{% endif %}
-      </h3>
+      </div>
       <p style="color:rgba(212,160,23,0.6);font-size:0.875rem;margin-bottom:1.5rem;position:relative;display:inline-flex;align-items:center;gap:0.4rem;">
         <span id="rsvp-date">{{ hero_date }}</span> &nbsp;&bull;&nbsp; <span id="rsvp-city">{{ hero_city }}</span>
         {% if is_dashboard %}<button onclick="openMuhuEdit('Wedding Date','rsvp-date','hero_date')" style="background:none;border:none;cursor:pointer;color:rgba(212,160,23,0.5);font-size:0.7rem;padding:0;" title="Edit date">✏</button>
