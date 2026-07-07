@@ -50,7 +50,7 @@ def admin_login(request):
         if verify_user(username, password):
             request.session['admin_logged_in'] = True
             request.session['admin_username'] = username.strip().lower()
-            return redirect('admin_panel')
+            return redirect('dashboard')
         messages.error(request, 'Invalid username or password.')
     return render(request, 'invitation/login.html')
 
@@ -62,12 +62,7 @@ def admin_logout(request):
 
 @login_required
 def admin_panel(request):
-    w = WEDDING
-    context = {
-        'w': w,
-        'admin_username': request.session.get('admin_username', 'admin'),
-    }
-    return render(request, 'invitation/admin_panel.html', context)
+    return redirect('dashboard')
 
 
 @login_required
