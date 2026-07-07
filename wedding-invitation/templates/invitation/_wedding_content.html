@@ -12,7 +12,7 @@
     <a href="/dashboard/" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#D4A017;font-size:0.9rem;text-decoration:none;background:rgba(212,160,23,0.08);border-right:3px solid #D4A017;">
       <span style="font-size:1.1rem;">💍</span><span>Wedding Site</span>
     </a>
-    <button onclick="showAdminQR();closeDrawer();" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:rgba(255,255,255,0.7);font-size:0.9rem;border:none;border-right:3px solid transparent;width:100%;cursor:pointer;font-family:inherit;background:#060E24;" onmouseover="this.style.background='rgba(212,160,23,0.12)';this.style.color='#D4A017'" onmouseout="this.style.background='#060E24';this.style.color='rgba(255,255,255,0.7)'">
+    <button onclick="window.location.href='/qr-page/';" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:rgba(255,255,255,0.7);font-size:0.9rem;border:none;border-right:3px solid transparent;width:100%;cursor:pointer;font-family:inherit;background:#060E24;" onmouseover="this.style.background='rgba(212,160,23,0.12)';this.style.color='#D4A017'" onmouseout="this.style.background='#060E24';this.style.color='rgba(255,255,255,0.7)'">
       <span style="font-size:1.1rem;">📲</span><span>QR Code</span>
     </button>
     {% if admin_username == 'sai' %}
@@ -261,7 +261,6 @@ async function generatePublishQR(){
   document.getElementById('admin-qr-modal').style.display='flex';
 }
 document.addEventListener('DOMContentLoaded',function(){
-  var qrm=document.getElementById('admin-qr-modal');if(qrm)qrm.addEventListener('click',function(e){if(e.target===this)this.style.display='none';});
   var nm=document.getElementById('name-edit-modal');if(nm)nm.addEventListener('click',function(e){if(e.target===this)closeNameEdit();});
   var hm=document.getElementById('hero-edit-modal');if(hm)hm.addEventListener('click',function(e){if(e.target===this)closeHeroEdit();});
   var om=document.getElementById('overlay-edit-modal');if(om)om.addEventListener('click',function(e){if(e.target===this)closeOverlayEdit();});
