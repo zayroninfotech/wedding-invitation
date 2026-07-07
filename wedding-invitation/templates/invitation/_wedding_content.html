@@ -151,12 +151,15 @@ function _cardAddThumb(url,name,num){
   del.innerHTML='&#10005;';
   del.style.cssText='position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:rgba(220,38,38,0.85);border:none;color:#fff;font-size:0.65rem;cursor:pointer;line-height:1;padding:0;z-index:2;';
   del.onclick=function(){
-    if(name){fetch('/delete-card/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':_csrfToken()},body:JSON.stringify({name:name})});}
+    var n=wrap.dataset.name;
+    if(n){fetch('/delete-card/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':_csrfToken()},body:JSON.stringify({name:n})});}
     wrap.remove();_reNumberUploaded();_cardUpdateEmpty();
   };
   wrap.appendChild(img);wrap.appendChild(label);wrap.appendChild(del);
+  if(name)wrap.dataset.name=name;
   row.appendChild(wrap);
   _cardUpdateEmpty();
+  return wrap;
 }
 function _csrfToken(){
   var c=document.cookie.split(';').find(function(s){return s.trim().startsWith('csrftoken=');});
@@ -172,20 +175,25 @@ function loadSavedCards(){
 }
 function addUploadedCards(input){
   if(!input.files||!input.files.length)return;
-  var btn=document.getElementById('add-photos-btn');
-  btn.style.opacity='0.5';btn.style.pointerEvents='none';
   var files=Array.from(input.files);
-  var done=0;
   var row=document.getElementById('card-upload-row');
   files.forEach(function(file){
-    var fd=new FormData();fd.append('card',file);
-    fetch('/upload-card/',{method:'POST',headers:{'X-CSRFToken':_csrfToken()},body:fd})
-      .then(function(r){return r.json();})
-      .then(function(d){
-        if(d.ok){var n=row.children.length+3;_cardAddThumb(d.url,d.name,n);}
-      }).finally(function(){
-        done++;if(done===files.length){btn.style.opacity='1';btn.style.pointerEvents='';}
-      });
+    var reader=new FileReader();
+    reader.onload=function(e){
+      var n=row.children.length+3;
+      var wrap=_cardAddThumb(e.target.result,null,n);
+      var fd=new FormData();fd.append('card',file);
+      fetch('/upload-card/',{method:'POST',headers:{'X-CSRFToken':_csrfToken()},body:fd})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(d.ok&&wrap){
+            wrap.dataset.name=d.name;
+            var img=wrap.querySelector('img');
+            if(img)img.src=d.url;
+          }
+        });
+    };
+    reader.readAsDataURL(file);
   });
   input.value='';
 }
