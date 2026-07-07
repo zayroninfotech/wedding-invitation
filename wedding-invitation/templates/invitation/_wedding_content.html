@@ -48,12 +48,12 @@
 
   <!-- Template images: full width side by side -->
   <div style="display:grid;grid-template-columns:1fr 1fr;flex:1;min-height:0;">
-    <div onclick="selectCardTemplate(this,'{% static 'images/invite-card-template.png' %}')" id="card-tpl-1" style="position:relative;cursor:pointer;border-right:1px solid rgba(212,160,23,0.15);border-bottom:3px solid transparent;transition:border-color 0.2s;" onmouseover="if(!this.classList.contains('selected'))this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
-      <img src="{% static 'images/invite-card-template.png' %}" style="width:100%;height:100%;object-fit:contain;display:block;min-height:260px;max-height:60vh;">
+    <div onclick="selectCardTemplate(this,'{% static 'images/invite-card-template.jpg' %}')" id="card-tpl-1" style="position:relative;cursor:pointer;border-right:1px solid rgba(212,160,23,0.15);border-bottom:3px solid transparent;transition:border-color 0.2s;" onmouseover="if(!this.classList.contains('selected'))this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+      <img src="{% static 'images/invite-card-template.jpg' %}" style="width:100%;height:100%;object-fit:contain;display:block;min-height:260px;max-height:60vh;" loading="eager">
       <div style="position:absolute;bottom:0;left:0;right:0;padding:0.4rem;background:rgba(6,14,36,0.75);color:rgba(212,160,23,0.8);font-size:0.7rem;text-align:center;letter-spacing:0.15em;text-transform:uppercase;">Template 1</div>
     </div>
-    <div onclick="selectCardTemplate(this,'{% static 'images/invite-card-template-2.png' %}')" id="card-tpl-2" style="position:relative;cursor:pointer;border-bottom:3px solid transparent;transition:border-color 0.2s;" onmouseover="if(!this.classList.contains('selected'))this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
-      <img src="{% static 'images/invite-card-template-2.png' %}" style="width:100%;height:100%;object-fit:contain;display:block;min-height:260px;max-height:60vh;">
+    <div onclick="selectCardTemplate(this,'{% static 'images/invite-card-template-2.jpg' %}')" id="card-tpl-2" style="position:relative;cursor:pointer;border-bottom:3px solid transparent;transition:border-color 0.2s;" onmouseover="if(!this.classList.contains('selected'))this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+      <img src="{% static 'images/invite-card-template-2.jpg' %}" style="width:100%;height:100%;object-fit:contain;display:block;min-height:260px;max-height:60vh;" loading="eager">
       <div style="position:absolute;bottom:0;left:0;right:0;padding:0.4rem;background:rgba(6,14,36,0.75);color:rgba(212,160,23,0.8);font-size:0.7rem;text-align:center;letter-spacing:0.15em;text-transform:uppercase;">Template 2</div>
     </div>
   </div>
