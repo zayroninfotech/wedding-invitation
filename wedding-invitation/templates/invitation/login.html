@@ -85,7 +85,10 @@
     <label class="label">Username</label>
     <input class="input" type="text" name="username" autocomplete="username" required autofocus>
     <label class="label">Password</label>
-    <input class="input" type="password" name="password" autocomplete="current-password" required>
+    <div style="position:relative;margin-bottom:1.1rem;">
+      <input class="input" type="password" name="password" id="login-password" autocomplete="current-password" required style="margin-bottom:0;padding-right:2.8rem;">
+      <button type="button" id="toggle-pw" onclick="var i=document.getElementById('login-password'),b=document.getElementById('toggle-pw');i.type=i.type==='password'?'text':'password';b.innerHTML=i.type==='password'?'&#128065;':'&#128064;';" style="position:absolute;right:0.8rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.15rem;line-height:1;padding:0;color:rgba(212,160,23,0.55);display:flex;align-items:center;">&#128065;</button>
+    </div>
     <button class="btn" type="submit">Sign In</button>
   </form>
 </div>
