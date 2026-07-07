@@ -304,6 +304,17 @@ def invite_card(request):
 
 
 @login_required
+def thanks_page(request):
+    w = WEDDING
+    groom, bride = apply_name_overrides(w['groom'], w['bride'])
+    return render(request, 'invitation/thanks.html', {
+        'groom': groom,
+        'bride': bride,
+        'wedding_date': get_setting('hero_date', w['wedding_date']),
+    })
+
+
+@login_required
 def save_names(request):
     if request.method == 'POST':
         data = json.loads(request.body)

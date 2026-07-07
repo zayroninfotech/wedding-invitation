@@ -13,4 +13,5 @@ urlpatterns = [
     path('upload-photo/', views.upload_photo, name='upload_photo'),
     path('qr-page/', views.qr_page, name='qr_page'),
     path('invite-card/', views.invite_card, name='invite_card'),
+    path('thanks/', views.thanks_page, name='thanks_page'),
 ]

@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thank You — {{ groom.first_name }} & {{ bride.first_name }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,#060E24 0%,#0D1B4B 50%,#060E24 100%);
+    font-family:'Palatino Linotype',Georgia,serif;
+    padding:2rem 1rem;
+  }
+  .card{
+    max-width:520px;width:100%;text-align:center;
+    background:linear-gradient(145deg,rgba(13,27,75,0.8),rgba(6,14,36,0.95));
+    border:1.5px solid rgba(212,160,23,0.4);
+    border-radius:1.5rem;
+    padding:3.5rem 2.5rem;
+    box-shadow:0 0 0 1px rgba(212,160,23,0.08),0 24px 64px rgba(0,0,0,0.6),inset 0 1px 0 rgba(212,160,23,0.12);
+    position:relative;
+  }
+  /* Corner accents */
+  .card::before,.card::after{content:'';position:absolute;width:22px;height:22px;border-color:rgba(212,160,23,0.7);border-style:solid;}
+  .card::before{top:12px;left:12px;border-width:2px 0 0 2px;border-radius:3px 0 0 0;}
+  .card::after{top:12px;right:12px;border-width:2px 2px 0 0;border-radius:0 3px 0 0;}
+  .corner-bl,.corner-br{position:absolute;width:22px;height:22px;border-color:rgba(212,160,23,0.7);border-style:solid;}
+  .corner-bl{bottom:12px;left:12px;border-width:0 0 2px 2px;border-radius:0 0 0 3px;}
+  .corner-br{bottom:12px;right:12px;border-width:0 2px 2px 0;border-radius:0 0 3px 0;}
+  .om{font-size:2.2rem;color:#D4A017;margin-bottom:0.75rem;text-shadow:0 0 20px rgba(212,160,23,0.6);}
+  .label{font-size:0.62rem;letter-spacing:0.45em;text-transform:uppercase;color:rgba(212,160,23,0.5);margin-bottom:1.5rem;}
+  .thanks-text{font-family:'Great Vibes',cursive;font-size:clamp(3rem,10vw,4.5rem);color:#D4A017;text-shadow:0 0 30px rgba(212,160,23,0.5);line-height:1.1;margin-bottom:0.5rem;}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,0.5),transparent);width:60%;margin:1.25rem auto;}
+  .names{font-family:'Cinzel',serif;font-size:clamp(1.1rem,3vw,1.5rem);color:#fff;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.4rem;}
+  .weds{font-family:'Great Vibes',cursive;font-size:clamp(1.2rem,3vw,1.6rem);color:#D4A017;display:block;margin:0.1rem 0;}
+  .date{color:rgba(212,160,23,0.7);font-size:0.85rem;margin-top:1rem;font-style:italic;}
+  .message{color:rgba(255,255,255,0.55);font-size:0.9rem;line-height:1.8;margin-top:1.5rem;font-style:italic;}
+  .flower{font-size:1.4rem;margin:1.25rem 0 0.25rem;opacity:0.7;}
+</style>
+</head>
+<body>
+<div class="card">
+  <span class="corner-bl"></span>
+  <span class="corner-br"></span>
+
+  <div class="om">ॐ</div>
+  <p class="label">&#10022; &nbsp; With Gratitude &nbsp; &#10022;</p>
+
+  <div class="thanks-text">Thank You</div>
+
+  <div class="divider"></div>
+
+  <div class="names">{{ groom.first_name }}</div>
+  <span class="weds">Weds</span>
+  <div class="names">{{ bride.first_name }}</div>
+
+  <p class="date">{{ wedding_date }}</p>
+
+  <div class="divider"></div>
+
+  <p class="message">
+    We are truly grateful for your love, blessings,<br>
+    and presence as we begin this beautiful journey together.<br>
+    Your warmth made our special day even more memorable.
+  </p>
+
+  <div class="flower">🌸</div>
+  <p style="color:rgba(212,160,23,0.35);font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;margin-top:0.5rem;">With love &amp; blessings</p>
+</div>
+</body>
+</html>
