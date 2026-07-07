@@ -110,8 +110,9 @@
   </div>
 </div>
 <script>
-function openThanksModal(){document.getElementById('thanks-modal').style.display='flex';}
-function closeThanksModal(){document.getElementById('thanks-modal').style.display='none';}
+function openThanksModal(){document.getElementById('thanks-modal').style.display='flex';history.replaceState(null,'','#thanks');}
+function closeThanksModal(){document.getElementById('thanks-modal').style.display='none';history.replaceState(null,'',window.location.pathname);}
+document.addEventListener('DOMContentLoaded',function(){if(window.location.hash==='#thanks'){var m=document.getElementById('thanks-modal');if(m)m.style.display='flex';}});
 function openTemplatePhoto(src,label){var m=document.getElementById('template-photo-modal');document.getElementById('template-photo-img').src=src;document.getElementById('template-photo-label').textContent=label;m.style.display='flex';closeDrawer();}
 function closeTemplatePhoto(){document.getElementById('template-photo-modal').style.display='none';}
 function toggleDrawer(){var d=document.getElementById('admin-drawer'),o=document.getElementById('admin-overlay'),ic=document.getElementById('admin-ham-icon');var open=d.style.left==='0px';d.style.left=open?'-270px':'0px';o.style.display=open?'none':'block';if(ic)ic.innerHTML=open?'&#9776;':'&#8592;';}
