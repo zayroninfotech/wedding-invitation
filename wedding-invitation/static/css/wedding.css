@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* ── Reset & Base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -132,7 +133,7 @@ body {
 /* ── Section title ── */
 .section-title { position: relative; display: inline-block; }
 .section-title::before,
-.section-title::after { content: ' ✦ '; color: var(--gold); }
+.section-title::after { content: ' \2726 '; color: var(--gold); }
 
 /* ── Custom scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
