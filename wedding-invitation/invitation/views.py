@@ -430,7 +430,7 @@ def save_names(request):
         invite_url = ''
         if groom_name and bride_name:
             slug = _make_slug(groom_name, bride_name)
-            invite_url = request.build_absolute_uri('/invite/' + slug + '/')
+            invite_url = request.build_absolute_uri('/dashboard/' + slug + '/')
             create_invitation(slug, groom_name, bride_name, invite_url)
             save_setting('active_invite_slug', slug)
             save_setting('active_invite_url', invite_url)
