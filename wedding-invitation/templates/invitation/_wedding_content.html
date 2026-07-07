@@ -779,23 +779,8 @@ the beginning of our forever.{% endif %}</p>
         <!-- Gold floral border overlay -->
         <img src="{% static 'images/gold-floral-border.png' %}" alt="" aria-hidden="true"
              style="position:absolute;inset:-12px;width:calc(100% + 24px);height:calc(100% + 24px);object-fit:fill;pointer-events:none;z-index:10;opacity:0.95;">
-        <!-- Outer glow ring -->
-        <div style="position:absolute;inset:-4px;border-radius:12px;border:1px solid rgba(212,160,23,0.3);pointer-events:none;z-index:5;"></div>
-        <!-- Top center ornament -->
-        <svg style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);z-index:6;pointer-events:none;overflow:visible;" width="28" height="16" viewBox="0 0 28 16">
-          <g fill="#D4A017" transform="translate(14,14)">
-            <polygon points="0,-14 4,-6 0,-2 -4,-6" fill="#FFD700"/>
-            <polygon points="-8,-4 -4,-8 0,-4" opacity="0.7"/>
-            <polygon points="8,-4 4,-8 0,-4" opacity="0.7"/>
-          </g>
-        </svg>
-        <!-- Corner flower ornaments -->
-        <svg style="position:absolute;top:-8px;left:-8px;z-index:6;pointer-events:none;" width="20" height="20" viewBox="0 0 20 20"><g transform="translate(10,10)" fill="#D4A017"><ellipse cx="0" cy="-6" rx="2.5" ry="5"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(90,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(180,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(270,0,0)"/><circle cx="0" cy="0" r="3" fill="#FFD700"/></g></svg>
-        <svg style="position:absolute;top:-8px;right:-8px;z-index:6;pointer-events:none;" width="20" height="20" viewBox="0 0 20 20"><g transform="translate(10,10)" fill="#D4A017"><ellipse cx="0" cy="-6" rx="2.5" ry="5"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(90,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(180,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(270,0,0)"/><circle cx="0" cy="0" r="3" fill="#FFD700"/></g></svg>
-        <svg style="position:absolute;bottom:-8px;left:-8px;z-index:6;pointer-events:none;" width="20" height="20" viewBox="0 0 20 20"><g transform="translate(10,10)" fill="#D4A017"><ellipse cx="0" cy="-6" rx="2.5" ry="5"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(90,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(180,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(270,0,0)"/><circle cx="0" cy="0" r="3" fill="#FFD700"/></g></svg>
-        <svg style="position:absolute;bottom:-8px;right:-8px;z-index:6;pointer-events:none;" width="20" height="20" viewBox="0 0 20 20"><g transform="translate(10,10)" fill="#D4A017"><ellipse cx="0" cy="-6" rx="2.5" ry="5"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(90,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(180,0,0)"/><ellipse cx="0" cy="-6" rx="2.5" ry="5" transform="rotate(270,0,0)"/><circle cx="0" cy="0" r="3" fill="#FFD700"/></g></svg>
         <!-- Gold frame + video -->
-        <div style="border:3px solid #D4A017;border-radius:10px;overflow:hidden;box-shadow:0 0 0 1px rgba(212,160,23,0.25),0 0 28px rgba(212,160,23,0.5),inset 0 0 12px rgba(212,160,23,0.08);">
+        <div style="border-radius:10px;overflow:hidden;box-shadow:0 0 28px rgba(212,160,23,0.3);">
           <video autoplay loop muted playsinline preload="auto"
                  style="width:100%;display:block;max-height:55vh;object-fit:contain;background:#060E24;">
             <source src="/media/photos/divine-bg.mp4" type="video/mp4">
