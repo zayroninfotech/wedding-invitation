@@ -151,19 +151,33 @@ body {
 .star:nth-child(5) { animation-delay: 2s; }
 
 /* ── Gallery scroll track ── */
+.scroll-left, .scroll-right {
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+}
 .gallery-track {
   display: flex;
   gap: 1rem;
   width: max-content;
   padding: 0 1rem;
+  will-change: transform;
 }
-.scroll-left  .gallery-track { animation: scrollLeft  30s linear infinite; }
-.scroll-right .gallery-track { animation: scrollRight 30s linear infinite; }
+.scroll-left  .gallery-track { animation: scrollLeft  35s linear infinite; }
+.scroll-right .gallery-track { animation: scrollRight 35s linear infinite; }
 .scroll-left:hover  .gallery-track,
-.scroll-right:hover .gallery-track { animation-play-state: paused; }
+.scroll-right:hover .gallery-track,
+.scroll-left.paused  .gallery-track,
+.scroll-right.paused .gallery-track { animation-play-state: paused; }
 
 @keyframes scrollLeft  { from { transform: translateX(0); }  to { transform: translateX(-50%); } }
 @keyframes scrollRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+@media (max-width: 640px) {
+  .scroll-left .gallery-track  { animation-duration: 25s; }
+  .scroll-right .gallery-track { animation-duration: 25s; }
+  .photo-frame { width: 9rem !important; height: 12rem !important; }
+}
 
 /* ── Countdown boxes ── */
 .countdown-box {

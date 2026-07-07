@@ -215,29 +215,43 @@ def wedding_preview(request):
     if bride_ext:
         bride = dict(bride)
         bride['photo'] = f'/media/photos/bride{bride_ext}?v={get_setting("bride_photo_ts","1")}'
+    cv_ext = get_setting('couple_video_photo_ext', '')
+    cv_ts = get_setting('couple_video_photo_ts', '1')
+    couple_video_url = f'/media/photos/couple_video{cv_ext}?v={cv_ts}' if cv_ext else ''
     context = {
         'w':                  w,
         'groom':              groom,
         'bride':              bride,
         'venue':              w['venue'],
         'events':             w['events'],
-        'youtube':            w['youtube'],
+        'youtube':            {
+            **w['youtube'],
+            'video_id':    get_setting('yt_video_id',     w['youtube']['video_id']),
+            'embed_url':   get_setting('yt_embed_url',    w['youtube']['embed_url']),
+            'channel_url': get_setting('yt_channel_url',  w['youtube']['channel_url']),
+            'channel_name':get_setting('yt_channel_name', w['youtube']['channel_name']),
+            'live_date':   get_setting('yt_live_date',    w['youtube']['live_date']),
+        },
         'rsvp':               w['rsvp'],
         'quick_links':        quick_links,
         'muhurtham_items':    muhurtham_items,
-        'wedding_date_iso':   w['wedding_date_iso'],
-        'fam_blessing': get_setting('fam_blessing', 'May the divine bless this union with love, prosperity, and happiness forever'),
+        'wedding_date_iso':   get_setting('hero_countdown_date', w['wedding_date_iso']),
+        'overlay_text':       get_setting('overlay_text', 'ॐ శుభ వివాహ వేడుక ॐ'),
+        'hero_tagline':       get_setting('hero_tagline', "We're Getting Married"),
+        'hero_invite':        get_setting('hero_invite', "Together with our families,\nwe request the honour of your presence\nto celebrate our wedding ceremony."),
+        'hero_date':          get_setting('hero_date', w['wedding_date']),
+        'hero_city':          get_setting('hero_city', w['wedding_city']),
+        'hero_venue':         get_setting('hero_venue', w['venue']['name']),
+        'hero_sacred_quote':  get_setting('hero_sacred_quote', w['sacred_quote']),
+        'hero_hashtag':       get_setting('hero_hashtag', w['hashtag']),
+        'fam_blessing':       get_setting('fam_blessing', 'May the divine bless this union with love, prosperity, and happiness forever'),
         'venue_name_display': get_setting('venue_name_display', w['venue']['name']),
         'venue_address_display': get_setting('venue_address_display', w['venue']['address']),
-        'venue_maps_url': get_setting('venue_maps_url', w['venue'].get('maps_url','https://maps.google.com/?q=Shubhasree+Gardens+Secunderabad')),
-        'bride_groom_photos': list(zip(
-            w['bride_groom_photos'],
-            w['photo_placeholder_colors']['couple'],
-        )),
-        'family_photos': list(zip(
-            w['family_photos'],
-            w['photo_placeholder_colors']['family'],
-        )),
+        'venue_maps_url':     get_setting('venue_maps_url', w['venue'].get('maps_url','https://maps.google.com/?q=Shubhasree+Gardens+Secunderabad')),
+        'couple_video_url':   couple_video_url,
+        'couple_video_ext':   cv_ext,
+        'bride_groom_photos': list(zip(_gallery_photos('couple', w['bride_groom_photos']), w['photo_placeholder_colors']['couple'])),
+        'family_photos':      list(zip(_gallery_photos('family',  w['family_photos']),      w['photo_placeholder_colors']['family'])),
     }
     return render(request, 'invitation/home.html', context)
 
